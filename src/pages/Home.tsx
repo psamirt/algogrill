@@ -1,8 +1,12 @@
+// import Card from '../components/card/Card'
+import Carousel from '../components/carousel/Carousel'
+import './Home.css'
+
 const Home = (): JSX.Element => {
   return (
-    <div>
-      <h1>algo grill</h1>
-      <p>the best hamburger in the world</p>
+    <div className="container-home">
+      <Carousel></Carousel>
+      {/* <Card></Card> */}
     </div>
   )
 }
