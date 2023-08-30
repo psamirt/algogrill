@@ -30,6 +30,10 @@
   border-radius: 5px;
 }
 
+.list-item.active {
+  background-color: #555;
+}
+
 .search-input {
   background-color: #dad8d8;
   border: none;
