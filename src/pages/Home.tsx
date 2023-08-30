@@ -1,10 +1,9 @@
 // import Card from '../components/card/Card'
 import Carousel from '../components/carousel/Carousel'
-import './Home.css'
 
 const Home = (): JSX.Element => {
   return (
-    <div className="container-home">
+    <div className="mt-24 relative flex items-center justify-center">
       <Carousel></Carousel>
       {/* <Card></Card> */}
     </div>
