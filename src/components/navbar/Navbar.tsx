@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
           <img src="logo.svg" alt="logo" className='navbar-logo' />
         <button className='login-button'>
           <img src="user.svg" alt="user" />
-          Iniciar sesión
+          Ingresar
         </button>
       </div>
     </div>
