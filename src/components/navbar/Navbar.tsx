@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
-  const handleSetActiveLink = (link) => {
+  const handleSetActiveLink = (link: string): void => {
     setActiveLink(link)
   }
 
