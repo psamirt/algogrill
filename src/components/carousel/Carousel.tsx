@@ -47,7 +47,7 @@ const Carousel: React.FC = () => {
         <BsChevronCompactRight onClick={nextSlide} size={30} />
       </div>
       <div className='flex top-4 justify-center py-2'>
-        {slides.map((slide, slideIndex) => (
+        {slides.map((_slide, slideIndex) => (
           <div className='text-2xl cursor-pointer' key={slideIndex} onClick={(): void => { goToSlide(slideIndex) }}>
             <RxDotFilled />
           </div>
