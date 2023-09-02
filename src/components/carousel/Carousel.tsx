@@ -4,11 +4,11 @@ import { RxDotFilled } from 'react-icons/rx'
 
 const Carousel: React.FC = () => {
 	const slides = [
-		{ url: '/imagenes/hamburguesa.png' },
-		{ url: '/imagenes/alitas.png' },
-		{ url: '/imagenes/pack2.png' },
-		{ url: '/imagenes/salchigrill.png' },
-		{ url: '/imagenes/presentacion.png' },
+		{ url: 'imagenes/presentacion.png' },
+		{ url: 'imagenes/hamburguesa.png' },
+		{ url: 'imagenes/alitas.png' },
+		{ url: 'imagenes/pack2.png' },
+		{ url: 'imagenes/salchigrill.png' },
 	]
 
 	const [currentIndex, setCurrentIndex] = useState(0)
@@ -29,7 +29,7 @@ const Carousel: React.FC = () => {
 	}
 
 	return (
-		<div className='max-w-[1400px] h-[780px] w-full m-auto py-16 px-4 relative group'>
+		<div className='max-w-[850px] h-[650px] w-full m-auto py-16 px-4 relative group'>
 			<div
 				style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
 				className='w-full h-full rounded-2xl bg-center bg-cover duration-500'

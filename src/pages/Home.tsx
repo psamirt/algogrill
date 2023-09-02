@@ -3,7 +3,7 @@ import Carousel from '../components/carousel/Carousel'
 
 const Home = (): JSX.Element => {
   return (
-    <div className="mt-24 relative flex items-center justify-center">
+    <div className="relative flex items-center justify-center">
       <Carousel></Carousel>
       {/* <Card></Card> */}
     </div>
