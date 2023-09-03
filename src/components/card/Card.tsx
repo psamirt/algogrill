@@ -1,5 +1,4 @@
-import React from 'react'
-import { Hamburguesa } from '../../utils/utils'
+// import React from 'react'
 
 type CardProps = {
 	nombre: string
