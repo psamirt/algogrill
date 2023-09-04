@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
 			{/* left side */}
 
 			<div className='flex items-center'>
-				<div onClick={() => setNav(!nav)} className='cursor-pointer'>
+				<div onClick={() => setNav(!nav)} className='cursor-pointer '>
 					<AiOutlineMenu size={30} />
 				</div>
 				<NavLink to='/' className='text-2xl sm:text-3xl lg:text-4xl px-2'>
@@ -68,11 +68,13 @@ const Navbar: React.FC = () => {
 					size={30}
 					className='absolute right-4 top-4 cursor-pointer'
 				/>
-				<h2 className='text-2xl p-4'>
+					<NavLink to='/' >
+						<h2 className='text-2xl p-4 m-2'>
 					Algo <span className='font-bold'>Grill</span>
-				</h2>
+						</h2>
+				</NavLink>
 				<nav>
-					<ul className='flex-col pg-4 text-white-800'>
+					<ul className='flex-col px-4 py-4 text-white-800'>
 						<li className='text-xl py-4 flex'>
 							{' '}
 							<TbTruckDelivery size={25} className='mr-4' /> Pedidos{' '}

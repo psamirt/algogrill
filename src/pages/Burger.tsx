@@ -2,13 +2,15 @@
 import { carta } from '../utils/utils'
 import Card from '../components/card/Card'
 
-const Menu = (): JSX.Element => {
+const Burger = (): JSX.Element => {
 
 	return (
-		<div className='relative flex items-center flex-col justify-center '>
+		<div className='max-w-[1640px] mx-auto flex flex-col justify-between items-center p-4'>
+			<h1 className='text-6xl underline'>Burger</h1>
 			{carta.map((card)=>{
 				return (
 					<Card 
+					id={card.id}
 					nombre={card.nombre}
 					descripcion={card.descripcion}
 					precio={card.precio}
@@ -20,4 +22,4 @@ const Menu = (): JSX.Element => {
 	)
 }
 
-export default Menu
+export default Burger

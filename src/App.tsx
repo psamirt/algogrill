@@ -1,7 +1,8 @@
 import Navbar from './components/navbar/Navbar'
 import Home from './pages/Home'
 import { Route, Routes } from 'react-router-dom'
-import Menu from './pages/Menu'
+import Burger from './pages/Burger'
+import ScrollToTop from "react-scroll-to-top";
 
 const App = (): JSX.Element => {
 	return (
@@ -9,8 +10,9 @@ const App = (): JSX.Element => {
 			<Navbar />
 			<Routes>
 				<Route path='/' element={<Home />}></Route>
-				<Route path='/menu' element={<Menu />}></Route>
+				<Route path='/menu' element={<Burger />}></Route>
 			</Routes>
+			<ScrollToTop smooth />
 		</div>
 	)
 }

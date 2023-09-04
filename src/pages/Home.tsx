@@ -1,13 +1,13 @@
-// import Card from '../components/card/Card'
 import Carousel from '../components/carousel/Carousel'
-
 const Home = (): JSX.Element => {
-  return (
-    <div className="relative flex items-center justify-center">
-      <Carousel></Carousel>
-      {/* <Card></Card> */}
-    </div>
-  )
+	return (
+		<div>
+			<Carousel></Carousel>
+			<div>
+
+      </div>
+		</div>
+	)
 }
 
 export default Home
