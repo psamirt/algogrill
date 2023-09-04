@@ -25,7 +25,7 @@ export const carta: Hamburguesa[] = [
         id:3,
         descripcion:
             'Hamburguesa artesanal de 130 gr. a la parrilla, con salsa casera, queso cheddar, chorizo parrillero, plátano, huevo y acompañado de nuestras crujientes papas fritas.',
-        precio: 3.5,
+        precio: 23.5,
         imagen: '/imagenes/hamburguesa.png',
         nombre: 'Taquicardia',
     },
