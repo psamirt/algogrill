@@ -1,7 +1,12 @@
-body{
-    background-color: rgb(15, 15, 15);
-    color:white;    
-}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    button {
+        @apply border-white rounded-xl px-5 py-1
+    }
+    body {
+        @apply bg-zinc-900 text-white
+    }
+}

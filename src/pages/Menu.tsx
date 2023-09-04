@@ -5,7 +5,7 @@ import Card from '../components/card/Card'
 const Menu = (): JSX.Element => {
 
 	return (
-		<div className='relative flex items-center justify-center'>
+		<div className='relative flex items-center flex-col justify-center '>
 			{carta.map((card)=>{
 				return (
 					<Card 
