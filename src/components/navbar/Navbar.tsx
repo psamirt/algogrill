@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
 	AiFillTag,
 	AiOutlineClose,
@@ -10,7 +10,7 @@ import { TbTruckDelivery } from 'react-icons/tb'
 import { FaWallet } from 'react-icons/fa'
 import { MdFavorite, MdHelp } from 'react-icons/md'
 import { RiTodoFill } from 'react-icons/ri'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Navbar: React.FC = () => {
 	const [nav, setNav] = useState(false)
@@ -23,9 +23,9 @@ const Navbar: React.FC = () => {
 				<div onClick={() => setNav(!nav)} className='cursor-pointer'>
 					<AiOutlineMenu size={30} />
 				</div>
-				<Link to='/' className='text-2xl sm:text-3xl lg:text-4xl px-2'>
+				<NavLink to='/' className='text-2xl sm:text-3xl lg:text-4xl px-2'>
 					Algo <span className='font-bold'>Grill</span>
-				</Link>
+				</NavLink>
 				<div className='hidden lg:flex items-center bg-white text-black rounded-full p-1 text-[14px]'>
 					<p>Delivery</p>
 				</div>
@@ -93,10 +93,10 @@ const Navbar: React.FC = () => {
 							{' '}
 							<AiFillTag size={25} className='mr-4' /> Promociones{' '}
 						</li>
-						<Link to='/menu' className='text-xl py-4 flex'>
+						<NavLink to='/menu' className='text-xl py-4 flex'>
 							{' '}
 							<RiTodoFill size={25} className='mr-4' /> Carta{' '}
-						</Link>
+						</NavLink>
 					</ul>
 				</nav>
 			</div>
