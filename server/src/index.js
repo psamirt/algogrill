@@ -4,11 +4,11 @@ require('./database/db');
 
 const PORT = 3000;
 
-// app.get('/product', (_req, res) => {
-//   console.log('Esta corriendo el server');
-//   res.send('probanding');
-// });
-app.use(require('./routes/productsRouter'))
+app.get('/product', (req, res) => {
+  console.log('Esta corriendo el server');
+  res.send('probanding');
+});
+app.use(require('./routes/productsRouter'));
 app.use(express.json());
 
 app.listen(PORT, () => {
