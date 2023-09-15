@@ -1,0 +1,32 @@
+{
+	"producto": {
+		"hamburguesa": [
+			{
+				"productogeneral_id": "",
+				"productogeneral_descripcion": "",
+				"lista_presentacion": [
+					{
+						"producto_id": "",
+						"producto_presentacion": "",
+						"producto_precio": "",
+						"producto_delivery": ""
+					}
+				],
+				"adicionales": [
+					{
+						"modificador_id": "",
+						"modificador_nombre": "",
+						"listaModificadores": [
+							{
+								"modificadorseleccion_id": "",
+								"modificadorseleccion_nombre": "",
+								"modificadorseleccion_precio": ""
+							}
+						]
+					}
+				]
+			}
+		],
+		"totalregistros": ""
+	}
+}
