@@ -1,9 +1,9 @@
-const ProductsSchema = require('../database/models/product');
+const Products = require('../database/models/product'); 
 
 const postProduct = async (req, res) => {
   try {
     const {
-      product_name,
+      product_version,
       image,
       price,
       description,
@@ -11,11 +11,13 @@ const postProduct = async (req, res) => {
       offers,
       favorite,
       rating,
-      additional
+      additional,
     } = req.body;
 
-    const newProduct = new ProductsSchema({
-      product_name,
+    const newProduct = new Products({
+      hamburguesa: {
+        product_version
+      },
       image,
       price,
       description,
@@ -23,7 +25,7 @@ const postProduct = async (req, res) => {
       offers,
       favorite,
       rating,
-      additional
+      additional,
     });
 
     const savedProduct = await newProduct.save();
@@ -38,7 +40,7 @@ const postProduct = async (req, res) => {
 const getProducts = async (req, res) => {
   console.log(req);
   try {
-    const allProducts = await ProductsSchema.find();
+    const allProducts = await productSchema.find();
     res.status(200).json(allProducts);
   } catch (error) {
     console.error(error);
