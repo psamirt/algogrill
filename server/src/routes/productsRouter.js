@@ -9,6 +9,6 @@ const {
 router.post('/newProduct', postProduct);
 
 //-----------obtener productos -------------
-router.get('/getAllProducts', getProducts);
+// router.get('/getAllProducts', getProducts);
 
 module.exports = router;
