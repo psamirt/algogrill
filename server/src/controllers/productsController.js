@@ -32,7 +32,7 @@ const postProduct = async (req, res) => {
 
     res.status(200).json(savedProduct);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(400).send('Error al crear producto');
   }
 };
