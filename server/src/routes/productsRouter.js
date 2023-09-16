@@ -8,7 +8,7 @@ const {
 //------------ productos nuevos para el admin --------------
 router.post('/newProduct', postProduct);
 
-//-----------obtener productos -------------
-// router.get('/getAllProducts', getProducts);
+// -----------obtener productos -------------
+router.get('/getAllProducts', getProducts);
 
 module.exports = router;
