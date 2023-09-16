@@ -1,12 +1,20 @@
 const { Schema, model } = require('mongoose');
 
+const validProductTypes = ['hamburguesa', 'salchipapa', 'alitas'];
+
 const productSchema = new Schema(
   {
     product: [
       {
+        product_type: {
+          type: String,
+          required: true,
+          enum: validProductTypes
+        },
         product_name: {
           type: String,
-          required: true
+          required: true,
+          unique: true
         },
         product_version: {
           type: String,
@@ -32,22 +40,24 @@ const productSchema = new Schema(
           type: Number,
           default: 0
         },
-        rating: {
-          stars: {
-            type: [Number]
-          },
-          totalStars: {
-            type: Number
-          },
-          comments: {
-            type: [String]
+        rating: [
+          {
+            stars: {
+              type: [Number]
+            },
+            totalStars: {
+              type: Number
+            },
+            comments: {
+              type: [String]
+            }
           }
-        }
+        ]
       }
     ]
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

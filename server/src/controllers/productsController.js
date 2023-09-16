@@ -3,6 +3,7 @@ const Products = require('../database/models/product');
 const postProduct = async (req, res) => {
   try {
     const {
+      product_type,
       product_name,
       product_version,
       image,
@@ -16,6 +17,7 @@ const postProduct = async (req, res) => {
     const newProduct = new Products({
       product: [
         {
+          product_type,
           product_name,
           product_version,
           image,
@@ -48,6 +50,7 @@ const postProduct = async (req, res) => {
 //   }
 // };
 
-module.exports = { postProduct,
+module.exports = {
+  postProduct
   //  getProducts
-   };
+};
