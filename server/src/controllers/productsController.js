@@ -61,9 +61,34 @@ const getProducts = async (req, res) => {
   }
 };
 
+const getById = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const productId = await Products.findById(id);
+    res.status(200).json(productId);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send('Error al obtener el producto');
+  }
+};
 
+const deleteById = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const deleteProduct = await Products.deleteOne({ _id: id });
+    if (deleteProduct.deletedCount === 0) {
+      return res.status(404).send('Producto no encontrado');
+    }
+    res.status(200).send('Producto eliminado exitosamente');
+  } catch (error) {
+    console.error(error);
+    res.status(400).send('Error al eliminar el producto');
+  }
+};
 
 module.exports = {
   postProduct,
   getProducts,
+  getById,
+  deleteById
 };
