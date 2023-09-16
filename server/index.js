@@ -1,9 +1,9 @@
-require('./database/db');
+require('./src/database/db');
 const express = require('express');
 const app = express();
 const cors = require('cors')
-require('dotenv').config()
-const routes = require('./routes/productsRouter')
+require('dotenv').config();
+const routes = require('./src/routes/productsRouter')
 
 const {PORT} = process.env
 
