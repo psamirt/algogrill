@@ -4,7 +4,8 @@ const {
   postProduct,
   getProducts,
   getById,
-  deleteById
+  deleteById,
+  updateProduct
 } = require('../controllers/productsController');
 
 //------------ productos nuevos para el admin --------------
@@ -12,8 +13,8 @@ router.post('/newProduct', postProduct);
 
 // -----------obtener productos -------------
 router.get('/getAllProducts', getProducts);
-router.get('/productId', getById)
-router.get('/deleteId', deleteById)
+router.get('/productId', getById);
+router.get('/deleteId', deleteById);
+router.put('/upDateProduct/:id', updateProduct);
 
 module.exports = router;
-

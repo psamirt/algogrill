@@ -86,9 +86,58 @@ const deleteById = async (req, res) => {
   }
 };
 
+const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      product_type,
+      product_name,
+      product_version,
+      image,
+      price,
+      description,
+      disable,
+      offers,
+      rating
+    } = req.body;
+
+    const toUpdate = await Products.findByIdAndUpdate(
+      id,
+      {
+        product: [
+          {
+            product_type,
+            product_name,
+            product_version,
+            image,
+            price,
+            description,
+            disable,
+            offers,
+            rating
+          }
+        ]
+      },
+      { new: true }
+    );
+
+    if (!toUpdate) {
+      return res
+        .status(404)
+        .json({ message: 'No se encontró el producto a actualizar' });
+    }
+
+    res.status(200).json(toUpdate);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ message: 'Error al actualizar el producto' });
+  }
+};
+
 module.exports = {
   postProduct,
   getProducts,
   getById,
-  deleteById
+  deleteById,
+  updateProduct
 };
