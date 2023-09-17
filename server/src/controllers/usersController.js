@@ -1,5 +1,6 @@
 const Users = require('../database/models/userModel');
 const bcrypt = require('bcrypt');
+const cloudinary = require('../utils/cloudinary.js');
 
 const createUser = async (req, res) => {
   try {
@@ -51,4 +52,41 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, lastName, location, favorite } = req.body;
+
+    const user = await Users.findById(id);
+
+    const previousImage = user.imageProfile;
+    if (previousImage) {
+      await cloudinary.upload.destroy(previousImage);
+    }
+
+    const update = {
+      $set: {
+        name: name,
+        lastName: lastName,
+        location: location,
+        favorite: favorite
+      }
+    };
+
+    if (req.file) {
+      const newImage = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'Foto de perfil'
+      });
+      update.$set.imageProfile = newImage.secure_url;
+    }
+
+    const updateUser = await Users.findByIdAndUpdate(id, update, { new: true });
+
+    res.status(200).json(updateUser);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send('Error al actualizar usuario');
+  }
+};
+
+module.exports = { createUser, updateUser };
