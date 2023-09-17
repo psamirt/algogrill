@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 require('dotenv').config();
-const routes = require('./src/routes/productsRouter');
+const routes = require('./src/routes/index');
 const { PORT } = process.env;
 
 const connectToDatabase = require('./src/database/db');
