@@ -59,30 +59,30 @@ const updateUser = async (req, res) => {
 
     const user = await Users.findById(id);
 
-    const previousImage = user.imageProfile;
-    if (previousImage) {
-      await cloudinary.upload.destroy(previousImage);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    const update = {
-      $set: {
-        name: name,
-        lastName: lastName,
-        location: location,
-        favorite: favorite
-      }
-    };
+    const previousImage = user.user[0].imageProfile;
+    if (previousImage) {
+      await cloudinary.uploader.destroy(previousImage);
+    }
+
+    user.user[0].name = name;
+    user.user[0].lastName = lastName;
+    user.user[0].location = location;
+    user.user[0].favorite = favorite;
 
     if (req.file) {
       const newImage = await cloudinary.uploader.upload(req.file.path, {
         folder: 'Foto de perfil'
       });
-      update.$set.imageProfile = newImage.secure_url;
+      user.user[0].imageProfile = newImage.secure_url;
     }
 
-    const updateUser = await Users.findByIdAndUpdate(id, update, { new: true });
+    const updatedUser = await user.save();
 
-    res.status(200).json(updateUser);
+    res.status(200).json(updatedUser);
   } catch (error) {
     console.error(error);
     res.status(400).send('Error al actualizar usuario');
