@@ -89,4 +89,26 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser, updateUser };
+const updatePassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password } = req.body;
+
+    const user = await Users.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no existe' });
+    }
+
+    const newPassword = password ? await bcrypt.hash(password, 10) : '';
+
+    user.user[0].password = newPassword;
+    const updatedUser = await user.save();
+
+    res.status(200).send(updatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send('Error al actualizar la contraseña');
+  }
+};
+
+module.exports = { createUser, updateUser, updatePassword };
