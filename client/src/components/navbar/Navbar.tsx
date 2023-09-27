@@ -5,6 +5,7 @@ import {
 	AiOutlineMenu,
 	AiOutlineSearch,
 } from 'react-icons/ai'
+import {BiSolidUserCircle} from 'react-icons/bi'
 import { BsFillCartFill } from 'react-icons/bs'
 import { TbTruckDelivery } from 'react-icons/tb'
 import { FaWallet } from 'react-icons/fa'
@@ -46,7 +47,10 @@ const Navbar: React.FC = () => {
 			<button className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
 				<BsFillCartFill size={20} className='mr-2' />
 			</button>
-
+			<button className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
+				<BiSolidUserCircle size={30} className='mr-2 p-0' />
+				<span>Login</span>
+			</button>
 			{/* Mobile menu */}
 			{/* Overlay */}
 			{nav ? (
