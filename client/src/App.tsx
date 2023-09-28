@@ -9,15 +9,13 @@ import { AuthProvider } from './context/AuthContext'
 const App = (): JSX.Element => {
 	return (
 		<AuthProvider>
-			<div>
-				<Navbar />
-				<Routes>
-					<Route path='/' element={<Home />}></Route>
-					<Route path='/menu' element={<Burger />}></Route>
-					<Route path='/login' element={<Login />}></Route>
-				</Routes>
-				<ScrollToTop smooth />
-			</div>
+		<Navbar />
+			<Routes>
+				<Route path='/' element={<Home />}></Route>
+				<Route path='/menu' element={<Burger />}></Route>
+				<Route path='/login' element={<Login />}></Route>
+			</Routes>
+			<ScrollToTop smooth />
 		</AuthProvider>
 	)
 }
