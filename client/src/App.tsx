@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Burger from './pages/Burger'
 import ScrollToTop from 'react-scroll-to-top'
 import Login from './components/modal/Login'
-import { AuthProvider } from './context/authContext'
+import { AuthProvider } from './context/AuthContext'
 
 const App = (): JSX.Element => {
 	return (
