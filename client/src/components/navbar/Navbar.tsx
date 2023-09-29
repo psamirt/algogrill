@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
 	}
 
 	return (
-		<div className='max-w-[1640px] mx-auto flex justify-between items-center p-4'>
+		<div className='max-w-full mx-auto flex justify-between items-center p-4'>
 			{/* left side */}
 
 			<div className='flex items-center'>
@@ -71,11 +71,11 @@ const Navbar: React.FC = () => {
 				</button>
 			) : (
 				<button onClick={handleModalOpen} className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
-					<BiSolidUserCircle size={30} className='mr-2 p-0' />
+					<BiSolidUserCircle size={30} className='' />
 					<span>Ingresar</span>
 				</button>
 			)}
-			{openLogin && <Login onClose={handleModalClose} />}
+			{openLogin && <Login onClose={handleModalClose}/>}
 
 			{/* side drawer menu */}
 			<div

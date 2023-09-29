@@ -55,7 +55,7 @@ const Register: React.FC = () => {
 	return (
 		<>
 			{console.log(passwordMatch, user.password, user.verifyPassword)}
-			<div className='bg-black/80 fixed w-full h-screen z-10 top-0 flex items-center justify-center text-black'>
+			<div className=' fixed w-full h-screen z-10 top-0 flex items-center justify-center text-black'>
 				<div className='w-[500px] min-h-[500px] bg-white relative rounded-lg p-5'>
 					<h1 className='text-black text-3xl text-center border-b-2 pb-6'>
 						Registro
