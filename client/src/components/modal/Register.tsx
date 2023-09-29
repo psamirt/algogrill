@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import { useAuth } from '../../context/AuthContext'
@@ -13,32 +13,52 @@ const Register: React.FC = () => {
 	const { register } = useAuth()
 	const navigate = useNavigate()
 	const [error, setError] = useState('')
+	const [passwordMatch, setPasswordMatch] = useState(true)
+	const [disable, setDisable] = useState(true)
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
-		setUser({ ...user, [name]: value })
+		setUser(prevUser => {
+			const updatedUser = { ...prevUser, [name]: value }
+			if (updatedUser.password === updatedUser.verifyPassword) {
+				setPasswordMatch(true)
+			} else {
+				setPasswordMatch(false)
+			}
+			return updatedUser
+		})
 	}
+
+	useEffect(() => {
+		if (
+			user.email === '' ||
+			user.password === '' ||
+			user.verifyPassword === '' ||
+			!passwordMatch
+		) {
+			setDisable(true)
+		} else {
+			setDisable(false)
+		}
+	}, [user, passwordMatch])
 
 	const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		setError('')
 		try {
-			if (user.password === user.verifyPassword) {
-				await register(user.email, user.password)
-				navigate('/')
-			} else {
-				setError('Contraseñas no coinciden')
-			}
+			await register(user.email, user.password)
+			navigate('/')
 		} catch (error: any) {
 			setError(error.message)
 		}
 	}
 	return (
 		<>
+			{console.log(passwordMatch, user.password, user.verifyPassword)}
 			<div className='bg-black/80 fixed w-full h-screen z-10 top-0 flex items-center justify-center text-black'>
 				<div className='w-[500px] min-h-[500px] bg-white relative rounded-lg p-5'>
 					<h1 className='text-black text-3xl text-center border-b-2 pb-6'>
-						Iniciar sesión
+						Registro
 					</h1>
 					{error && <p>{error}</p>}
 					<form
@@ -58,7 +78,7 @@ const Register: React.FC = () => {
 								placeholder='Ingrese correo'
 								required
 								className='border rounded-lg focus:ring-blue-400 
-                            focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+								focus:border-gray-600 block w-full p-2.5 bg-gray-200'
 							/>
 						</div>
 						<div className='relative mb-6'>
@@ -75,8 +95,10 @@ const Register: React.FC = () => {
 								name='password'
 								placeholder='*********'
 								required
-								className='border rounded-lg focus:ring-blue-400 
-                            focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+								className={`border rounded-lg focus:ring-blue-400 
+								 focus:border-gray-600 block w-full p-2.5 bg-gray-200 ${
+										passwordMatch ? 'border-green-500' : 'border-red-500'
+									}`}
 							/>
 						</div>
 						<div className='relative mb-6'>
@@ -93,22 +115,25 @@ const Register: React.FC = () => {
 								name='verifyPassword'
 								placeholder='Ingrese nuevamente la contraseña'
 								required
-								className='border rounded-lg focus:ring-blue-400 
-                            focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+								className={`border rounded-lg focus:ring-blue-400 
+								 focus:border-gray-600 block w-full p-2.5 bg-gray-200 ${
+										passwordMatch ? 'border-green-500' : 'border-red-500'
+									}`}
 							/>
 						</div>
 						<hr />
-						<div className='text-center justify-between flex'>
-							<a className='text-sm' href='#'>
-								¿Olvidó su contraseña?
-							</a>
-							<a className='text-sm' href='#'>
-								Registro
-							</a>
-						</div>
 						<br />
-						<button type='submit' className='bg-slate-400 w-full'>
-							Iniciar
+						<button
+							type='submit'
+							className={`${
+								disable
+									? 'bg-slate-300 w-full text-white'
+									: 'bg-blue-500 text-black w-full hover:scale-105 transition-transform duration-500 ease-in-out'
+							}`}
+							
+							disabled={disable}
+						>
+							Registrarse
 						</button>
 						<div className='flex items-center justify-center mt-8'>
 							<button>

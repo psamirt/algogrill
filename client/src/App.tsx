@@ -3,8 +3,8 @@ import Home from './pages/Home'
 import { Route, Routes } from 'react-router-dom'
 import Burger from './pages/Burger'
 import ScrollToTop from 'react-scroll-to-top'
-import Login from './components/modal/Login'
 import { AuthProvider } from './context/AuthContext'
+import Register from './components/modal/Register'
 
 const App = (): JSX.Element => {
 	return (
@@ -13,7 +13,7 @@ const App = (): JSX.Element => {
 			<Routes>
 				<Route path='/' element={<Home />}></Route>
 				<Route path='/menu' element={<Burger />}></Route>
-				<Route path='/login' element={<Login />}></Route>
+				<Route path='/register' element={<Register />}></Route>
 			</Routes>
 			<ScrollToTop smooth />
 		</AuthProvider>
