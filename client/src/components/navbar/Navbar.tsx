@@ -5,16 +5,33 @@ import {
 	AiOutlineMenu,
 	AiOutlineSearch,
 } from 'react-icons/ai'
-import {BiSolidUserCircle} from 'react-icons/bi'
+import { BiSolidUserCircle, BiSolidLogOutCircle } from 'react-icons/bi'
 import { BsFillCartFill } from 'react-icons/bs'
 import { TbTruckDelivery } from 'react-icons/tb'
 import { FaWallet } from 'react-icons/fa'
 import { MdFavorite, MdHelp } from 'react-icons/md'
 import { RiTodoFill } from 'react-icons/ri'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import Login from '../modal/Login'
 
 const Navbar: React.FC = () => {
+	const [openLogin, setOpenLogin] = useState(false)
 	const [nav, setNav] = useState(false)
+	const { user, logout } = useAuth()
+	const navigate = useNavigate()
+
+	const handleModalOpen = () => {
+		setOpenLogin(true)
+	}
+	const handleModalClose = () => {
+		setOpenLogin(false)
+	}
+
+	const handleLogOut = async () => {
+		await logout()
+		navigate('/')
+	}
 
 	return (
 		<div className='max-w-[1640px] mx-auto flex justify-between items-center p-4'>
@@ -43,21 +60,22 @@ const Navbar: React.FC = () => {
 				/>
 			</div>
 
-			{/* card button */}
+			{/* card and login button */}
 			<button className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
 				<BsFillCartFill size={20} className='mr-2' />
 			</button>
-			<button className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
-				<BiSolidUserCircle size={30} className='mr-2 p-0' />
-				<span>Login</span>
-			</button>
-			{/* Mobile menu */}
-			{/* Overlay */}
-			{nav ? (
-				<div className='bg-black/80 fixed w-full h-screen z-10 top-0'></div>
+			{user ? (
+				<button onClick={handleLogOut} className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
+					<BiSolidLogOutCircle size={30} className='mr-2 p-0' />
+					<span>Salir</span>
+				</button>
 			) : (
-				''
+				<button onClick={handleModalOpen} className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
+					<BiSolidUserCircle size={30} className='mr-2 p-0' />
+					<span>Ingresar</span>
+				</button>
 			)}
+			{openLogin && <Login onClose={handleModalClose} />}
 
 			{/* side drawer menu */}
 			<div
@@ -68,14 +86,14 @@ const Navbar: React.FC = () => {
 				}
 			>
 				<AiOutlineClose
-				onClick ={()=> setNav(!nav)}
+					onClick={() => setNav(!nav)}
 					size={30}
 					className='absolute right-4 top-4 cursor-pointer'
 				/>
-					<NavLink to='/' >
-						<h2 className='text-2xl p-4 m-2'>
-					Algo <span className='font-bold'>Grill</span>
-						</h2>
+				<NavLink to='/'>
+					<h2 className='text-2xl p-4 m-2'>
+						Algo <span className='font-bold'>Grill</span>
+					</h2>
 				</NavLink>
 				<nav>
 					<ul className='flex-col px-4 py-4 text-white-800'>
