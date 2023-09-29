@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 const Register: React.FC = () => {
@@ -54,8 +54,7 @@ const Register: React.FC = () => {
 	}
 	return (
 		<>
-			{console.log(passwordMatch, user.password, user.verifyPassword)}
-			<div className=' fixed w-full h-screen z-10 top-0 flex items-center justify-center text-black'>
+			<div className='w-full flex items-center justify-center text-black mt-9'>
 				<div className='w-[500px] min-h-[500px] bg-white relative rounded-lg p-5'>
 					<h1 className='text-black text-3xl text-center border-b-2 pb-6'>
 						Registro

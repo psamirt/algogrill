@@ -15,6 +15,7 @@ import {
 	onAuthStateChanged,
 	UserCredential,
 	User,
+	sendPasswordResetEmail,
 } from 'firebase/auth'
 
 interface IAuthContext {
@@ -24,6 +25,7 @@ interface IAuthContext {
 	logout: () => Promise<void>
 	user: User | null
 	loading: boolean
+	resetPassword: (email: string) => Promise<void>
 }
 
 export const authContext = createContext<IAuthContext | undefined>(undefined)
@@ -56,6 +58,10 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 		const responseGoogle = new GoogleAuthProvider()
 		return signInWithPopup(auth, responseGoogle)
 	}
+
+	const resetPassword = (email: string) => {
+		return sendPasswordResetEmail(auth, email)
+	}
 	const logout = async () => {
 		const responseOut = await signOut(auth)
 		console.log(responseOut)
@@ -69,7 +75,15 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 	}, [])
 	return (
 		<authContext.Provider
-			value={{ register, login, loginWithGoogle, logout, user, loading }}
+			value={{
+				register,
+				login,
+				loginWithGoogle,
+				logout,
+				user,
+				loading,
+				resetPassword,
+			}}
 		>
 			{children}
 		</authContext.Provider>

@@ -3,7 +3,7 @@ import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import { AiOutlineClose } from 'react-icons/ai'
 import { useAuth } from '../../context/AuthContext'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 type LoginProps = {
 	onClose: () => void
@@ -15,8 +15,8 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 		password: '',
 	})
 
-	const { login } = useAuth()
-	// const navigate = useNavigate()
+	const { login, loginWithGoogle } = useAuth()
+	const navigate = useNavigate()
 	const [error, setError] = useState('')
 	const [disable, setDisable] = useState(true)
 
@@ -36,12 +36,22 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 		}
 	}, [user])
 
+	const handleLoginWithGoogle = async () => {
+		try {
+			await loginWithGoogle()
+			onClose()
+		} catch (error: any) {
+			setError(error.message)
+		}
+	}
+
 	const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		setError('')
 		try {
 			await login(user.email, user.password)
 			onClose()
+			navigate('/')
 		} catch (error: any) {
 			setError(error.message)
 		}
@@ -97,10 +107,11 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 						</div>
 						<hr />
 						<div className='text-center justify-between flex'>
-							<a className='text-sm' href='#'>
+							<a className='text-sm'
+							href='/resetPassword'>
 								¿Olvidó su contraseña?
 							</a>
-							<a className='text-sm' href='#'>
+							<a className='text-sm' href='/register'>
 								Quiero registrarme
 							</a>
 						</div>
@@ -120,7 +131,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 							<button>
 								<BsFacebook size={40} className='text-blue-600  ' />
 							</button>
-							<button>
+							<button onClick={handleLoginWithGoogle}>
 								<FcGoogle size={45} />
 							</button>
 						</div>
