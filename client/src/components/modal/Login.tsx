@@ -107,8 +107,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 						</div>
 						<hr />
 						<div className='text-center justify-between flex'>
-							<a className='text-sm'
-							href='/resetPassword'>
+							<a className='text-sm' href='/resetPassword'>
 								¿Olvidó su contraseña?
 							</a>
 							<a className='text-sm' href='/register'>
