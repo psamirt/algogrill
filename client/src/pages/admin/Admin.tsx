@@ -8,7 +8,7 @@ import { BiFoodMenu } from 'react-icons/bi'
 import { CiDeliveryTruck } from 'react-icons/ci'
 import { FaComments } from 'react-icons/fa'
 
-const Dashboard = (): JSX.Element => {
+const admin = (): JSX.Element => {
 	return (
 		<div className='min-h-screen grid grid-cols-6'>
 			<div className='col-span-1 p-8'>
@@ -26,7 +26,7 @@ const Dashboard = (): JSX.Element => {
 									className='flex items-center gap-3 hover:bg-slate-400 lg:text-sm p-4 rounded-lg transition-colors font-semibold'
 								>
 									<RiDashboardLine size={30} />
-									Dashboard
+									admin
 								</a>
 							</li>
 							<li>
@@ -98,4 +98,4 @@ const Dashboard = (): JSX.Element => {
 	)
 }
 
-export default Dashboard
+export default admin

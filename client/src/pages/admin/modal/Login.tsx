@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import { AiOutlineClose } from 'react-icons/ai'
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 type LoginProps = {

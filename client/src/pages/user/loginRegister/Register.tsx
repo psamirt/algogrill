@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 const Register: React.FC = () => {

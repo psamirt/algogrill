@@ -13,7 +13,7 @@ import { MdFavorite, MdHelp } from 'react-icons/md'
 import { RiTodoFill } from 'react-icons/ri'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import Login from '../modal/Login'
+import Login from '../../pages/admin/modal/Login'
 
 const Navbar: React.FC = () => {
 	const [openLogin, setOpenLogin] = useState(false)
