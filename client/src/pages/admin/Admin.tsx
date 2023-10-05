@@ -7,6 +7,7 @@ import {
 import { BiFoodMenu } from 'react-icons/bi'
 import { CiDeliveryTruck } from 'react-icons/ci'
 import { FaComments } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 const admin = (): JSX.Element => {
 	return (
@@ -39,13 +40,13 @@ const admin = (): JSX.Element => {
 								</a>
 							</li>
 							<li>
-								<a
-									href='#'
+								<Link
+									to={'/newProduct'}
 									className='flex items-center gap-3 hover:bg-slate-400 p-4 rounded-lg transition-colors font-semibold'
 								>
 									<BiFoodMenu size={30} />
 									Productos
-								</a>
+								</Link>
 							</li>
 							<li>
 								<a

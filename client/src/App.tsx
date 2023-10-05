@@ -8,6 +8,7 @@ import ResetPassword from './pages/user/loginRegister/ResetPassword.js'
 import Dashboard from './pages/admin/Admin.js'
 import { Provider } from 'react-redux'
 import {store} from './app/store.js'
+import CreateProduct from './pages/admin/products/CreateProduct.js'
 
 const App = (): JSX.Element => {
 	return (
@@ -20,6 +21,7 @@ const App = (): JSX.Element => {
 					<Route path='/menu' element={<Burger />}></Route>
 					<Route path='/register' element={<Register />}></Route>
 					<Route path='/resetPassword' element={<ResetPassword />}></Route>
+					<Route path='/newProduct' element={<CreateProduct />}></Route>
 				</Routes>
 			</AuthProvider>
 		</Provider>
