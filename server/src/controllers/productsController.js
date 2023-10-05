@@ -5,7 +5,6 @@ const postProduct = async (req, res) => {
     const {
       product_type,
       product_name,
-      product_version,
       image,
       price,
       description,
@@ -19,7 +18,6 @@ const postProduct = async (req, res) => {
         {
           product_type,
           product_name,
-          product_version,
           image,
           price,
           description,
@@ -92,7 +90,6 @@ const updateProduct = async (req, res) => {
     const {
       product_type,
       product_name,
-      product_version,
       image,
       price,
       description,
@@ -108,7 +105,6 @@ const updateProduct = async (req, res) => {
           {
             product_type,
             product_name,
-            product_version,
             image,
             price,
             description,

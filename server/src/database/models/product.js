@@ -16,16 +16,12 @@ const productSchema = new Schema(
           required: true,
           unique: true
         },
-        product_version: {
-          type: String,
-          required: true
-        },
         image: {
           type: String,
           required: true
         },
         price: {
-          type: String,
+          type: Number,
           required: true
         },
         description: {

@@ -8,16 +8,14 @@ const CreateProduct: React.FC = () => {
 	const [product, setProduct] = useState({
 		product_type: '',
 		product_name: '',
-		product_version: '',
 		image: '',
-		price: '',
+		price: 0,
 		description: '',
-		disable: false,
 		offers: 0,
 	})
 
 	const handleInputChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
 	) => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
@@ -29,11 +27,9 @@ const CreateProduct: React.FC = () => {
 		setProduct({
 			product_type: '',
 			product_name: '',
-			product_version: '',
 			image: '',
-			price: '',
+			price: 0,
 			description: '',
-			disable: false,
 			offers: 0,
 		})
 	}
@@ -68,6 +64,44 @@ const CreateProduct: React.FC = () => {
 						required
 					/>
 				</label>
+				<label>
+					Ingresar imagen:
+					<input type='text' 
+                    name='image'
+                    value={product.image}
+                    onChange={handleInputChange}
+                    required
+                    />
+				</label>
+                <label>
+                    Precio
+                    <input
+                     type="number"
+                    name='price'
+                    value={product.price}
+                    onChange={handleInputChange}
+                    required
+                    />
+                </label>
+                <label>
+                    Descripción
+                    <textarea
+                    name='description'
+                    value={product.description}
+                    onChange={handleInputChange}
+                    required
+                    />
+                </label>
+                <label>
+                    Oferta
+                    <input
+                     type="number"
+                    name='offers'
+                    value={product.offers}
+                    onChange={handleInputChange}
+                    required
+                    />
+                </label>
 				{/* Agrega más campos del producto según sea necesario */}
 				<button type='submit'>Crear Producto</button>
 			</form>
