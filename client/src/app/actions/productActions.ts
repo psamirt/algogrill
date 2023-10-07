@@ -1,4 +1,4 @@
-import api from '../../utils/api'
+import { product } from '../../utils/api'
 import { Product } from '../../utils/Types'
 import { Dispatch } from 'redux'
 import { AxiosResponse } from 'axios'
@@ -11,8 +11,8 @@ interface ProductCreatedAction {
 export const createProduct = (productData: Product) => {
 	return async (dispatch: Dispatch<ProductCreatedAction>) => {
 		try {
-			const response: AxiosResponse<Product> = await api.post(
-				'/newProduct',
+			const response: AxiosResponse<Product> = await product.post(
+				'product/newProduct',
 				productData,
 			)
 			dispatch({
