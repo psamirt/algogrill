@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { addProduct } from '../../../features/products/productSlice'
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
 import { validProductTypes } from '../../../utils/Types.ts'
+import { createProduct } from '../../../app/actions/productActions.ts'
+import { Product } from '../../../utils/Types.ts'
+import { useDispatch } from 'react-redux'
+import { AppDispatch, RootState } from 'app/store.ts'
 
 const CreateProduct: React.FC = () => {
-	const dispatch = useDispatch()
+	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch<AppDispatch>()
 	const [disable, setDisable] = useState(true)
-	const [product, setProduct] = useState({
+	const [product, setProduct] = useState<Product>({
 		product_type: '',
 		product_name: '',
 		image: '',
 		price: 0,
 		description: '',
 		offers: 0,
+		disable: false,
+		rating:{ stars: [], totalStars: 0, comments: [] } 
 	})
 
 	const handleInputChange = (
@@ -39,7 +44,7 @@ const CreateProduct: React.FC = () => {
 	})
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
-		dispatch(addProduct(product))
+		dispatch(createProduct(product))
 		setProduct({
 			product_type: '',
 			product_name: '',
@@ -47,6 +52,8 @@ const CreateProduct: React.FC = () => {
 			price: 0,
 			description: '',
 			offers: 0,
+			disable: false,
+			rating:{ stars: [], totalStars: 0, comments: [] } 
 		})
 	}
 
