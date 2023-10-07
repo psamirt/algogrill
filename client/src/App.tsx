@@ -17,7 +17,7 @@ const App = (): JSX.Element => {
 				<Navbar />
 				<Routes>
 					<Route path='/' element={<Home />}></Route>
-					<Route path='admin' element={<Dashboard />}></Route>
+					<Route path='/admin' element={<Dashboard />}></Route>
 					<Route path='/menu' element={<Burger />}></Route>
 					<Route path='/register' element={<Register />}></Route>
 					<Route path='/resetPassword' element={<ResetPassword />}></Route>

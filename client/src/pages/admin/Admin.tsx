@@ -7,9 +7,30 @@ import {
 import { BiFoodMenu } from 'react-icons/bi'
 import { CiDeliveryTruck } from 'react-icons/ci'
 import { FaComments } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import CreateProduct from './products/CreateProduct'
+// import { Options } from '../../utils/Types.ts'
+import { OptionsProduct } from '../../utils/Types.ts'
+import EditProduct from './products/EditProduct.tsx'
 
 const admin = (): JSX.Element => {
+	// const [selectedOption, setSelectedOption] = useState<Options | string>()
+	const [optionsProduct, setOptionProduct] = useState<OptionsProduct | string>()
+	const [menuOpen, setMenuOpen] = useState(false)
+
+	let content = null
+
+	const handleOptionSelect = (selectedOption: OptionsProduct | string) => {
+		setOptionProduct(selectedOption)
+		setMenuOpen(false)
+	}
+
+	if (optionsProduct === 'new-product') {
+		content = <CreateProduct />
+	} else if (optionsProduct === 'edit-product') {
+		content = <EditProduct />
+	}
+
 	return (
 		<div className='min-h-screen grid grid-cols-6'>
 			<div className='col-span-1 p-8'>
@@ -27,7 +48,7 @@ const admin = (): JSX.Element => {
 									className='flex items-center gap-3 hover:bg-slate-400 lg:text-sm p-4 rounded-lg transition-colors font-semibold'
 								>
 									<RiDashboardLine size={30} />
-									admin
+									dashboard
 								</a>
 							</li>
 							<li>
@@ -39,15 +60,37 @@ const admin = (): JSX.Element => {
 									Usuarios
 								</a>
 							</li>
-							<li>
-								<Link
-									to={'/newProduct'}
+
+							<div className='flex items-center '>
+								<li
+									onClick={() => setMenuOpen(!menuOpen)}
 									className='flex items-center gap-3 hover:bg-slate-400 p-4 rounded-lg transition-colors font-semibold'
 								>
 									<BiFoodMenu size={30} />
 									Productos
-								</Link>
-							</li>
+								</li>
+
+								{menuOpen ? (
+									<select
+										onChange={e => handleOptionSelect(e.target.value)}
+										value={optionsProduct}
+										className='bg-slate-400 rounded m-1 relative '
+									>
+										<option value='' className='text-black'>
+											Seleccionar opción
+										</option>
+										<option value='new-product' className='text-black'>
+											Nuevo producto
+										</option>
+										<option value='edit-product' className='text-black'>
+											Editar producto
+										</option>
+									</select>
+								) : (
+									''
+								)}
+							</div>
+
 							<li>
 								<a
 									href='#'
@@ -94,7 +137,7 @@ const admin = (): JSX.Element => {
 					/>
 				</div>
 			</div>
-			<div className='bg-slate-600 col-span-5'>hello</div>
+			<div className='col-span-5'>{content}</div>
 		</div>
 	)
 }

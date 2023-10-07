@@ -14,22 +14,17 @@ const postProduct = async (req, res) => {
     } = req.body;
 
     const newProduct = new Products({
-      product: [
-        {
-          product_type,
-          product_name,
-          image,
-          price,
-          description,
-          disable,
-          offers,
-          rating
-        }
-      ]
+      product_type,
+      product_name,
+      image,
+      price,
+      description,
+      disable,
+      offers,
+      rating
     });
 
     const savedProduct = await newProduct.save();
-
     res.status(200).json(savedProduct);
   } catch (error) {
     console.error(error.message);
