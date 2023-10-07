@@ -1,7 +1,9 @@
 
 const EditProduct = () => {
   return (
-    <div>EditProduct works</div>
+    <div>
+
+    </div>
   )
 }
 

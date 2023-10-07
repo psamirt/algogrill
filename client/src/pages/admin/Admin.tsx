@@ -64,7 +64,7 @@ const Admin = (): JSX.Element => {
 							<div className='flex items-center '>
 								<li
 									onClick={() => setMenuOpen(!menuOpen)}
-									className='flex items-center gap-3 hover:bg-slate-400 p-4 rounded-lg transition-colors font-semibold'
+									className='flex items-center gap-3 cursor-pointer hover:bg-slate-400 p-4 rounded-lg transition-colors font-semibold'
 								>
 									<BiFoodMenu size={30} />
 									Productos
@@ -74,7 +74,7 @@ const Admin = (): JSX.Element => {
 									<select
 										onChange={e => handleOptionSelect(e.target.value)}
 										value={optionsProduct}
-										className='bg-slate-400 rounded m-1 relative '
+										className='bg-slate-400 rounded m-1 relative cursor-pointer'
 									>
 										<option value='' className='text-black'>
 											Seleccionar opción
