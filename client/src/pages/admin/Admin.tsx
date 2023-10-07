@@ -13,7 +13,7 @@ import CreateProduct from './products/CreateProduct'
 import { OptionsProduct } from '../../utils/Types.ts'
 import EditProduct from './products/EditProduct.tsx'
 
-const admin = (): JSX.Element => {
+const Admin = (): JSX.Element => {
 	// const [selectedOption, setSelectedOption] = useState<Options | string>()
 	const [optionsProduct, setOptionProduct] = useState<OptionsProduct | string>()
 	const [menuOpen, setMenuOpen] = useState(false)
@@ -142,4 +142,4 @@ const admin = (): JSX.Element => {
 	)
 }
 
-export default admin
+export default Admin

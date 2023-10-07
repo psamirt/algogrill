@@ -5,9 +5,13 @@ import { createProduct } from '../../../app/actions/productActions.ts'
 import { Product } from '../../../utils/Types.ts'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, RootState } from 'app/store.ts'
+import { Toaster, toast } from 'react-hot-toast'
+
+
 
 const CreateProduct: React.FC = () => {
-	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch<AppDispatch>()
+	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> =
+		useDispatch<AppDispatch>()
 	const [disable, setDisable] = useState(true)
 	const [product, setProduct] = useState<Product>({
 		product_type: '',
@@ -17,17 +21,16 @@ const CreateProduct: React.FC = () => {
 		description: '',
 		offers: 0,
 		disable: false,
-		rating:{ stars: [], totalStars: 0, comments: [] } 
+		rating: { stars: [], totalStars: 0, comments: [] },
 	})
 
-	const handleInputChange = (
-		e: React.ChangeEvent<
-			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-		>,
-	) => {
-		const { name, value } = e.target
-		setProduct({ ...product, [name]: value })
-	}
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+		const { name, value } = e.target;
+		setProduct(prevProduct => ({
+		  ...prevProduct,
+		  [name]: value,
+		}));
+	  };
 
 	useEffect(() => {
 		if (
@@ -41,20 +44,26 @@ const CreateProduct: React.FC = () => {
 		} else {
 			setDisable(false)
 		}
-	})
+	}, [product])
+
 	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault()
-		dispatch(createProduct(product))
-		setProduct({
-			product_type: '',
-			product_name: '',
-			image: '',
-			price: 0,
-			description: '',
-			offers: 0,
-			disable: false,
-			rating:{ stars: [], totalStars: 0, comments: [] } 
-		})
+		try {
+			e.preventDefault()
+			dispatch(createProduct(product))
+			toast.success('Producto creado exitosamente',{duration:4000})
+			setProduct({
+				product_type: '',
+				product_name: '',
+				image: '',
+				price: 0,
+				description: '',
+				offers: 0,
+				disable: false,
+				rating: { stars: [], totalStars: 0, comments: [] },
+			})
+		} catch (error) {
+			toast.error('Error al crear el producto',{duration:4000})
+		}
 	}
 
 	return (
@@ -154,6 +163,7 @@ const CreateProduct: React.FC = () => {
 					Crear
 				</button>
 			</form>
+			<Toaster />
 		</div>
 	)
 }
