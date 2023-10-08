@@ -1,6 +1,7 @@
 export const validProductTypes = ['hamburguesa', 'salchipapa', 'alitas']
 
 export type Product = {
+	_id: string
 	product_type: string;
 	product_name: string;
 	image: string;

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Product } from '../../utils/Types'
 
 export const productSlice = createSlice({
@@ -8,8 +8,11 @@ export const productSlice = createSlice({
 		addProduct: (state, action) => {
 			state.push(action.payload)
 		},
+		getProducts: (_state, action: PayloadAction<Product[]>) => {
+			return action.payload;
+		}
 	},
 })
 
 export default productSlice.reducer
-export const { addProduct } = productSlice.actions
+export const { addProduct, getProducts } = productSlice.actions

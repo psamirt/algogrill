@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import {store} from './app/store.js'
 import CreateProduct from './pages/admin/products/CreateProduct.js'
 import Admin from './pages/admin/Admin.js'
+import ProductList from './pages/admin/products/ProductList.js'
 
 const App = (): JSX.Element => {
 	return (
@@ -22,6 +23,7 @@ const App = (): JSX.Element => {
 					<Route path='/register' element={<Register />}></Route>
 					<Route path='/resetPassword' element={<ResetPassword />}></Route>
 					<Route path='/newProduct' element={<CreateProduct />}></Route>
+					<Route path='/edit' element={<ProductList />}></Route>
 				</Routes>
 			</AuthProvider>
 		</Provider>

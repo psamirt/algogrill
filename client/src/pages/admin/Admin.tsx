@@ -11,7 +11,7 @@ import { useState } from 'react'
 import CreateProduct from './products/CreateProduct'
 // import { Options } from '../../utils/Types.ts'
 import { OptionsProduct } from '../../utils/Types.ts'
-import EditProduct from './products/EditProduct.tsx'
+import ProductList from './products/ProductList.tsx'
 
 const Admin = (): JSX.Element => {
 	// const [selectedOption, setSelectedOption] = useState<Options | string>()
@@ -28,7 +28,7 @@ const Admin = (): JSX.Element => {
 	if (optionsProduct === 'new-product') {
 		content = <CreateProduct />
 	} else if (optionsProduct === 'edit-product') {
-		content = <EditProduct />
+		content = <ProductList />
 	}
 
 	return (
