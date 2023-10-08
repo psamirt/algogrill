@@ -7,13 +7,12 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch, RootState } from 'app/store.ts'
 import { Toaster, toast } from 'react-hot-toast'
 
-
-
 const CreateProduct: React.FC = () => {
 	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> =
 		useDispatch<AppDispatch>()
 	const [disable, setDisable] = useState(true)
 	const [product, setProduct] = useState<Product>({
+		_id: '',
 		product_type: '',
 		product_name: '',
 		image: '',
@@ -24,13 +23,17 @@ const CreateProduct: React.FC = () => {
 		rating: { stars: [], totalStars: 0, comments: [] },
 	})
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-		const { name, value } = e.target;
+	const handleInputChange = (
+		e: React.ChangeEvent<
+			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+		>,
+	) => {
+		const { name, value } = e.target
 		setProduct(prevProduct => ({
-		  ...prevProduct,
-		  [name]: value,
-		}));
-	  };
+			...prevProduct,
+			[name]: value,
+		}))
+	}
 
 	useEffect(() => {
 		if (
@@ -50,8 +53,9 @@ const CreateProduct: React.FC = () => {
 		try {
 			e.preventDefault()
 			dispatch(createProduct(product))
-			toast.success('Producto creado exitosamente',{duration:4000})
+			toast.success('Producto creado exitosamente', { duration: 4000 })
 			setProduct({
+				_id: '',
 				product_type: '',
 				product_name: '',
 				image: '',
@@ -62,7 +66,7 @@ const CreateProduct: React.FC = () => {
 				rating: { stars: [], totalStars: 0, comments: [] },
 			})
 		} catch (error) {
-			toast.error('Error al crear el producto',{duration:4000})
+			toast.error('Error al crear el producto', { duration: 4000 })
 		}
 	}
 
