@@ -32,7 +32,7 @@ const Admin = (): JSX.Element => {
 	}
 
 	return (
-		<div className='min-h-screen grid grid-cols-6'>
+		<div className='min-h-full grid grid-cols-6'>
 			<div className='col-span-1 p-8'>
 				{/* logo */}
 				<div className='text-center p-8'>
