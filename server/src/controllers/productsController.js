@@ -83,7 +83,6 @@ const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      product_type,
       product_name,
       image,
       price,
@@ -95,10 +94,7 @@ const updateProduct = async (req, res) => {
 
     const toUpdate = await Products.findByIdAndUpdate(
       id,
-      {
-        product: [
           {
-            product_type,
             product_name,
             image,
             price,
@@ -106,9 +102,7 @@ const updateProduct = async (req, res) => {
             disable,
             offers,
             rating
-          }
-        ]
-      },
+          },
       { new: true }
     );
 

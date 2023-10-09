@@ -8,14 +8,11 @@ import { Product } from '../../../utils/Types'
 
 const EditProduct: React.FC<{ product: Product }> = ({ product }) => {
 	const dispatch: ThunkDispatch<RootState, undefined, AnyAction> = useDispatch()
-	const [disable, setDisable] = useState(true)
 	const [editedProduct, setEditedProduct] = useState<Product>(product)
-	console.log(editedProduct);
-	
+	console.log(editedProduct)
 
 	useEffect(() => {
 		setEditedProduct(product)
-		setDisable(false)
 	}, [product])
 
 	const handleInputChange = (
@@ -45,7 +42,7 @@ const EditProduct: React.FC<{ product: Product }> = ({ product }) => {
 	}
 
 	return (
-		<div className='max-w-lg mx-auto my-10 p-6 bg-slate-800 rounded-lg '>
+		<div className='max-h-[100vh] mx-auto my-10 p-6 bg-slate-800 rounded-lg '>
 			<h2 className='text-2xl mb-4 text-center'>Nuevo Producto</h2>
 			<hr />
 			<form className='m-4' onSubmit={handleSubmit}>
@@ -104,21 +101,34 @@ const EditProduct: React.FC<{ product: Product }> = ({ product }) => {
                     outline-none focus:ring-1 focus:ring-green-500 text-black'
 							type='number'
 							name='offers'
-							value={editedProduct?.offers}
+							value={editedProduct.offers}
 							onChange={handleInputChange}
 							required
+						/>
+					</li>
+					<li className='p-3 flex items-center'>
+						<label htmlFor='disable-checkbox' className='mr-4'>
+							Deshabilitar el producto
+						</label>
+						<input
+							id='disable-checkbox'
+							type='checkbox'
+							className='ml-2 form-checkbox h-5 w-5 text-green-500 focus:ring-green-400 focus:border-green-400'
+							name='disable'
+							checked={editedProduct.disable}
+							onChange={e =>
+								setEditedProduct({
+									...editedProduct,
+									disable: e.target.checked,
+								})
+							}
 						/>
 					</li>
 				</ul>
 
 				<button
 					type='submit'
-					className={`${
-						disable
-							? 'bg-slate-300 text-2xl text-black'
-							: 'bg-blue-500 text-2xl text-white hover:scale-105 transition-transform duration-500 ease-in-out'
-					}rounded-lg flex mx-auto`}
-					disabled={disable}
+					className='bg-blue-500 text-2xl text-white hover:scale-105 transition-transform duration-500 ease-in-out flex mx-auto'
 				>
 					Guardar cambios
 				</button>

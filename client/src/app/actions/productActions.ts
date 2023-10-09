@@ -39,11 +39,15 @@ export const fetchProduct = () => {
 export const editProduct = (productId: string, updatedProductData: Product) => {
 	return async (dispatch: AppDispatch) => {
 		try {
-			const response: AxiosResponse<Product> = await axios.put(
+			 await axios.put(
 				`http://localhost:3000/products/upDateProduct/${productId}`,
 				updatedProductData,
 			)
-			dispatch(updateProduct(response.data))
+			dispatch(
+				updateProduct({
+					...updatedProductData,
+				}),
+			)
 		} catch (error) {
 			console.error('Error al editar el producto', error)
 		}

@@ -18,7 +18,6 @@ export const productSlice = createSlice({
 			if (index !== -1) {
 				state[index] = action.payload
 			}
-			return state
 		},
 	},
 })
