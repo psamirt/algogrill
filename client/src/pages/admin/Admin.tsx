@@ -7,15 +7,16 @@ import {
 import { BiFoodMenu } from 'react-icons/bi'
 import { CiDeliveryTruck } from 'react-icons/ci'
 import { FaComments } from 'react-icons/fa'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import CreateProduct from './products/CreateProduct'
-// import { Options } from '../../utils/Types.ts'
+import { Options } from '../../utils/Types.ts'
 import { OptionsProduct } from '../../utils/Types.ts'
 import ProductList from './products/ProductList.tsx'
 import AllProducts from './products/AllProducts.tsx'
+import Users from './users/Users.tsx'
 
 const Admin = (): JSX.Element => {
-	// const [selectedOption, setSelectedOption] = useState<Options | string>()
+	const [selectedOption, setSelectedOption] = useState<Options | string>()
 	const [optionsProduct, setOptionProduct] = useState<OptionsProduct | string>()
 	const [menuOpen, setMenuOpen] = useState(false)
 
@@ -26,12 +27,21 @@ const Admin = (): JSX.Element => {
 		setMenuOpen(false)
 	}
 
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		const {value}= event.currentTarget
+		setSelectedOption(value as Options)
+	}
+
 	if (optionsProduct === 'new-product') {
 		content = <CreateProduct />
 	} else if (optionsProduct === 'edit-product') {
 		content = <ProductList />
 	} else if (optionsProduct === 'all-products') {
 		content = <AllProducts />
+	}
+
+	if (selectedOption === 'users') {
+		content = <Users />
 	}
 
 	return (
@@ -55,13 +65,15 @@ const Admin = (): JSX.Element => {
 								</a>
 							</li>
 							<li>
-								<a
-									href='#'
+								<button
+									onClick={handleClick}
+									value='users'
+									name='users'
 									className='flex items-center gap-3 hover:bg-slate-400 p-4 rounded-lg transition-colors font-semibold'
 								>
 									<RiUserStarLine size={30} />
 									Usuarios
-								</a>
+								</button>
 							</li>
 
 							<div className='flex items-center '>
