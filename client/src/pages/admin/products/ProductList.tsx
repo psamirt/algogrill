@@ -24,69 +24,29 @@ const ProductList: React.FC = () => {
 	}
 
 	return (
-		<div className='flex items-center justify-center mt-8'>
+		<div className='max-w-lg mx-auto my-10 p-6 bg-slate-800 rounded-lg '>
 			{/* select option */}
 			<div className=''>
 				<h2 className='text-2xl'>Selecciona un producto</h2>
-				<select 
-        className='text-black' 
-        name='product' 
-        id='product'
-        onChange={(e)=>handleProductSelected(e.target.value)}
-        >
-						<option value=''>Seleccionar</option>
+				<select
+					className='mt-1 block w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-300 bg-white text-gray-900'
+					name='product'
+					id='product'
+					onChange={e => handleProductSelected(e.target.value)}
+				>
+					<option value=''>Seleccionar</option>
 					{products.map(product => (
-            <option key={product._id} value={product._id}>{product.product_name}</option>
+						<option key={product._id} value={product._id}>
+							{product.product_name}
+						</option>
 					))}
 				</select>
 			</div>
 			{/* Form edit */}
-      {selectedProduct && <EditProduct product= {selectedProduct} />}
+			{selectedProduct && <EditProduct product={selectedProduct} />}
 		</div>
 	)
 }
 
 export default ProductList
 
-// <div className=' max-h-[full] h-full p-10'>
-// 	<table className='min-w-full border rounded-lg '>
-// 		<thead className='bg-gray-800 border'>
-// 			<tr className='text-left uppercase'>
-// 				<th className='py-2 px-4'>Nombre</th>
-// 				<th className='py-2 px-4'>Tipo</th>
-// 				<th className='py-2 px-4'>Precio</th>
-// 				<th className='py-2 px-4'>Imagen</th>
-// 				<th className='py-2 px-4'>Oferta</th>
-// 				<th className='py-2 px-4'></th>
-// 			</tr>
-// 		</thead>
-// 		<tbody className='bg-black'>
-// 			{products.map(product => (
-// 				<tr key={product._id}>
-// 					<td className='py-2 px-4'>{product.product_name}</td>
-// 					<td className='py-2 px-4'>{product.product_type}</td>
-// 					<td className='py-2 px-4'>
-// 						s/.{' '}
-// 						{product.price.toLocaleString(undefined, {
-// 							minimumFractionDigits: 2,
-// 							maximumFractionDigits: 2,
-// 						})}
-// 					</td>
-// 					<td className='py-2 px-4'>
-// 						<img
-// 							src={product.image}
-// 							alt={product.product_name}
-// 							className='h-10 w-10 object-cover rounded'
-// 						/>
-// 					</td>
-// 					<td className='py-2 px-4'>{product.offers}</td>
-// 					<button
-//           onClick={()=> setSelectedProduct(product)}
-//           className='bg-blue-500 mt-4 hover:bg-blue-400 text-white hover:scale-105 transition-transform duration-500 ease-in-out'>
-// 						Editar
-// 					</button>
-// 				</tr>
-// 			))}
-// 		</tbody>
-// 	</table>
-// </div>

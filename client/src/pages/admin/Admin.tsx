@@ -12,6 +12,7 @@ import CreateProduct from './products/CreateProduct'
 // import { Options } from '../../utils/Types.ts'
 import { OptionsProduct } from '../../utils/Types.ts'
 import ProductList from './products/ProductList.tsx'
+import AllProducts from './products/AllProducts.tsx'
 
 const Admin = (): JSX.Element => {
 	// const [selectedOption, setSelectedOption] = useState<Options | string>()
@@ -29,10 +30,12 @@ const Admin = (): JSX.Element => {
 		content = <CreateProduct />
 	} else if (optionsProduct === 'edit-product') {
 		content = <ProductList />
+	} else if (optionsProduct === 'all-products') {
+		content = <AllProducts />
 	}
 
 	return (
-		<div className='min-h-full grid grid-cols-6'>
+		<div className='max-h-[100vh] grid grid-cols-6'>
 			<div className='col-span-1 p-8'>
 				{/* logo */}
 				<div className='text-center p-8'>
@@ -84,6 +87,9 @@ const Admin = (): JSX.Element => {
 										</option>
 										<option value='edit-product' className='text-black'>
 											Editar producto
+										</option>
+										<option value='all-products' className='text-black'>
+											Listado de productos
 										</option>
 									</select>
 								) : (

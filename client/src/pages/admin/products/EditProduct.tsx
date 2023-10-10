@@ -42,9 +42,7 @@ const EditProduct: React.FC<{ product: Product }> = ({ product }) => {
 	}
 
 	return (
-		<div className='max-h-[100vh] mx-auto my-10 p-6 bg-slate-800 rounded-lg '>
-			<h2 className='text-2xl mb-4 text-center'>Nuevo Producto</h2>
-			<hr />
+		<div className='max-h-[100vh] mx-auto my-2 p-3 bg-slate-800 rounded-lg '>
 			<form className='m-4' onSubmit={handleSubmit}>
 				<ul className='mb-4'>
 					<li className='p-3'>
