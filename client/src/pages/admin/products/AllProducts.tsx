@@ -1,16 +1,21 @@
-import { RootState } from 'app/store'
-import {useSelector} from 'react-redux'
+import { useEffect } from 'react'
+import { AppDispatch, RootState } from 'app/store'
+import { useDispatch, useSelector } from 'react-redux'
 import { Product } from 'utils/Types'
+import { fetchProduct } from '../../../app/actions/productActions'
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
 
 const AllProducts = () => {
+	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> =
+		useDispatch<AppDispatch>()
+	const products = useSelector((state: RootState): Product[] => state.product)
 
-    const products = useSelector((state: RootState): Product[] => state.product)
-    console.log(products);
-    
-
+	useEffect(() => {
+		dispatch(fetchProduct())
+	}, [dispatch])
 
 	return (
-		<div className=' max-h-[full] h-full p-10'>
+		<div className=' max-h-[full] h-full p-8'>
 			<table className='min-w-full border rounded-lg '>
 				<thead className='bg-gray-800 border'>
 					<tr className='text-left uppercase'>
@@ -19,7 +24,6 @@ const AllProducts = () => {
 						<th className='py-2 px-4'>Precio</th>
 						<th className='py-2 px-4'>Imagen</th>
 						<th className='py-2 px-4'>Oferta</th>
-						<th className='py-2 px-4'></th>
 					</tr>
 				</thead>
 				<tbody className='bg-black'>
