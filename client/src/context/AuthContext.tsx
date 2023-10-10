@@ -17,9 +17,10 @@ import {
 	User,
 	sendPasswordResetEmail,
 } from 'firebase/auth'
+import { doc, getFirestore, setDoc } from 'firebase/firestore'
 
 interface IAuthContext {
-	register: (email: string, password: string) => Promise<void>
+	register: (email: string, password: string, role: string) => Promise<void>
 	login: (email: string, password: string) => Promise<void>
 	loginWithGoogle: () => Promise<UserCredential>
 	logout: () => Promise<void>
@@ -45,18 +46,50 @@ interface IAuthProviderProps {
 export function AuthProvider({ children }: IAuthProviderProps) {
 	const [user, setUser] = useState<User | null>(null)
 	const [loading, setLoading] = useState(true)
+	const firestore = getFirestore()
 
 	const register = async (email: string, password: string) => {
-		const response = await createUserWithEmailAndPassword(auth, email, password)
-		console.log(response)
+		try {
+			const role = 'user'
+			const infoUser = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password,
+			)
+			if (infoUser.user) {
+				const { uid } = infoUser.user
+				const docuRef = doc(firestore, `users/${uid}`)
+				await setDoc(docuRef, { email: email, role: role })
+			}
+		} catch (error) {
+			console.error(error)
+			throw error
+		}
 	}
 	const login = async (email: string, password: string) => {
 		const response = await signInWithEmailAndPassword(auth, email, password)
 		console.log(response)
 	}
 	const loginWithGoogle = async () => {
-		const responseGoogle = new GoogleAuthProvider()
-		return signInWithPopup(auth, responseGoogle)
+		const provider = new GoogleAuthProvider()
+		try {
+			const response = await signInWithPopup(auth, provider)
+			if (response.user) {
+				const { uid, email, displayName, photoURL } = response.user
+				const role = 'user'
+				const docuRef = doc(firestore, `users/${uid}`)
+				setDoc(docuRef, {
+					email: email,
+					displayName: displayName,
+					photoURL: photoURL,
+					role: role,
+				})
+			}
+			return response
+		} catch (error) {
+			console.error(error)
+			throw error
+		}
 	}
 
 	const resetPassword = (email: string) => {

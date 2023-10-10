@@ -19,6 +19,7 @@ const Navbar: React.FC = () => {
 	const [openLogin, setOpenLogin] = useState(false)
 	const [nav, setNav] = useState(false)
 	const { user, logout } = useAuth()
+	
 	const navigate = useNavigate()
 
 	const handleModalOpen = () => {
