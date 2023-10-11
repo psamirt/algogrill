@@ -10,37 +10,35 @@ import { FaComments } from 'react-icons/fa'
 import React, { useState } from 'react'
 import CreateProduct from './products/CreateProduct'
 import { Options } from '../../utils/Types.ts'
-import { OptionsProduct } from '../../utils/Types.ts'
+// import { OptionsProduct } from '../../utils/Types.ts'
 import ProductList from './products/ProductList.tsx'
 import AllProducts from './products/AllProducts.tsx'
 import Users from './users/Users.tsx'
 
 const Admin = (): JSX.Element => {
-	const [selectedOption, setSelectedOption] = useState<Options | string>()
-	const [optionsProduct, setOptionProduct] = useState<OptionsProduct | string>()
+	const [selectedOption, setSelectedOption] = useState<Options | string>('')
 	const [menuOpen, setMenuOpen] = useState(false)
 
 	let content = null
 
-	const handleOptionSelect = (selectedOption: OptionsProduct | string) => {
-		setOptionProduct(selectedOption)
-		setMenuOpen(false)
-	}
-
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		const {value}= event.currentTarget
+	const handleClick = (
+		event:
+			| React.MouseEvent<HTMLButtonElement>
+			| React.ChangeEvent<HTMLSelectElement>,
+	) => {
+		const value = event.currentTarget
+			? (event.currentTarget as HTMLButtonElement).value
+			: (event.target as HTMLSelectElement).value
 		setSelectedOption(value as Options)
 	}
 
-	if (optionsProduct === 'new-product') {
+	if (selectedOption === 'new-product') {
 		content = <CreateProduct />
-	} else if (optionsProduct === 'edit-product') {
+	} else if (selectedOption === 'edit-product') {
 		content = <ProductList />
-	} else if (optionsProduct === 'all-products') {
+	} else if (selectedOption === 'all-products') {
 		content = <AllProducts />
-	}
-
-	if (selectedOption === 'users') {
+	} else if (selectedOption === 'users') {
 		content = <Users />
 	}
 
@@ -85,10 +83,10 @@ const Admin = (): JSX.Element => {
 									Productos
 								</li>
 
-								{menuOpen ? (
+								{menuOpen && (
 									<select
-										onChange={e => handleOptionSelect(e.target.value)}
-										value={optionsProduct}
+										onChange={e => handleClick(e)}
+										value={selectedOption}
 										className='bg-slate-400 rounded m-1 relative cursor-pointer'
 									>
 										<option value='' className='text-black'>
@@ -104,8 +102,6 @@ const Admin = (): JSX.Element => {
 											Listado de productos
 										</option>
 									</select>
-								) : (
-									''
 								)}
 							</div>
 

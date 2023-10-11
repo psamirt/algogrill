@@ -16,7 +16,7 @@ export type Product = {
 	}
 }
 
-export type OptionsProduct = 'new-product' | 'edit-product'
+// export type OptionsProduct =
 
 export type Options =
 	| 'dashboard'
@@ -26,5 +26,13 @@ export type Options =
 	| 'payments'
 	| 'SEO'
 	| 'comments'
+	| 'new-product'
+	| 'edit-product'
 
-export type User = { id: string; name: string; email: string; role: string ; photo:string}
+export type User = {
+	id: string
+	name: string
+	email: string
+	role: string
+	photo: string
+}
