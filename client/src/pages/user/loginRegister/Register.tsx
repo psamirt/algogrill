@@ -8,6 +8,7 @@ const Register: React.FC = () => {
 	const [user, setUser] = useState({
 		email: '',
 		password: '',
+		role:'',
 		verifyPassword: '',
 	})
 	const { register } = useAuth()
@@ -46,7 +47,7 @@ const Register: React.FC = () => {
 		e.preventDefault()
 		setError('')
 		try {
-			await register(user.email, user.password)
+			await register(user.email, user.password, user.role)
 			navigate('/')
 		} catch (error: any) {
 			setError(error.message)

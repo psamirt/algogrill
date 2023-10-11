@@ -26,3 +26,5 @@ export type Options =
 	| 'payments'
 	| 'SEO'
 	| 'comments'
+
+export type User = { id: string; name: string; email: string; role: string ; photo:string}

@@ -59,7 +59,7 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 			if (infoUser.user) {
 				const { uid } = infoUser.user
 				const docuRef = doc(firestore, `users/${uid}`)
-				await setDoc(docuRef, { email: email, role: role })
+				await setDoc(docuRef, { email: email, role: role, id: uid })
 			}
 		} catch (error) {
 			console.error(error)
@@ -83,6 +83,7 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 					displayName: displayName,
 					photoURL: photoURL,
 					role: role,
+					id: uid,
 				})
 			}
 			return response
