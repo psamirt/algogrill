@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
 			<div className='max-w-[1400px] mx-auto flex justify-between items-center p-4 text-gray-700'>
 				{/* left side */}
 
-				<div className='flex items-center'>
+				<NavLink className='flex items-center' to='/'>
 					<div
 						onClick={() => setNav(!nav)}
 						className='cursor-pointer md:hidden flex'
@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
 						alt='logo'
 						className='w-[170px]'
 					/>
-				</div>
+				</NavLink>
 
 				{/* search input */}
 

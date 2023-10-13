@@ -1,4 +1,4 @@
-const Card = () => {
+const CardHome = () => {
 	return (
 		<div className='mx-4 py-12 grid md:grid-cols-3 gap-6'>
 			{/* Card */}
@@ -51,4 +51,4 @@ const Card = () => {
 	)
 }
 
-export default Card
+export default CardHome

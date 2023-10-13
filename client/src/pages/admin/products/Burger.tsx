@@ -1,6 +1,6 @@
 // import React from 'react'
 import { carta } from '../../../utils/utils'
-import Card from '../../../components/card/Card'
+import Card from '../../../components/card/CardHome'
 
 const Burger = (): JSX.Element => {
 

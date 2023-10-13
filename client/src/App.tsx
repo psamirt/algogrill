@@ -6,10 +6,8 @@ import { AuthProvider } from './context/AuthContext'
 import Register from './pages/user/loginRegister/Register.js'
 import ResetPassword from './pages/user/loginRegister/ResetPassword.js'
 import { Provider } from 'react-redux'
-import {store} from './app/store.js'
-import CreateProduct from './pages/admin/products/CreateProduct.js'
+import { store } from './app/store.js'
 import Admin from './pages/admin/Admin.js'
-import ProductList from './pages/admin/products/ProductList.js'
 
 const App = (): JSX.Element => {
 	return (
@@ -22,8 +20,6 @@ const App = (): JSX.Element => {
 					<Route path='/menu' element={<Burger />}></Route>
 					<Route path='/register' element={<Register />}></Route>
 					<Route path='/resetPassword' element={<ResetPassword />}></Route>
-					<Route path='/newProduct' element={<CreateProduct />}></Route>
-					<Route path='/edit' element={<ProductList />}></Route>
 				</Routes>
 			</AuthProvider>
 		</Provider>
