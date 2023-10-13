@@ -4,9 +4,9 @@
 
 @layer base {
     button {
-        @apply  rounded-xl px-5 items-center
+        @apply  rounded-full px-5 items-center 
     }
     body {
-        @apply bg-zinc-900 text-white
+        @apply bg-slate-100   
     }
 }
