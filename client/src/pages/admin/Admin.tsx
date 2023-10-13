@@ -43,7 +43,7 @@ const Admin = (): JSX.Element => {
 	}
 
 	return (
-		<div className='max-h-[100vh] grid grid-cols-6'>
+		<div className='max-h-[100vh] max-w-[1400px] mx-auto grid grid-cols-6'>
 			<div className='col-span-1 p-8'>
 				{/* logo */}
 				<div className='text-center p-8'>
@@ -145,7 +145,7 @@ const Admin = (): JSX.Element => {
 					</nav>
 					{/* imagen */}
 					<img
-						src='imagenes/imgAdmin.svg'
+						src='svg/imgAdmin.svg'
 						alt='admin'
 						className='max-w-[200px]'
 					/>

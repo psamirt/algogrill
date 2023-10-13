@@ -24,7 +24,7 @@ const ProductList: React.FC = () => {
 	}
 
 	return (
-		<div className='max-w-lg mx-auto my-10 p-6 bg-slate-800 rounded-lg '>
+		<div className='max-w-lg mx-auto my-10 p-6 bg-slate-800 rounded-lg text-white'>
 			{/* select option */}
 			<div className=''>
 				<h2 className='text-2xl'>Selecciona un producto</h2>

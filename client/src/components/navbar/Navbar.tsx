@@ -35,8 +35,8 @@ const Navbar: React.FC = () => {
 	}
 
 	return (
-		<div className='bg-blue-400'>
-			<div className='max-w-[1400px] mx-auto flex justify-between items-center text-white p-4'>
+		<div className='bg-yellow-400'>
+			<div className='max-w-[1400px] mx-auto flex justify-between items-center p-4'>
 				{/* left side */}
 
 				<div className='flex items-center'>
@@ -47,9 +47,9 @@ const Navbar: React.FC = () => {
 						<AiOutlineMenu size={30} />
 					</div>
 					<img
-						src='logoNegro.svg'
+						src='svg/logo-suplente.svg'
 						alt='logo'
-						className='w-[90px] p-1 ml-5'
+						className='w-[170px]'
 					/>
 				</div>
 
@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
 						</h2>
 					</NavLink>
 					<nav>
-						<ul className='flex-col px-4 py-4 text-white-800'>
+						<ul className='flex-col px-4 py-4-800'>
 							<li className='text-xl py-4 flex'>
 								{' '}
 								<TbTruckDelivery size={25} className='mr-4' /> Pedidos{' '}

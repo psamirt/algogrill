@@ -1,36 +1,52 @@
-// import React from 'react'
-
-type CardProps = {
-	id:number
-	nombre: string
-	descripcion: string
-	precio: number
-	imagen: string
-}
-
-const Card: React.FC<CardProps> = props => {
+const Card = () => {
 	return (
-		<div
-		key={props.id}
-			className='max-w-[300px] sm:max-w-[900px] sm:flex-row flex flex-col m-5 p-4 items-center justify-between
-		 bg-zinc-900 rounded shadow-sm shadow-white'
-		>
-			<img src={props.imagen} alt='imagen' className='w-[250px] p-2' />
-			<div className='flex flex-col justify-between text-xs sm:text-base m-2'>
-				<div className='flex justify-between pt-2 mt-0 items-center'>
-					<h2 className='sm:text-3xl text-lg font-bold underline decoration-wavy mb-2 '>
-						{props.nombre}
-					</h2>
-					<h2 className='text-xl sm:text-3xl font-bold'>.S/ {props.precio.toFixed(2)}</h2>
+		<div className='mx-4 py-12 grid md:grid-cols-3 gap-6'>
+			{/* Card */}
+			<div className='rounded-xl relative'>
+				{/* Overlay */}
+				<div className='absolute h-full w-full bg-black/50 rounded-xl text-white'>
+					<p className='font-bold text-2xl px-2 pt-4'>Hamburguesas</p>
+					<p className='px-2'>Artesanales</p>
+					<button className='border-white bg-white text-black mx-2 absolute bottom-4'>
+						Ver todas
+					</button>
 				</div>
-				<p className='italic sm:text-xl text-base '>{props.descripcion}</p>
+				<img
+					src='imagenes/hamburguesa-card.jpg'
+					alt='card-image'
+					className=' h-[250px] w-full object-cover'
+				/>
 			</div>
-			<button
-				className='px-4 py-2 bg-blue-500 text-white rounded
-			 hover:bg-blue-600 transition duration-300 ease-in-out'
-			>
-				Agregar al carrito
-			</button>
+			{/* Card */}
+			<div className='rounded-xl relative'>
+				{/* Overlay */}
+				<div className='absolute h-full w-full bg-black/50 rounded-xl text-white'>
+					<p className='font-bold text-2xl px-2 pt-4'>Alitas</p>
+					<button className='border-white bg-white text-black mx-2 absolute bottom-4'>
+						Ver todas
+					</button>
+				</div>
+				<img
+					src='imagenes/alitas.jpg'
+					alt='card-image'
+					className=' h-[250px] w-full object-cover'
+				/>
+			</div>
+			{/* Card */}
+			<div className='rounded-xl relative'>
+				{/* Overlay */}
+				<div className='absolute h-full w-full bg-black/50 rounded-xl text-white'>
+					<p className='font-bold text-2xl px-2 pt-4'>Salchipapas</p>
+					<button className='border-white bg-white text-black mx-2 absolute bottom-4'>
+						Ver todas
+					</button>
+				</div>
+				<img
+					src='imagenes/salchi.jpeg'
+					alt='card-image'
+					className=' h-[250px] w-full object-cover'
+				/>
+			</div>
 		</div>
 	)
 }

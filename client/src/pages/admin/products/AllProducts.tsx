@@ -15,7 +15,7 @@ const AllProducts = () => {
 	}, [dispatch])
 
 	return (
-		<div className=' max-h-[full] h-full p-8'>
+		<div className=' max-h-[full] h-full p-8 text-white'>
 			<table className='min-w-full border rounded-lg '>
 				<thead className='bg-gray-800 border'>
 					<tr className='text-left uppercase'>

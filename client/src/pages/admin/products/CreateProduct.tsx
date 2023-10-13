@@ -71,7 +71,7 @@ const CreateProduct: React.FC = () => {
 	}
 
 	return (
-		<div className='max-w-lg mx-auto my-10 p-6 bg-slate-800 rounded-lg '>
+		<div className='max-w-lg mx-auto my-10 p-6 bg-slate-800 rounded-lg text-white'>
 			<h2 className='text-2xl mb-4 text-center'>Nuevo Producto</h2>
 			<hr />
 			<form className='m-4' onSubmit={handleSubmit}>
