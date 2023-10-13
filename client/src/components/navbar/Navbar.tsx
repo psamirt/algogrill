@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
 	const [openLogin, setOpenLogin] = useState(false)
 	const [nav, setNav] = useState(false)
 	const { user, logout } = useAuth()
-	
+
 	const navigate = useNavigate()
 
 	const handleModalOpen = () => {
@@ -39,15 +39,13 @@ const Navbar: React.FC = () => {
 			{/* left side */}
 
 			<div className='flex items-center'>
-				<div onClick={() => setNav(!nav)} className='cursor-pointer '>
+				<div
+					onClick={() => setNav(!nav)}
+					className='cursor-pointer md:hidden flex'
+				>
 					<AiOutlineMenu size={30} />
 				</div>
-				<NavLink to='/' className='text-2xl sm:text-3xl lg:text-4xl px-2'>
-					Algo <span className='font-bold'>Grill</span>
-				</NavLink>
-				<div className='hidden lg:flex items-center bg-white text-black rounded-full p-1 text-[14px]'>
-					<p>Delivery</p>
-				</div>
+				<img src='logoBlanco.svg' alt='logo' className='w-[80px] p-1 ml-5' />
 			</div>
 
 			{/* search input */}
@@ -63,20 +61,32 @@ const Navbar: React.FC = () => {
 
 			{/* card and login button */}
 			<button className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
-				<BsFillCartFill size={20} className='mr-2' />
+				<BsFillCartFill size={25} className='mr-2' />
+				Carrito
 			</button>
+			<NavLink to='#' className='flex items-center justify-center ml-2'>
+				<div className='flex items-center bg-white text-black rounded-full p-5 h-6'>
+					<p className=' text-lg'>Menú</p>
+				</div>
+			</NavLink>
 			{user ? (
-				<button onClick={handleLogOut} className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
+				<button
+					onClick={handleLogOut}
+					className='bg-white text-black hidden md:flex items-center py-2 rounded-full'
+				>
 					<BiSolidLogOutCircle size={30} className='mr-2 p-0' />
 					<span>Salir</span>
 				</button>
 			) : (
-				<button onClick={handleModalOpen} className='bg-white text-black hidden md:flex items-center py-2 rounded-full'>
+				<button
+					onClick={handleModalOpen}
+					className='bg-white text-black hidden md:flex items-center py-2 rounded-full'
+				>
 					<BiSolidUserCircle size={30} className='' />
 					<span>Ingresar</span>
 				</button>
 			)}
-			{openLogin && <Login onClose={handleModalClose}/>}
+			{openLogin && <Login onClose={handleModalClose} />}
 
 			{/* side drawer menu */}
 			<div
