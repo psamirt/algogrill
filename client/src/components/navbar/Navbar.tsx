@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
 
 	return (
 		<div className='bg-yellow-400'>
-			<div className='max-w-[1400px] mx-auto flex justify-between items-center p-4 text-gray-700'>
+			<div className='max-w-[1400px] mx-auto flex justify-between items-center p-4'>
 				{/* left side */}
 
 				<NavLink className='flex items-center' to='/'>
