@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
 
 				{/* search input */}
 
-				<div className='bg-gray-200 rounded-full flex items-center px-2 w-[200px] sm:w-[400px] lg:w-[500px]'>
+				<div className='bg-slate-100 rounded-full flex items-center px-2 w-[200px] sm:w-[400px] lg:w-[500px]'>
 					<AiOutlineSearch />
 					<input
 						className='bg-transparent p-2 focus:outline-none w-full'

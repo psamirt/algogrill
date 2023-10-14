@@ -64,7 +64,7 @@ const Menu = () => {
 	})
 
 	return (
-		<div className='max-w-[1400px] mx-auto'>
+		<div className='max-w-[1400px] mx-auto bg-slate-50'>
 			{/* Filtros */}
 			<div className='bg-orange-300 p-3 rounded-b-md flex justify-evenly'>
 				<Order onOrderChange={handleOrder} orderOptions={orderOptions} />
