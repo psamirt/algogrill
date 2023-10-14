@@ -69,7 +69,7 @@ const Navbar: React.FC = () => {
 					<BsFillCartFill size={25} className='mr-2' />
 					Carrito
 				</button>
-				<NavLink to='#' className='flex items-center justify-center ml-2'>
+				<NavLink to='/menu' className='flex items-center justify-center ml-2'>
 					<div className='flex items-center p-5 h-6 '>
 						<p className=' text-lg'>Menú</p>
 					</div>

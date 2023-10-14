@@ -9,7 +9,6 @@ import { Product } from '../../../utils/Types'
 const EditProduct: React.FC<{ product: Product }> = ({ product }) => {
 	const dispatch: ThunkDispatch<RootState, undefined, AnyAction> = useDispatch()
 	const [editedProduct, setEditedProduct] = useState<Product>(product)
-	console.log(editedProduct)
 
 	useEffect(() => {
 		setEditedProduct(product)
