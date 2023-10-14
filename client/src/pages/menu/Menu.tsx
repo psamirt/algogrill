@@ -26,7 +26,7 @@ const Menu = () => {
 					<div className='flex justify-between px-2 py-4 '>
 						<p className='font-bold'>{product.product_name}</p>
 						<p>
-							<span className='bg-orange-500 text-white p-1 rounded-full'>
+							<span className='bg-orange-500 text-white px-2 rounded-full'>
 								./S {product.price}
 							</span>
 						</p>
