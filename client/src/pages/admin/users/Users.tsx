@@ -35,7 +35,7 @@ const Users = () => {
 		<div className=' max-h-[full] h-full p-8'>
 			<table className='min-w-full border rounded-lg '>
 				<thead className='bg-gray-800 border'>
-					<tr className='text-left uppercase'>
+					<tr className='text-left uppercase text-slate-100'>
 						<th className='py-2 px-4'>id</th>
 						<th className='py-2 px-4'>nombre</th>
 						<th className='py-2 px-4'>email</th>
@@ -46,12 +46,12 @@ const Users = () => {
 				<tbody>
 					{users.map(user => {
 						return (
-							<tr key={user.id}>
+							<tr key={user.id} className='bg-slate-200'>
 								<td className='py-2 px-4'>{user.id}</td>
 								<td className='py-2 px-4'>{user.name}</td>
 								<td className='py-2 px-4'>{user.email}</td>
 								<td className='py-2 px-4'>{user.role}</td>
-								<td className='py-2 px.4'>
+								<td className='py-2 px.4 items-center justify-center flex'>
 									<img
 										src={user.photo}
 										alt={user.photo}

@@ -87,7 +87,7 @@ const Admin = (): JSX.Element => {
 									<select
 										onChange={e => handleClick(e)}
 										value={selectedOption}
-										className='bg-slate-400 rounded m-1 relative cursor-pointer'
+										className='bg-slate-200 rounded m-1 relative cursor-pointer'
 									>
 										<option value='' className='text-black'>
 											Seleccionar opción
