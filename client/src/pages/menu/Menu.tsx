@@ -2,32 +2,50 @@ import { useEffect, useState } from 'react'
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
 import { AppDispatch, RootState } from 'app/store'
 import { useDispatch, useSelector } from 'react-redux'
-import { Product } from 'utils/Types'
+import { Product, orderOptions } from '../../utils/Types'
 import { fetchProduct } from '../../app/actions/productActions'
 import Order from '../../components/filters&orders/Order'
 import { BiCartAdd } from 'react-icons/bi'
+import { addItemToCart } from '../../features/cart/cartSlice'
+import { fetchUsers } from '../../app/actions/userAction'
 
 const Menu = () => {
-	const orderOptions = [
-		{ label: 'Ordenar', value: '' },
-		{ label: 'Menor precio', value: 'price-asc' },
-		{ label: 'Mayor precio', value: 'price-desc' },
-		{ label: 'A a Z', value: 'name-asc' },
-		{ label: 'Z a A', value: 'name-desc' },
-	]
-
 	const products = useSelector((state: RootState): Product[] => state.product)
 	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> =
 		useDispatch<AppDispatch>()
 	const [selectedOrder, setSelectedOrder] = useState<string>('')
 	const [selectTypes, setSelectTypes] = useState<string[]>([])
+	const [quantity, setQuantity] = useState(1)
+
 
 	useEffect(() => {
 		dispatch(fetchProduct())
 	}, [dispatch])
 
+	useEffect(() => {
+		const getUsers = async () => {
+			try {
+				await dispatch(fetchUsers())
+			} catch (error) {
+				console.error('Error al obtener el usuario:', error)
+			}
+		}
+		getUsers()
+	}, [])
+
+	const addToCart = (product: Product, quantity: number) => {
+		dispatch(addItemToCart({ product, quantity }))
+	}
+
 	const handleOrder = (value: string) => {
 		setSelectedOrder(value)
+	}
+
+	const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const newQuantity = parseInt(e.target.value)
+		if (newQuantity >= 1) {
+			setQuantity(newQuantity)
+		}
 	}
 
 	const handleCheckboxChange = (type: string) => {
@@ -114,18 +132,29 @@ const Menu = () => {
 							alt={product.product_name}
 							className='w-full h-[200px] object-cover rounded-t-lg hover:scale-105 duration-300'
 						/>
-						<div className='flex justify-between px-2 py-4 '>
+						<div className='flex justify-between px-2 py-4'>
 							<p className='font-bold'>{product.product_name}</p>
-							<button className='flex bg-orange-500 text-white px-2 rounded-full hover:scale-105 duration-300'>
-								<span className='p-1'>
-									s/.{' '}
-									{product.price.toLocaleString(undefined, {
-										minimumFractionDigits: 2,
-										maximumFractionDigits: 2,
-									})}
-								</span>
-								<BiCartAdd />
-							</button>
+							<div className='flex items-center bg-orange-500 px-2 rounded-md'>
+								<input
+									type='number'
+									value={quantity}
+									onChange={handleQuantityChange}
+									className='mr-2 w-8 text-center rounded '
+								/>
+								<button
+									className='flex  text-white px-2 rounded-full hover:scale-105 duration-300'
+									onClick={() => addToCart(product, quantity)}
+								>
+									<span className='p-1'>
+										s/.{' '}
+										{product.price.toLocaleString(undefined, {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})}
+									</span>
+									<BiCartAdd />
+								</button>
+							</div>
 						</div>
 					</div>
 				))}

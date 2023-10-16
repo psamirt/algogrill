@@ -1,34 +1,25 @@
-import { useEffect, useState } from 'react'
-import { DocumentData, collection, getDocs } from 'firebase/firestore'
-import { db } from '../../../utils/firebaseConfig'
-import { User } from '../../../utils/Types'
+import { useEffect } from 'react'
+import { fetchUsers } from '../../../app/actions/userAction'
+import { useDispatch, useSelector } from 'react-redux'
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
+import { AppDispatch, RootState } from 'app/store'
+import { User } from 'utils/Types'
 
 const Users = () => {
-	const [users, setUsers] = useState<User[]>([])
+	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> =
+		useDispatch<AppDispatch>()
+
+	const users = useSelector((state: RootState): User[] => state.user)
 
 	useEffect(() => {
-		const fetchUsers = async () => {
-			const usersCollection = collection(db, 'users')
-			const usersSnapshot = await getDocs(usersCollection)
-
-			const usersData: User[] = []
-
-			usersSnapshot.forEach(doc => {
-				const userData = doc.data() as DocumentData
-				const user: User = {
-					id: doc.id,
-					name: userData.displayName,
-					email: userData.email,
-					role: userData.role,
-					photo: userData.photoURL,
-				}
-				usersData.push(user)
-			})
-
-			setUsers(usersData)
+		const getUsers = async () => {
+			try {
+				await dispatch(fetchUsers())
+			} catch (error) {
+				console.error('Error al obtener el usuario:', error)
+			}
 		}
-
-		fetchUsers()
+		getUsers()
 	}, [])
 
 	return (
@@ -51,7 +42,7 @@ const Users = () => {
 								<td className='py-2 px-4'>{user.name}</td>
 								<td className='py-2 px-4'>{user.email}</td>
 								<td className='py-2 px-4'>{user.role}</td>
-								<td className='py-2 px.4 items-center justify-center flex'>
+								<td className='py-2 px-4 items-center justify-center flex'>
 									<img
 										src={user.photo}
 										alt={user.photo}
@@ -68,4 +59,3 @@ const Users = () => {
 }
 
 export default Users
-

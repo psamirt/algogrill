@@ -36,3 +36,11 @@ export type User = {
 	role: string
 	photo: string
 }
+
+export const orderOptions = [
+	{ label: 'Ordenar', value: '' },
+	{ label: 'Menor precio', value: 'price-asc' },
+	{ label: 'Mayor precio', value: 'price-desc' },
+	{ label: 'A a Z', value: 'name-asc' },
+	{ label: 'Z a A', value: 'name-desc' },
+]
