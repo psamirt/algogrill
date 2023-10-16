@@ -1,4 +1,4 @@
-import { addItemToCart } from 'features/cart/cartSlice'
+import { addItemToCart } from 'app/redux/slices/cartSlice'
 import axios, { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
 import { Product } from 'utils/Types'

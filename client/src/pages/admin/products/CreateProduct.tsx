@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
 import { validProductTypes } from '../../../utils/Types.ts'
-import { createProduct } from '../../../app/actions/productActions.ts'
+import { createProduct } from '../../../app/redux/actions/productActions.ts'
 import { Product } from '../../../utils/Types.ts'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, RootState } from 'app/store.ts'

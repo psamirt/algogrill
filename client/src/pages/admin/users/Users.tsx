@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { fetchUsers } from '../../../app/actions/userAction'
+import { fetchUsers } from '../../../app/redux/actions/userAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
 import { AppDispatch, RootState } from 'app/store'

@@ -1,11 +1,11 @@
-import { Product } from '../../utils/Types'
+import { Product } from '../../../utils/Types'
 import { Dispatch } from 'redux'
 import axios, { AxiosResponse } from 'axios'
 import {
 	addProduct,
 	getProducts,
 	updateProduct,
-} from '../../features/products/productSlice'
+} from '../slices/productSlice'
 import { AppDispatch } from 'app/store'
 
 export const createProduct = (productData: Product) => {

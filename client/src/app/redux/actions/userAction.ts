@@ -1,8 +1,8 @@
 import { DocumentData, collection, getDocs } from 'firebase/firestore'
 import { User } from 'utils/Types'
 import { Dispatch } from 'redux'
-import { db } from '../../utils/firebaseConfig'
-import { getUser } from '../../features/user/userSlice'
+import { db } from '../../../utils/firebaseConfig'
+import { getUser } from '../slices/userSlice'
 
 export const fetchUsers = () => {
 	return async (dispatch: Dispatch): Promise<void> => {

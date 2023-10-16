@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react'
-import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
-import { AppDispatch, RootState } from 'app/store'
-import { useDispatch, useSelector } from 'react-redux'
 import { Product, orderOptions } from '../../utils/Types'
-import { fetchProduct } from '../../app/actions/productActions'
+import { fetchProduct } from '../../app/redux/actions/productActions'
 import Order from '../../components/filters&orders/Order'
 import { BiCartAdd } from 'react-icons/bi'
-import { addItemToCart } from '../../features/cart/cartSlice'
-import { fetchUsers } from '../../app/actions/userAction'
+import { addItemToCart } from '../../app/redux/slices/cartSlice'
+import { fetchUsers } from '../../app/redux/actions/userAction'
+import {
+	useAppDispatch,
+	useAppSelector,
+} from '../../app/redux/hooks/customHooks'
 
 const Menu = () => {
-	const products = useSelector((state: RootState): Product[] => state.product)
-	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> =
-		useDispatch<AppDispatch>()
+	const products = useAppSelector((state): Product[] => state.product)
+	const dispatch = useAppDispatch()
 	const [selectedOrder, setSelectedOrder] = useState<string>('')
 	const [selectTypes, setSelectTypes] = useState<string[]>([])
 	const [quantity, setQuantity] = useState(1)
-
 
 	useEffect(() => {
 		dispatch(fetchProduct())

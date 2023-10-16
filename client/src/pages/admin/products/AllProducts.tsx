@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { AppDispatch, RootState } from 'app/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { Product } from 'utils/Types'
-import { fetchProduct } from '../../../app/actions/productActions'
+import { fetchProduct } from '../../../app/redux/actions/productActions'
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
 
 const AllProducts = () => {

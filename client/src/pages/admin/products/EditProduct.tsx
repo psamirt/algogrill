@@ -1,5 +1,5 @@
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
-import { editProduct } from '../../../app/actions/productActions'
+import { editProduct } from '../../../app/redux/actions/productActions'
 import { RootState } from 'app/store'
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
