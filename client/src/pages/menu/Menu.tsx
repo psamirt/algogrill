@@ -4,7 +4,6 @@ import { fetchProduct } from '../../app/redux/actions/productActions'
 import Order from '../../components/filters&orders/Order'
 import { BiCartAdd } from 'react-icons/bi'
 import { addItemToCart } from '../../app/redux/slices/cartSlice'
-import { fetchUsers } from '../../app/redux/actions/userAction'
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -20,17 +19,6 @@ const Menu = () => {
 	useEffect(() => {
 		dispatch(fetchProduct())
 	}, [dispatch])
-
-	useEffect(() => {
-		const getUsers = async () => {
-			try {
-				await dispatch(fetchUsers())
-			} catch (error) {
-				console.error('Error al obtener el usuario:', error)
-			}
-		}
-		getUsers()
-	}, [])
 
 	const addToCart = (product: Product, quantity: number) => {
 		dispatch(addItemToCart({ product, quantity }))

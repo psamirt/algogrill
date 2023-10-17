@@ -1,26 +1,23 @@
 import { useEffect } from 'react'
 import { fetchUsers } from '../../../app/redux/actions/userAction'
-import { useDispatch, useSelector } from 'react-redux'
-import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
-import { AppDispatch, RootState } from 'app/store'
-import { User } from 'utils/Types'
+import {useState} from 'react'
+import { User } from 'utils/Types';
 
 const Users = () => {
-	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> =
-		useDispatch<AppDispatch>()
+    const [users, setUsers] = useState<User[]>([])
 
-	const users = useSelector((state: RootState): User[] => state.user)
+    useEffect(() => {
+        const getUsers = async () => {
+            try {
+                const data = await fetchUsers();
+                setUsers(data);
+            } catch (error) {
+                console.error('Error al obtener el usuario:', error);
+            }
+        };
+        getUsers();
+    }, []);
 
-	useEffect(() => {
-		const getUsers = async () => {
-			try {
-				await dispatch(fetchUsers())
-			} catch (error) {
-				console.error('Error al obtener el usuario:', error)
-			}
-		}
-		getUsers()
-	}, [])
 
 	return (
 		<div className=' max-h-[full] h-full p-8'>
