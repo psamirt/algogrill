@@ -8,31 +8,36 @@ import {
 	useAppDispatch,
 	useAppSelector,
 } from '../../app/redux/hooks/customHooks'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Menu = () => {
-	const products = useAppSelector((state): Product[] => state.product)
-	const dispatch = useAppDispatch()
-	const [selectedOrder, setSelectedOrder] = useState<string>('')
-	const [selectTypes, setSelectTypes] = useState<string[]>([])
-	const [quantity, setQuantity] = useState(1)
+	const products = useAppSelector((state): Product[] => state.product);
+	const dispatch = useAppDispatch();
+	const [selectedOrder, setSelectedOrder] = useState<string>('');
+	const [selectTypes, setSelectTypes] = useState<string[]>([]);
+	const [selectQuantity, setSelectQuantity] = useState<Record<string, number>>({});
 
 	useEffect(() => {
 		dispatch(fetchProduct())
 	}, [dispatch])
 
-	const addToCart = (product: Product, quantity: number) => {
-		dispatch(addItemToCart({ product, quantity }))
+	const handleQuantityChange = (productId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+		const quantity = Number(event.target.value);
+		setSelectQuantity(prevQuantities => ({ ...prevQuantities, [productId]: quantity }));
+	};
+
+	const addToCart = (productId: string) => {
+		try {
+			const quantity = selectQuantity[productId] || 1;
+			dispatch(addItemToCart({ productId, quantity }))
+			toast.success('Añadido al carrito exitosamente', { duration: 3000 })
+		} catch (error) {
+			toast.error('Error al añadir al carrito', { duration: 3000 })
+		}
 	}
 
 	const handleOrder = (value: string) => {
 		setSelectedOrder(value)
-	}
-
-	const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const newQuantity = parseInt(e.target.value)
-		if (newQuantity >= 1) {
-			setQuantity(newQuantity)
-		}
 	}
 
 	const handleCheckboxChange = (type: string) => {
@@ -124,13 +129,13 @@ const Menu = () => {
 							<div className='flex items-center bg-orange-500 px-2 rounded-md'>
 								<input
 									type='number'
-									value={quantity}
-									onChange={handleQuantityChange}
+									value={selectQuantity[product._id] || 1}
+									onChange={handleQuantityChange(product._id)}
 									className='mr-2 w-8 text-center rounded '
 								/>
 								<button
 									className='flex  text-white px-2 rounded-full hover:scale-105 duration-300'
-									onClick={() => addToCart(product, quantity)}
+									onClick={() => addToCart(product._id)}
 								>
 									<span className='p-1'>
 										s/.{' '}
@@ -146,6 +151,7 @@ const Menu = () => {
 					</div>
 				))}
 			</div>
+			<Toaster />
 		</div>
 	)
 }

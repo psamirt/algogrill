@@ -16,7 +16,15 @@ export type Product = {
 	}
 }
 
-// export type OptionsProduct =
+export type CartItem = {
+    productId: string;
+    quantity: number;
+};
+
+export type Cart = {
+    userId: string;
+    items: CartItem[];
+};
 
 export type Options =
 	| 'dashboard'
@@ -44,3 +52,4 @@ export const orderOptions = [
 	{ label: 'A a Z', value: 'name-asc' },
 	{ label: 'Z a A', value: 'name-desc' },
 ]
+

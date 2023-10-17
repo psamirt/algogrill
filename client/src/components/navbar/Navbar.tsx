@@ -6,7 +6,7 @@ import {
 	AiOutlineSearch,
 } from 'react-icons/ai'
 import { BiSolidUserCircle, BiSolidLogOutCircle } from 'react-icons/bi'
-import { BsFillCartFill } from 'react-icons/bs'
+import { BsBagCheck } from 'react-icons/bs'
 import { TbTruckDelivery } from 'react-icons/tb'
 import { FaWallet } from 'react-icons/fa'
 import { MdFavorite, MdHelp } from 'react-icons/md'
@@ -14,13 +14,18 @@ import { RiTodoFill } from 'react-icons/ri'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Login from '../../pages/admin/modal/Login'
+import { useAppSelector } from '../../app/redux/hooks/customHooks'
 
 const Navbar: React.FC = () => {
 	const [openLogin, setOpenLogin] = useState(false)
 	const [nav, setNav] = useState(false)
 	const { user, logout } = useAuth()
+	const itemsCount = useAppSelector(state => state.cart.items)
 
 	const navigate = useNavigate()
+
+	const totalQuantity = itemsCount.reduce((total, item) => total + item.quantity, 0);
+
 
 	const handleModalOpen = () => {
 		setOpenLogin(true)
@@ -46,11 +51,7 @@ const Navbar: React.FC = () => {
 					>
 						<AiOutlineMenu size={30} />
 					</div>
-					<img
-						src='svg/logo-suplente.svg'
-						alt='logo'
-						className='w-[170px]'
-					/>
+					<img src='svg/logo-suplente.svg' alt='logo' className='w-[170px]' />
 				</NavLink>
 
 				{/* search input */}
@@ -65,10 +66,14 @@ const Navbar: React.FC = () => {
 				</div>
 
 				{/* card and login button */}
-				<button className='hidden md:flex items-center py-2'>
-					<BsFillCartFill size={25} className='mr-2' />
-					Carrito
-				</button>
+				<div className='relative'>
+					<button className='hidden md:flex items-center py-2'>
+						<BsBagCheck size={25} className='mr-2' />
+							<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[-3px] left-9 items-center justify-center flex absolute'>
+								{totalQuantity}
+							</span>
+					</button>
+				</div>
 				<NavLink to='/menu' className='flex items-center justify-center ml-2'>
 					<div className='flex items-center p-5 h-6 '>
 						<p className=' text-lg'>Menú</p>
