@@ -33,6 +33,7 @@ export const authContext = createContext<IAuthContext | undefined>(undefined)
 
 export const useAuth = (): IAuthContext => {
 	const context = useContext(authContext)
+	
 	if (!context) {
 		throw new Error('useAuth debe estar dentro del proveedor AuthContext')
 	}
@@ -67,8 +68,7 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 		}
 	}
 	const login = async (email: string, password: string) => {
-		const response = await signInWithEmailAndPassword(auth, email, password)
-		console.log(response)
+		await signInWithEmailAndPassword(auth, email, password)
 	}
 	const loginWithGoogle = async () => {
 		const provider = new GoogleAuthProvider()
@@ -97,8 +97,7 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 		return sendPasswordResetEmail(auth, email)
 	}
 	const logout = async () => {
-		const responseOut = await signOut(auth)
-		console.log(responseOut)
+		await signOut(auth)
 	}
 
 	useEffect(() => {

@@ -1,20 +1,21 @@
-import { addItemToCart } from 'app/redux/slices/cartSlice'
+import { addItemToCart, setCart } from '../../../app/redux/slices/cartSlice'
 import axios, { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
-import { Product } from 'utils/Types'
-import { useAppSelector } from '../hooks/customHooks'
 
-export const addProductsToCart = (productDetails: Product, quantity:number) => {
-	const userId = useAppSelector((state)=> state.cart)
+export const addProductsToCart = (
+	productDetails: string,
+	quantity: number,
+	userId: string,
+) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			const response: AxiosResponse = await axios.post(
 				'http://localhost:3000/cart/addToCart',
 				{
-					productId: productDetails._id,
-					quantity:quantity,
-					userId: userId
-				}
+					productId: productDetails,
+					quantity: quantity,
+					userId: userId,
+				},
 			)
 			dispatch(addItemToCart(response.data.product))
 		} catch (error) {
@@ -23,6 +24,16 @@ export const addProductsToCart = (productDetails: Product, quantity:number) => {
 	}
 }
 
-// removeItemFromCart,
-// updateCartItemQuantity,
-// clearCart,
+export const getCart = (userId: string) => {
+	return async (dispatch: Dispatch) => {
+		try {
+			const response: AxiosResponse = await axios.get(
+				`http://localhost:3000/cart/getCart/${userId}`,
+			)
+			dispatch(setCart(response.data.items))
+		} catch (error) {
+			console.error('Error al obtener el carrito', error)
+		}
+	}
+}
+

@@ -11,6 +11,7 @@ import Menu from './pages/menu/Menu.js'
 
 
 const App = (): JSX.Element => {
+
 	return (
 		<Provider store={store}>
 			<AuthProvider>

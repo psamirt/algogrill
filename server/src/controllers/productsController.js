@@ -82,27 +82,20 @@ const deleteById = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const {
-      product_name,
-      image,
-      price,
-      description,
-      disable,
-      offers,
-      rating
-    } = req.body;
+    const { product_name, image, price, description, disable, offers, rating } =
+      req.body;
 
     const toUpdate = await Products.findByIdAndUpdate(
       id,
-          {
-            product_name,
-            image,
-            price,
-            description,
-            disable,
-            offers,
-            rating
-          },
+      {
+        product_name,
+        image,
+        price,
+        description,
+        disable,
+        offers,
+        rating
+      },
       { new: true }
     );
 

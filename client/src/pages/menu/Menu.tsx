@@ -3,34 +3,50 @@ import { Product, orderOptions } from '../../utils/Types'
 import { fetchProduct } from '../../app/redux/actions/productActions'
 import Order from '../../components/filters&orders/Order'
 import { BiCartAdd } from 'react-icons/bi'
-import { addItemToCart } from '../../app/redux/slices/cartSlice'
+// import { addItemToCart } from '../../app/redux/slices/cartSlice'
 import {
 	useAppDispatch,
 	useAppSelector,
 } from '../../app/redux/hooks/customHooks'
 import toast, { Toaster } from 'react-hot-toast'
+import { useAuth } from '../../context/AuthContext'
+import { addProductsToCart } from '../../app/redux/actions/cartActions'
 
 const Menu = () => {
-	const products = useAppSelector((state): Product[] => state.product);
-	const dispatch = useAppDispatch();
-	const [selectedOrder, setSelectedOrder] = useState<string>('');
-	const [selectTypes, setSelectTypes] = useState<string[]>([]);
-	const [selectQuantity, setSelectQuantity] = useState<Record<string, number>>({});
+	const products = useAppSelector((state): Product[] => state.product)
+	const dispatch = useAppDispatch()
+	const [selectedOrder, setSelectedOrder] = useState<string>('')
+	const [selectTypes, setSelectTypes] = useState<string[]>([])
+	const [selectQuantity, setSelectQuantity] = useState<Record<string, number>>(
+		{},
+	)
+	const { user } = useAuth()
 
 	useEffect(() => {
 		dispatch(fetchProduct())
 	}, [dispatch])
 
-	const handleQuantityChange = (productId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-		const quantity = Number(event.target.value);
-		setSelectQuantity(prevQuantities => ({ ...prevQuantities, [productId]: quantity }));
-	};
+	const handleQuantityChange =
+		(productId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+			const quantity = Number(event.target.value)
+			setSelectQuantity(prevQuantities => ({
+				...prevQuantities,
+				[productId]: quantity,
+			}))
+		}
 
 	const addToCart = (productId: string) => {
 		try {
-			const quantity = selectQuantity[productId] || 1;
-			dispatch(addItemToCart({ productId, quantity }))
-			toast.success('Añadido al carrito exitosamente', { duration: 3000 })
+			if (user) {
+				const quantity = selectQuantity[productId] || 1
+				const userId = user.uid
+				dispatch(addProductsToCart(productId, quantity, userId))
+				toast.success('Añadido al carrito exitosamente', { duration: 3000 })
+			} else {
+				toast.error('Debe iniciar sesión para agregar items', {
+					duration: 3000,
+				})
+			}
 		} catch (error) {
 			toast.error('Error al añadir al carrito', { duration: 3000 })
 		}

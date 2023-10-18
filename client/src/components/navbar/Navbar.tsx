@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
 	AiFillTag,
 	AiOutlineClose,
@@ -14,18 +14,28 @@ import { RiTodoFill } from 'react-icons/ri'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Login from '../../pages/user/loginRegister/Login'
-import { useAppSelector } from '../../app/redux/hooks/customHooks'
+import {
+	useAppDispatch,
+	useAppSelector,
+} from '../../app/redux/hooks/customHooks'
+import { getCart } from '../../app/redux/actions/cartActions'
 
 const Navbar: React.FC = () => {
 	const [openLogin, setOpenLogin] = useState(false)
 	const [nav, setNav] = useState(false)
 	const { user, logout } = useAuth()
-	const itemsCount = useAppSelector(state => state.cart.items)
-
+	const cartState = useAppSelector(state => state.cart)
+	
 	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
 
-	const totalQuantity = itemsCount.reduce((total, item) => total + item.quantity, 0);
+	const totalQuantity = Array.isArray(cartState.items)? cartState.items.reduce((total, item) => total + item.quantity, 0): 0;
 
+	useEffect(() => {
+		if (user && user.uid) {
+			dispatch(getCart(user.uid))
+		}
+	},[dispatch, user])
 
 	const handleModalOpen = () => {
 		setOpenLogin(true)
@@ -69,9 +79,9 @@ const Navbar: React.FC = () => {
 				<div className='relative'>
 					<button className='hidden md:flex items-center py-2'>
 						<BsBagCheck size={25} className='mr-2' />
-							<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[-3px] left-9 items-center justify-center flex absolute'>
-								{totalQuantity}
-							</span>
+						<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[-3px] left-9 items-center justify-center flex absolute'>
+							{totalQuantity}
+						</span>
 					</button>
 				</div>
 				<NavLink to='/menu' className='flex items-center justify-center ml-2'>
@@ -151,3 +161,21 @@ const Navbar: React.FC = () => {
 }
 
 export default Navbar
+
+// const [items, setItems] = useState([])
+
+
+// useEffect(() => {
+// 	const fetchCartItems = async () => {
+// 		try {
+// 			const userId = user?.uid
+// 			if (userId) {
+// 				const items = await getCart(userId)
+// 				setItems(items)
+// 			}
+// 		} catch (error) {
+// 			console.error('Error al obtener el carrito', error)
+// 		}
+// 	}
+// 	fetchCartItems()
+// }, [user])

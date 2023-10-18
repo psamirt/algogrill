@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import { AiOutlineClose } from 'react-icons/ai'
-import { useAuth } from '../../../context/AuthContext'
+import {  useAuth } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 type LoginProps = {
@@ -10,31 +10,32 @@ type LoginProps = {
 }
 
 const Login: React.FC<LoginProps> = ({ onClose }) => {
-	const [user, setUser] = useState({
+	const [data, setData] = useState({
 		email: '',
 		password: '',
 	})
 
 	const { login, loginWithGoogle } = useAuth()
+	
 	const navigate = useNavigate()
 	const [error, setError] = useState('')
 	const [disable, setDisable] = useState(true)
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
-		setUser(prevUser => {
+		setData(prevUser => {
 			const updatedUser = { ...prevUser, [name]: value }
 			return updatedUser
 		})
 	}
 
 	useEffect(() => {
-		if (user.email === '' || user.password === '') {
+		if (data.email === '' || data.password === '') {
 			setDisable(true)
 		} else {
 			setDisable(false)
 		}
-	}, [user])
+	}, [data])
 
 	const handleLoginWithGoogle = async () => {
 		try {
@@ -49,7 +50,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 		e.preventDefault()
 		setError('')
 		try {
-			await login(user.email, user.password)
+			await login(data.email, data.password)
 			onClose()
 			navigate('/')
 		} catch (error: any) {
