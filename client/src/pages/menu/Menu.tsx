@@ -3,7 +3,6 @@ import { Product, orderOptions } from '../../utils/Types'
 import { fetchProduct } from '../../app/redux/actions/productActions'
 import Order from '../../components/filters&orders/Order'
 import { BiCartAdd } from 'react-icons/bi'
-// import { addItemToCart } from '../../app/redux/slices/cartSlice'
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -11,6 +10,7 @@ import {
 import toast, { Toaster } from 'react-hot-toast'
 import { useAuth } from '../../context/AuthContext'
 import { addProductsToCart } from '../../app/redux/actions/cartActions'
+
 
 const Menu = () => {
 	const products = useAppSelector((state): Product[] => state.product)
@@ -25,6 +25,7 @@ const Menu = () => {
 	useEffect(() => {
 		dispatch(fetchProduct())
 	}, [dispatch])
+	
 
 	const handleQuantityChange =
 		(productId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,7 +103,7 @@ const Menu = () => {
 						checked={selectTypes.includes('hamburguesa')}
 						onChange={() => handleCheckboxChange('hamburguesa')}
 					/>
-					<label htmlFor='hamburguesa' className='font-semibold'>
+					<label id='hamburguesa' className='font-semibold'>
 						Hamburguesas
 					</label>
 				</div>
@@ -114,7 +115,7 @@ const Menu = () => {
 						checked={selectTypes.includes('alitas')}
 						onChange={() => handleCheckboxChange('alitas')}
 					/>
-					<label htmlFor='alitas' className='font-semibold'>
+					<label id='alitas' className='font-semibold'>
 						Alitas
 					</label>
 				</div>
@@ -126,7 +127,7 @@ const Menu = () => {
 						checked={selectTypes.includes('salchipapa')}
 						onChange={() => handleCheckboxChange('salchipapa')}
 					/>
-					<label htmlFor='salchipapa' className='font-semibold'>
+					<label id='salchipapa' className='font-semibold'>
 						Salchipapas
 					</label>
 				</div>

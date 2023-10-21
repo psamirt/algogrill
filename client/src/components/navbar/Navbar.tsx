@@ -26,6 +26,7 @@ const Navbar: React.FC = () => {
 	const { user, logout } = useAuth()
 	const cartState = useAppSelector(state => state.cart)
 	
+	
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 

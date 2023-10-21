@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
 
 export const addProductsToCart = (
-	productDetails: string,
+	productId: string,
 	quantity: number,
 	userId: string,
 ) => {
@@ -12,12 +12,13 @@ export const addProductsToCart = (
 			const response: AxiosResponse = await axios.post(
 				'http://localhost:3000/cart/addToCart',
 				{
-					productId: productDetails,
+					productId: productId,
 					quantity: quantity,
 					userId: userId,
 				},
 			)
-			dispatch(addItemToCart(response.data.product))
+			const addedProduct = response.data.items[response.data.items.length - 1];
+			dispatch(addItemToCart(addedProduct))
 		} catch (error) {
 			console.error('Error al crear el carrito', error)
 		}

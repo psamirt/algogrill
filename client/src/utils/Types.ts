@@ -16,11 +16,11 @@ export type Product = {
 	}
 }
 
-export type CartItem = {
-    productId: string;
-    quantity: number;
-	userId: string
-};
+export interface CartItem {
+	productId: string;
+	quantity: number;
+	userId: string;
+  }
 
 export type Cart = {
     userId: string;
