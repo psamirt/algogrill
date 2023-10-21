@@ -2,13 +2,17 @@ const Cart = require('../database/models/cart');
 
 const addToCart = async (req, res) => {
   try {
-    const { productId, quantity, userId } = req.body;
+    const { product, quantity, userId } = req.body;
     let cart = await Cart.findOne({ userId });
-
     if (!cart) {
-      cart = new Cart({ userId, items: [{ productId, quantity }] });
+      cart = new Cart({ userId, items: [{ product, quantity }] });
     } else {
-      cart.items.push({ productId, quantity });
+      const existingItemIndex = cart.items.findIndex(item => item.product._id.equals(product._id));
+      if (existingItemIndex !== -1) {
+        cart.items[existingItemIndex].quantity += quantity;
+      } else {
+        cart.items.push({ product, quantity });
+      }
     }
     await cart.save();
     res.status(200).json(cart);
@@ -16,6 +20,7 @@ const addToCart = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 const getCart = async (req, res) => {
   try {

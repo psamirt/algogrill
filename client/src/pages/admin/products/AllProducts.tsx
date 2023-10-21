@@ -1,14 +1,10 @@
 import { useEffect } from 'react'
-import { AppDispatch, RootState } from 'app/store'
-import { useDispatch, useSelector } from 'react-redux'
-import { Product } from 'utils/Types'
 import { fetchProduct } from '../../../app/redux/actions/productActions'
-import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
+import { useAppDispatch, useAppSelector } from '../../../app/redux/hooks/customHooks'
 
 const AllProducts = () => {
-	const dispatch: ThunkDispatch<RootState, unknown, AnyAction> =
-		useDispatch<AppDispatch>()
-	const products = useSelector((state: RootState): Product[] => state.product)
+	const dispatch= useAppDispatch()
+	const products = useAppSelector((state) => state.product)
 
 	useEffect(() => {
 		dispatch(fetchProduct())

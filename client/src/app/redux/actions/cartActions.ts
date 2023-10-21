@@ -1,30 +1,28 @@
 import { addItemToCart, setCart } from '../../../app/redux/slices/cartSlice'
 import axios, { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
+import { Product } from 'utils/Types';
 
-export const addProductsToCart = (
-	productId: string,
-	quantity: number,
-	userId: string,
-) => {
+export const addProductsToCart = (product: Product, quantity: number, userId: string) => {
 	return async (dispatch: Dispatch) => {
-		try {
-			const response: AxiosResponse = await axios.post(
-				'http://localhost:3000/cart/addToCart',
-				{
-					productId: productId,
-					quantity: quantity,
-					userId: userId,
-				},
-			)
-			const addedProduct = response.data.items[response.data.items.length - 1];
-			dispatch(addItemToCart(addedProduct))
-		} catch (error) {
-			console.error('Error al crear el carrito', error)
-		}
-	}
-}
-
+	  try {
+		const response: AxiosResponse = await axios.post(
+		  'http://localhost:3000/cart/addToCart',
+		  {
+			product: product,
+			quantity: quantity,
+			userId: userId,
+		  },
+		);
+		console.log(response.data);
+		const updatedCart = response.data;
+		dispatch(addItemToCart(updatedCart));
+	  } catch (error) {
+		console.error('Error al añadir el producto al carrito', error);
+	  }
+	};
+  };
+  
 export const getCart = (userId: string) => {
 	return async (dispatch: Dispatch) => {
 		try {

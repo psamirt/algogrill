@@ -11,7 +11,6 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useAuth } from '../../context/AuthContext'
 import { addProductsToCart } from '../../app/redux/actions/cartActions'
 
-
 const Menu = () => {
 	const products = useAppSelector((state): Product[] => state.product)
 	const dispatch = useAppDispatch()
@@ -25,7 +24,6 @@ const Menu = () => {
 	useEffect(() => {
 		dispatch(fetchProduct())
 	}, [dispatch])
-	
 
 	const handleQuantityChange =
 		(productId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,15 +36,19 @@ const Menu = () => {
 
 	const addToCart = (productId: string) => {
 		try {
-			if (user) {
+			const selectedProduct = products.find(p => p._id === productId)
+			if (user && selectedProduct) {
 				const quantity = selectQuantity[productId] || 1
 				const userId = user.uid
-				dispatch(addProductsToCart(productId, quantity, userId))
+				dispatch(addProductsToCart(selectedProduct, quantity, userId))
 				toast.success('Añadido al carrito exitosamente', { duration: 3000 })
 			} else {
-				toast.error('Debe iniciar sesión para agregar items', {
-					duration: 3000,
-				})
+				toast.error(
+					'Producto no válido o debe iniciar sesión para agregar ítems',
+					{
+						duration: 3000,
+					},
+				)
 			}
 		} catch (error) {
 			toast.error('Error al añadir al carrito', { duration: 3000 })
