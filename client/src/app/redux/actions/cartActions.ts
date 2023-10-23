@@ -14,7 +14,6 @@ export const addProductsToCart = (product: Product, quantity: number, userId: st
 			userId: userId,
 		  },
 		);
-		console.log(response.data);
 		const updatedCart = response.data;
 		dispatch(addItemToCart(updatedCart));
 	  } catch (error) {

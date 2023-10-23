@@ -1,26 +1,44 @@
 const Cart = require('../database/models/cart');
+const Products = require('../database/models/product');
 
 const addToCart = async (req, res) => {
   try {
     const { product, quantity, userId } = req.body;
-    let cart = await Cart.findOne({ userId });
+    const foundProduct = await Products.findById(product);
+    if (!foundProduct) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+    const cart = await Cart.findOne({ userId });
     if (!cart) {
-      cart = new Cart({ userId, items: [{ product, quantity }] });
+      const newCart = new Cart({
+        userId,
+        items: [
+          {
+            product: foundProduct,
+            quantity
+          }
+        ]
+      });
+      await newCart.save();
+      return res.status(200).json({ message: 'Producto añadido al carrito' });
+    }
+    const existingCartItem = cart.items.find(
+      (item) => item.product._id.toString() === product._id.toString()
+    );
+    if (existingCartItem) {
+      existingCartItem.quantity += quantity;
     } else {
-      const existingItemIndex = cart.items.findIndex(item => item.product._id.equals(product._id));
-      if (existingItemIndex !== -1) {
-        cart.items[existingItemIndex].quantity += quantity;
-      } else {
-        cart.items.push({ product, quantity });
-      }
+      cart.items.push({
+        product: foundProduct,
+        quantity
+      });
     }
     await cart.save();
-    res.status(200).json(cart);
+    return res.status(200).json({ message: 'Producto añadido al carrito' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error });
   }
 };
-
 
 const getCart = async (req, res) => {
   try {
@@ -34,11 +52,9 @@ const getCart = async (req, res) => {
       userId: userId
     });
     if (!findUser) {
-      return res
-        .status(404)
-        .json({
-          message: 'Carrito no encontrado para el usuario especificado'
-        });
+      return res.status(404).json({
+        message: 'Carrito no encontrado para el usuario especificado'
+      });
     }
     return res.status(200).json(findUser);
   } catch (error) {
