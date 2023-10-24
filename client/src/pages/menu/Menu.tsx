@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Product, orderOptions } from '../../utils/Types'
 import { fetchProduct } from '../../app/redux/actions/productActions'
 import Order from '../../components/filters&orders/Order'
+import { io } from 'socket.io-client'
 import { BiCartAdd } from 'react-icons/bi'
 import {
 	useAppDispatch,
@@ -10,6 +11,7 @@ import {
 import toast, { Toaster } from 'react-hot-toast'
 import { useAuth } from '../../context/AuthContext'
 import { addProductsToCart } from '../../app/redux/actions/cartActions'
+const socket = io('http://localhost:3000')
 
 const Menu = () => {
 	const products = useAppSelector((state): Product[] => state.product)
@@ -20,6 +22,10 @@ const Menu = () => {
 		{},
 	)
 	const { user } = useAuth()
+
+	socket.on('connection', () => {
+		console.log('connected to server')
+	})
 
 	useEffect(() => {
 		dispatch(fetchProduct())
@@ -41,6 +47,7 @@ const Menu = () => {
 				const quantity = selectQuantity[productId] || 1
 				const userId = user.uid
 				dispatch(addProductsToCart(selectedProduct, quantity, userId))
+				socket.emit('productAddedToCart', { quantity });
 				toast.success('Añadido al carrito exitosamente', { duration: 3000 })
 			} else {
 				toast.error(

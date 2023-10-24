@@ -19,6 +19,8 @@ import {
 	useAppSelector,
 } from '../../app/redux/hooks/customHooks'
 import { getCart } from '../../app/redux/actions/cartActions'
+import { io } from 'socket.io-client/debug'
+const socket = io('http://localhost:3000')
 
 const Navbar: React.FC = () => {
 	const [openLogin, setOpenLogin] = useState(false)
@@ -30,13 +32,17 @@ const Navbar: React.FC = () => {
 	const dispatch = useAppDispatch()
 
 	const totalQuantity = cartState.items.reduce(
-		(total, item) => total + (Number(item.quantity) || 0),
+		(total, item) => total + (Number(item.quantity) || 1),
 		0,
 	)
 
 	useEffect(() => {
 		if (user && user.uid) {
-			dispatch(getCart(user.uid))
+			const userId = user.uid
+			dispatch(getCart(userId))
+			socket.on('cartUpdate', () => {
+				dispatch(getCart(userId))
+			})
 		}
 	}, [dispatch, user])
 
@@ -80,12 +86,12 @@ const Navbar: React.FC = () => {
 
 				{/* card and login button */}
 				<div className='relative'>
-					<button className='hidden md:flex items-center py-2'>
+					<NavLink to='/cart' className='hidden md:flex items-center py-2'>
 						<BsBagCheck size={25} className='mr-2' />
 						<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[-3px] left-9 items-center justify-center flex absolute'>
 							{totalQuantity}
 						</span>
-					</button>
+					</NavLink>
 				</div>
 				<NavLink to='/menu' className='flex items-center justify-center ml-2'>
 					<div className='flex items-center p-5 h-6 '>

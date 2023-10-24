@@ -2,12 +2,22 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
+const { Server } = require('socket.io');
+const { createServer } = require('http');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const routes = require('./src/routes/index');
 const { PORT } = process.env;
 
 const connectToDatabase = require('./src/database/db');
+
+const server = createServer(app)
+const io = new Server(server,{
+  cors: {
+    origin:'*'
+  }
+})
+
 
 app.use(morgan('dev'));
 app.use(cors());
@@ -24,6 +34,14 @@ app.use((req, res, next) => {
   next();
 });
 
+io.on('connection', (socket)=>{
+  console.log('a user has connected');
+  socket.on('productAddedToCart',({ quantity, userId})=>{
+    console.log(`Product added with quantity ${quantity}`);
+    io.emit(`cartUpdate`,userId);
+  })
+})
+
 app.use('/', routes);
 
 app.get('/', (req, res) => {
@@ -32,7 +50,7 @@ app.get('/', (req, res) => {
 
 connectToDatabase()
   .then(() => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   })

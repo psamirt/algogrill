@@ -6,7 +6,7 @@ import { CartItem, Product } from '../../../utils/Types'
 const Cart = () => {
 	const cartState = useAppSelector(state => state.cart.items)
 	const [cartProduct, setCartProduct] = useState<CartItem[]>([])
-
+	
 	useEffect(() => {
 		setCartProduct(cartState)
 	}, [cartState])
@@ -30,7 +30,7 @@ const Cart = () => {
 					</thead>
 					<tbody>
 						{cartProduct.map(el => (
-							<tr>
+							<tr key={el.product._id}>
 								<td>{el.product.product_name}</td>
 								<td>{el.quantity}</td>
 								<td>
