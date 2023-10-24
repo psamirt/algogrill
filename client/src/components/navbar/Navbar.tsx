@@ -26,7 +26,6 @@ const Navbar: React.FC = () => {
 	const { user, logout } = useAuth()
 	const cartState = useAppSelector(state => state.cart)
 	
-	
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 
@@ -162,21 +161,3 @@ const Navbar: React.FC = () => {
 }
 
 export default Navbar
-
-// const [items, setItems] = useState([])
-
-
-// useEffect(() => {
-// 	const fetchCartItems = async () => {
-// 		try {
-// 			const userId = user?.uid
-// 			if (userId) {
-// 				const items = await getCart(userId)
-// 				setItems(items)
-// 			}
-// 		} catch (error) {
-// 			console.error('Error al obtener el carrito', error)
-// 		}
-// 	}
-// 	fetchCartItems()
-// }, [user])

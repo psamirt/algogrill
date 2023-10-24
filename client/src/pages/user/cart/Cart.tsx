@@ -1,32 +1,19 @@
 import { useState } from 'react'
-import { fetchProduct } from '../../../app/redux/actions/productActions'
-import {
-	useAppSelector,
-	useAppDispatch,
-} from '../../../app/redux/hooks/customHooks'
+import { useAppSelector } from '../../../app/redux/hooks/customHooks'
 import { useEffect } from 'react'
-import { Product } from '../../../utils/Types'
+import { CartItem, Product } from '../../../utils/Types'
 
 const Cart = () => {
-	const dispatch = useAppDispatch()
 	const cartState = useAppSelector(state => state.cart.items)
-	console.log(cartState);
-	
-	const products = useAppSelector(state => state.product)
-	const [cartProduct, setCartProduct] = useState<Product[]>([])
- 
+	const [cartProduct, setCartProduct] = useState<CartItem[]>([])
 
 	useEffect(() => {
-		dispatch(fetchProduct())
-	}, [])
+		setCartProduct(cartState)
+	}, [cartState])
 
-  const uniqueProductIds = [...new Set(cartState.map(product => product.productId))];
-  const filteredProducts = products.filter(product => uniqueProductIds.includes(product._id));
-
-  useEffect(()=>{
-    setCartProduct(filteredProducts)
-  },[])
-  
+	const calculateTotalPrice = (product: Product, quantity: number) => {
+		return product.price * quantity
+	}
 
 	return (
 		<div className='max-w-[1400px] mx-auto bg-slate-50 flex justify-between'>
@@ -42,14 +29,22 @@ const Cart = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{cartProduct.map(el=>(
-
+						{cartProduct.map(el => (
 							<tr>
-							<td>{el.product_name}</td>
-							<td>asd</td>
-							<td>{el.price}</td>
-						</tr>
-							))}
+								<td>{el.product.product_name}</td>
+								<td>{el.quantity}</td>
+								<td>
+									s/.{' '}
+									{calculateTotalPrice(el.product, el.quantity).toLocaleString(
+										undefined,
+										{
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										},
+									)}
+								</td>
+							</tr>
+						))}
 					</tbody>
 				</table>
 				<button>pagar</button>

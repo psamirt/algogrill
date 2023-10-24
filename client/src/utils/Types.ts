@@ -17,15 +17,10 @@ export type Product = {
 }
 
 export interface CartItem {
-	productId: string;
+	product: Product;
 	quantity: number;
 	userId: string;
   }
-
-export type Cart = {
-    userId: string;
-    items: CartItem[];
-};
 
 export type Options =
 	| 'dashboard'
