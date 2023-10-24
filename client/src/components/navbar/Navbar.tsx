@@ -25,11 +25,13 @@ const Navbar: React.FC = () => {
 	const [nav, setNav] = useState(false)
 	const { user, logout } = useAuth()
 	const cartState = useAppSelector(state => state.cart)
+	console.log(cartState);
+	
 	
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 
-	const totalQuantity = Array.isArray(cartState.items)? cartState.items.reduce((total, item) => total + item.quantity, 0): 0;
+	const totalQuantity = cartState.items.reduce((total, item) => total + (Number(item.quantity)|| 0),0)
 
 	useEffect(() => {
 		if (user && user.uid) {
