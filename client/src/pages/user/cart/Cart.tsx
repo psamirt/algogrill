@@ -1,25 +1,45 @@
 import { useState } from 'react'
-import { useAppSelector } from '../../../app/redux/hooks/customHooks'
+import {
+	useAppDispatch,
+	useAppSelector,
+} from '../../../app/redux/hooks/customHooks'
 import { useEffect } from 'react'
 import { CartItem, Product } from '../../../utils/Types'
 import { RiDeleteBin6Line } from 'react-icons/ri'
+import { useAuth } from '../../../context/AuthContext'
+import toast, { Toaster } from 'react-hot-toast'
+import { deleteProductFromCart } from '../../../app/redux/actions/cartActions'
 
 const Cart = () => {
 	const cartState = useAppSelector(state => state.cart.items)
 	const [cartProduct, setCartProduct] = useState<CartItem[]>([])
 	const [totalPrice, setTotalPrice] = useState<number>(0)
+	const { user } = useAuth()
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		setCartProduct(cartState)
-
-		// Calcular el precio total cuando el carrito cambie
 		const totalPrice = cartState.reduce((total, cartItem) => {
 			const itemPrice = cartItem.product.price * cartItem.quantity
 			return total + itemPrice
 		}, 0)
-
 		setTotalPrice(totalPrice)
 	}, [cartState])
+
+	const handleDelete = (
+		userId: string | undefined,
+		productId: string | undefined,
+	) => {
+		if (user) {
+			const confirmed = window.confirm(
+				'¿Estás seguro de que quieres eliminar este producto del carrito?',
+			)
+			if (confirmed) {
+				dispatch(deleteProductFromCart(userId, productId))
+				toast.success('Producto eliminado exitosamente')
+			}
+		}
+	}
 
 	const calculateTotalPrice = (product: Product, quantity: number) => {
 		return product.price * quantity
@@ -54,7 +74,10 @@ const Cart = () => {
 									)}
 								</td>
 								<td className='flex mt-3 '>
-									<button className='hover:scale-110'>
+									<button
+										onClick={() => handleDelete(user?.uid, el.product._id)}
+										className='hover:scale-110'
+									>
 										<RiDeleteBin6Line size={20} />
 									</button>
 								</td>
@@ -75,6 +98,7 @@ const Cart = () => {
 				doloremque consequuntur deleniti beatae porro! Corrupti esse vero,
 				expedita sequi suscipit molestiae.
 			</div>
+			<Toaster />
 		</div>
 	)
 }
