@@ -2,6 +2,11 @@ import { addItemToCart, setCart } from '../../../app/redux/slices/cartSlice'
 import axios, { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
 import { Product } from 'utils/Types';
+import { io } from 'socket.io-client'
+
+
+const socket = io('http://localhost:3000')
+
 
 export const addProductsToCart = (product: Product, quantity: number, userId: string) => {
 	return async (dispatch: Dispatch) => {
@@ -16,6 +21,7 @@ export const addProductsToCart = (product: Product, quantity: number, userId: st
 		);
 		const updatedCart = response.data;
 		dispatch(addItemToCart(updatedCart));
+		socket.emit('productAddedToCart', { quantity });
 	  } catch (error) {
 		console.error('Error al añadir el producto al carrito', error);
 	  }

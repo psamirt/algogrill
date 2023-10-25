@@ -63,7 +63,33 @@ const getCart = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { productId } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ message: 'Debe iniciar sesión' });
+    }
+
+    const cart = await Cart.findOne({ userId });
+    if (!cart) {
+      return res.status(404).json({ message: 'Carrito no encontrado para el usuario especificado' });
+    }
+
+    const updatedItems = cart.items.filter((item) => item.product._id.toString() !== productId);
+    cart.items = updatedItems;
+    await cart.save();
+
+    return res.status(200).json({ message: 'Producto eliminado del carrito' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al eliminar el producto del carrito');
+  }
+};
+
 module.exports = {
   addToCart,
-  getCart
+  getCart,
+  deleteProduct,
 };

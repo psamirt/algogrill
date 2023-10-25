@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
 				<div className='relative'>
 					<NavLink to='/cart' className='hidden md:flex items-center py-2'>
 						<BsBagCheck size={25} className='mr-2' />
-						<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[-3px] left-9 items-center justify-center flex absolute'>
+						<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[-3px] left-4 items-center justify-center flex absolute'>
 							{totalQuantity}
 						</span>
 					</NavLink>
