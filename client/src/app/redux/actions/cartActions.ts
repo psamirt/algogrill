@@ -77,7 +77,6 @@ export const updateQuantityCart = (
 			})
 			dispatch(updateQuantity({ productId, quantity }))
 		} catch (error) {
-			// Maneja errores aquí
 			console.error(
 				'Error al actualizar la cantidad del producto en el carrito',
 				error,
