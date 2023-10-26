@@ -8,7 +8,10 @@ import { CartItem, Product } from '../../../utils/Types'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useAuth } from '../../../context/AuthContext'
 import toast, { Toaster } from 'react-hot-toast'
-import { deleteProductFromCart } from '../../../app/redux/actions/cartActions'
+import {
+	deleteProductFromCart,
+	updateQuantityCart,
+} from '../../../app/redux/actions/cartActions'
 
 const Cart = () => {
 	const cartState = useAppSelector(state => state.cart.items)
@@ -25,6 +28,13 @@ const Cart = () => {
 		}, 0)
 		setTotalPrice(totalPrice)
 	}, [cartState])
+
+	const handleQuantityChange = (productId: string, newQuantity: number) => {
+		if (user) {
+			dispatch(updateQuantityCart(user.uid, productId, newQuantity))
+			toast.success('Cantidad actualizada exitosamente')
+		}
+	}
 
 	const handleDelete = (
 		userId: string | undefined,
@@ -62,7 +72,19 @@ const Cart = () => {
 						{cartProduct.map(el => (
 							<tr key={el.product._id} className='text-center'>
 								<td className='py-2 px-4'>{el.product.product_name}</td>
-								<td className='py-2 px-[50px]'>{el.quantity}</td>
+								<td className='py-2 px-[50px]'>
+									<input
+									className='w-8'
+										type='number'
+										value={el.quantity}
+										onChange={e =>
+											handleQuantityChange(
+												el.product._id,
+												parseInt(e.target.value),
+											)
+										}
+									/>
+								</td>
 								<td>
 									s/.{' '}
 									{calculateTotalPrice(el.product, el.quantity).toLocaleString(

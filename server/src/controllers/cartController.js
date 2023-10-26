@@ -88,8 +88,40 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const updateQuantity = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { productId, quantity } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ message: 'Debe iniciar sesión' });
+    }
+
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ message: 'Carrito no encontrado para el usuario especificado' });
+    }
+
+    const cartItemIndex = cart.items.findIndex(item => item.product._id.toString() === productId);
+
+    if (cartItemIndex === -1) {
+      return res.status(404).json({ message: 'Producto no encontrado en el carrito' });
+    }
+    cart.items[cartItemIndex].quantity = quantity;
+    await cart.save();
+
+    return res.status(200).json({ message: 'Cantidad del producto actualizada correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar la cantidad del producto en el carrito', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+
 module.exports = {
   addToCart,
   getCart,
   deleteProduct,
+  updateQuantity
 };

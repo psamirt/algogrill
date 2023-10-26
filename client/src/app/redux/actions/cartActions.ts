@@ -1,4 +1,9 @@
-import { addItemToCart, deleteItem, setCart } from '../../../app/redux/slices/cartSlice'
+import {
+	addItemToCart,
+	deleteItem,
+	setCart,
+	updateQuantity,
+} from '../../../app/redux/slices/cartSlice'
 import axios, { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
 import { Product } from 'utils/Types'
@@ -43,7 +48,10 @@ export const getCart = (userId: string) => {
 	}
 }
 
-export const deleteProductFromCart = (userId: string | undefined, productId: string | undefined) => {
+export const deleteProductFromCart = (
+	userId: string | undefined,
+	productId: string | undefined,
+) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			await axios.delete(`http://localhost:3000/cart/deleteProduct/${userId}`, {
@@ -52,6 +60,28 @@ export const deleteProductFromCart = (userId: string | undefined, productId: str
 			dispatch(deleteItem(productId))
 		} catch (error) {
 			console.error('Error al eliminar el producto del carrito', error)
+		}
+	}
+}
+
+export const updateQuantityCart = (
+	userId: string | undefined,
+	productId: string | undefined,
+	quantity: number,
+) => {
+	return async (dispatch: Dispatch) => {
+		try {
+			await axios.put(`http://localhost:3000/cart/updateQuantity/${userId}`, {
+				productId,
+				quantity,
+			})
+			dispatch(updateQuantity({ productId, quantity }))
+		} catch (error) {
+			// Maneja errores aquí
+			console.error(
+				'Error al actualizar la cantidad del producto en el carrito',
+				error,
+			)
 		}
 	}
 }
