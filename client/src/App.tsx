@@ -23,7 +23,7 @@ const App = (): JSX.Element => {
 					<Route path='/register' element={<Register />}></Route>
 					<Route path='/resetPassword' element={<ResetPassword />}></Route>
 					<Route path='/menu' element={<Menu />} />
-					<Route path='/cart' element={<Cart />} />
+					<Route path='/cart/:userId' element={<Cart />} />
 				</Routes>
 			</AuthProvider>
 		</Provider>

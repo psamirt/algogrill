@@ -6,19 +6,19 @@ import {
 import { useEffect } from 'react'
 import { CartItem, Product } from '../../../utils/Types'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { useAuth } from '../../../context/AuthContext'
 import toast, { Toaster } from 'react-hot-toast'
 import {
 	deleteProductFromCart,
 	updateQuantityCart,
 } from '../../../app/redux/actions/cartActions'
+import { Params, useParams } from 'react-router-dom'
 
 const Cart = () => {
 	const cartState = useAppSelector(state => state.cart.items)
 	const [cartProduct, setCartProduct] = useState<CartItem[]>([])
 	const [totalPrice, setTotalPrice] = useState<number>(0)
-	const { user } = useAuth()
 	const dispatch = useAppDispatch()
+	const params = useParams()
 
 	useEffect(() => {
 		setCartProduct(cartState)
@@ -30,22 +30,22 @@ const Cart = () => {
 	}, [cartState])
 
 	const handleQuantityChange = (productId: string, newQuantity: number) => {
-		if (user) {
-			dispatch(updateQuantityCart(user.uid, productId, newQuantity))
+		if (params) {
+			dispatch(updateQuantityCart(params, productId, newQuantity))
 			toast.success('Cantidad actualizada exitosamente')
 		}
 	}
 
 	const handleDelete = (
-		userId: string | undefined,
+		params: Readonly<Params<string>>,
 		productId: string | undefined,
 	) => {
-		if (user) {
+		if (params) {
 			const confirmed = window.confirm(
 				'¿Estás seguro de que quieres eliminar este producto del carrito?',
 			)
 			if (confirmed) {
-				dispatch(deleteProductFromCart(userId, productId))
+				dispatch(deleteProductFromCart(params, productId))
 				toast.success('Producto eliminado exitosamente')
 			}
 		}
@@ -97,7 +97,7 @@ const Cart = () => {
 								</td>
 								<td className='flex mt-3 '>
 									<button
-										onClick={() => handleDelete(user?.uid, el.product._id)}
+										onClick={() => handleDelete(params, el.product._id)}
 										className='hover:scale-110'
 									>
 										<RiDeleteBin6Line size={20} />

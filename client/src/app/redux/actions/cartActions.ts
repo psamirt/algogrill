@@ -8,6 +8,7 @@ import axios, { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
 import { Product } from 'utils/Types'
 import { io } from 'socket.io-client'
+import { Params } from 'react-router-dom'
 
 const socket = io('http://localhost:3000')
 
@@ -49,12 +50,12 @@ export const getCart = (userId: string) => {
 }
 
 export const deleteProductFromCart = (
-	userId: string | undefined,
+	params:  Readonly<Params<string>>,
 	productId: string | undefined,
 ) => {
 	return async (dispatch: Dispatch) => {
 		try {
-			await axios.delete(`http://localhost:3000/cart/deleteProduct/${userId}`, {
+			await axios.delete(`http://localhost:3000/cart/deleteProduct/${params}`, {
 				data: { productId },
 			})
 			dispatch(deleteItem(productId))
@@ -65,13 +66,13 @@ export const deleteProductFromCart = (
 }
 
 export const updateQuantityCart = (
-	userId: string | undefined,
+	params: Readonly<Params<string>>,
 	productId: string | undefined,
 	quantity: number,
 ) => {
 	return async (dispatch: Dispatch) => {
 		try {
-			await axios.put(`http://localhost:3000/cart/updateQuantity/${userId}`, {
+			await axios.put(`http://localhost:3000/cart/updateQuantity/${params}`, {
 				productId,
 				quantity,
 			})
@@ -85,3 +86,9 @@ export const updateQuantityCart = (
 		}
 	}
 }
+
+export const cleanupCart = () => {
+	return (dispatch: Dispatch) => {
+	  dispatch(setCart([]));
+	};
+  };

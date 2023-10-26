@@ -1,3 +1,5 @@
+import { Params } from "react-router-dom"
+
 export const validProductTypes = ['hamburguesa', 'salchipapa', 'alitas']
 
 export type Product = {
@@ -19,7 +21,7 @@ export type Product = {
 export interface CartItem {
 	product: Product;
 	quantity: number;
-	userId: string;
+	userId: string | Readonly<Params<string>>;
   }
 
 export type Options =
