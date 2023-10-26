@@ -10,12 +10,16 @@ import {
 import toast, { Toaster } from 'react-hot-toast'
 import { useAuth } from '../../context/AuthContext'
 import { addProductsToCart } from '../../app/redux/actions/cartActions'
+import { motion, AnimatePresence } from 'framer-motion'
+import ProductDetail from '../../components/productDetail/ProductDetail'
 
 const Menu = () => {
 	const products = useAppSelector((state): Product[] => state.product)
 	const dispatch = useAppDispatch()
 	const [selectedOrder, setSelectedOrder] = useState<string>('')
 	const [selectTypes, setSelectTypes] = useState<string[]>([])
+	const [selectedProduct, setSelectedProduct] = useState<Product['_id']>('')
+	const [isDetailVisible, setIsDetailVisible] = useState(false)
 	const [selectQuantity, setSelectQuantity] = useState<Record<string, number>>(
 		{},
 	)
@@ -24,6 +28,16 @@ const Menu = () => {
 	useEffect(() => {
 		dispatch(fetchProduct())
 	}, [dispatch])
+
+	const showProductDetail = (product: Product['_id']) => {
+		setSelectedProduct(product)
+		setIsDetailVisible(true)
+	}
+
+	const hideProductDetail = () => {
+		setSelectedProduct('')
+		setIsDetailVisible(false)
+	}
 
 	const handleQuantityChange =
 		(productId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +107,7 @@ const Menu = () => {
 	})
 
 	return (
-		<div className='max-w-[1400px] mx-auto bg-slate-50'>
+		<div className='max-w-[1400px] mx-auto bg-slate-50 relative'>
 			{/* Filtros */}
 			<div className='bg-orange-300 p-3 rounded-b-md flex justify-evenly'>
 				<Order onOrderChange={handleOrder} orderOptions={orderOptions} />
@@ -138,37 +152,57 @@ const Menu = () => {
 			<div className='grid grid-cols-2 lg:grid-cols-4 gap-6 p-4'>
 				{filteredProducts.map(product => (
 					<div key={product._id} className='border shadow-lg rounded-lg'>
-						<img
-							src={product.image}
-							alt={product.product_name}
-							className='w-full h-[200px] object-cover rounded-t-lg hover:scale-105 duration-300'
-						/>
+						<motion.div
+							layoutId={product._id}
+							onClick={() => showProductDetail(product._id)}
+						>
+							<img
+								src={product.image}
+								alt={product.product_name}
+								className='w-full h-[200px] opacity-95 object-cover rounded-t-lg hover:opacity-100 hover:scale-105 duration-300 cursor-pointer'
+							/>
+						</motion.div>
+
 						<div className='flex justify-between px-2 py-4'>
-							<p className='font-bold'>{product.product_name}</p>
-							<div className='flex items-center bg-orange-500 px-2 rounded-md'>
+							<div className='flex-col '>
+								<p className='font-bold'>{product.product_name}</p>
+								<span className='p-1 font-semibold text-red-600'>
+									s/.{' '}
+									{product.price.toLocaleString(undefined, {
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})}
+								</span>
+							</div>
+							<div className='flex items-center px-2 rounded-md'>
 								<input
 									type='number'
 									value={selectQuantity[product._id] || 1}
 									onChange={handleQuantityChange(product._id)}
-									className='mr-1 w-8 text-center rounded'
+									className='mr-1 w-9 text-center rounded bg-orange-100 border-solid  font-bold'
 								/>
-								<button
-									className='flex text-white px-1 rounded-full hover:scale-105 duration-300'
+								<motion.button
+									whileHover={{ scale: 1.1 }}
+									whileTap={{ scale: 0.9 }}
+									className='flex text-red-600 px-1 rounded-full '
 									onClick={() => addToCart(product._id)}
 								>
-									<span className='p-1'>
-										s/.{' '}
-										{product.price.toLocaleString(undefined, {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})}
-									</span>
-									<BiCartAdd />
-								</button>
+									<BiCartAdd size={30} />
+								</motion.button>
 							</div>
 						</div>
 					</div>
 				))}
+				<AnimatePresence>
+					{isDetailVisible && (
+						<motion.div layoutId={selectedProduct} className='bg-black/80 fixed w-full h-screen z-10 top-0 right-0 flex items-center justify-center'>
+							<ProductDetail
+								productId={selectedProduct}
+								onClose={hideProductDetail}
+							/>
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</div>
 			<Toaster />
 		</div>
