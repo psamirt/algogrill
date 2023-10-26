@@ -1,4 +1,4 @@
-import { Params } from "react-router-dom"
+import { Params } from 'react-router-dom'
 
 export const validProductTypes = ['hamburguesa', 'salchipapa', 'alitas']
 
@@ -19,10 +19,10 @@ export type Product = {
 }
 
 export interface CartItem {
-	product: Product;
-	quantity: number;
-	userId: string | Readonly<Params<string>>;
-  }
+	product: Product
+	quantity: number
+	userId: string | Readonly<Params<string>>
+}
 
 export type Options =
 	| 'dashboard'
@@ -51,3 +51,10 @@ export const orderOptions = [
 	{ label: 'Z a A', value: 'name-desc' },
 ]
 
+export const slides = [
+	{ url: 'imagenes/presentacion.png' },
+	{ url: 'imagenes/hamburguesa.png' },
+	{ url: 'imagenes/pack2.png' },
+	{ url: 'imagenes/salchigrill.png' },
+	{ url: 'imagenes/hamburguesa2.png' },
+]
