@@ -150,10 +150,10 @@ const Menu = () => {
 									type='number'
 									value={selectQuantity[product._id] || 1}
 									onChange={handleQuantityChange(product._id)}
-									className='mr-2 w-8 text-center rounded '
+									className='mr-1 w-8 text-center rounded'
 								/>
 								<button
-									className='flex  text-white px-2 rounded-full hover:scale-105 duration-300'
+									className='flex text-white px-1 rounded-full hover:scale-105 duration-300'
 									onClick={() => addToCart(product._id)}
 								>
 									<span className='p-1'>

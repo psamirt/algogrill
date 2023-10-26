@@ -17,7 +17,7 @@ import {
 	User,
 	sendPasswordResetEmail,
 } from 'firebase/auth'
-import { doc, getFirestore, setDoc } from 'firebase/firestore'
+import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore'
 
 interface IAuthContext {
 	register: (email: string, password: string, role: string) => Promise<void>
@@ -33,7 +33,7 @@ export const authContext = createContext<IAuthContext | undefined>(undefined)
 
 export const useAuth = (): IAuthContext => {
 	const context = useContext(authContext)
-	
+
 	if (!context) {
 		throw new Error('useAuth debe estar dentro del proveedor AuthContext')
 	}
@@ -70,21 +70,27 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 	const login = async (email: string, password: string) => {
 		await signInWithEmailAndPassword(auth, email, password)
 	}
+	
 	const loginWithGoogle = async () => {
 		const provider = new GoogleAuthProvider()
 		try {
 			const response = await signInWithPopup(auth, provider)
 			if (response.user) {
 				const { uid, email, displayName, photoURL } = response.user
-				const role = 'user'
 				const docuRef = doc(firestore, `users/${uid}`)
-				setDoc(docuRef, {
-					email: email,
-					displayName: displayName,
-					photoURL: photoURL,
-					role: role,
-					id: uid,
-				})
+				const docSnap = await getDoc(docuRef)
+				if (docSnap.exists() && docSnap.data()?.role) {
+					console.log('El usuario ya tiene un rol asignado.')
+				} else {
+					const role = 'user'
+					await setDoc(docuRef, {
+						email: email,
+						displayName: displayName,
+						photoURL: photoURL,
+						role: role,
+						id: uid,
+					})
+				}
 			}
 			return response
 		} catch (error) {

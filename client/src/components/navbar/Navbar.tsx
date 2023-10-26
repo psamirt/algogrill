@@ -6,7 +6,7 @@ import {
 	AiOutlineSearch,
 } from 'react-icons/ai'
 import { BiSolidUserCircle, BiSolidLogOutCircle } from 'react-icons/bi'
-import { BsBagCheck } from 'react-icons/bs'
+import { BsCart4 } from 'react-icons/bs'
 import { TbTruckDelivery } from 'react-icons/tb'
 import { FaWallet } from 'react-icons/fa'
 import { MdFavorite, MdHelp } from 'react-icons/md'
@@ -88,21 +88,21 @@ const Navbar: React.FC = () => {
 				{/* card and login button */}
 				<div className='relative'>
 					<NavLink to={`/cart/${user?.uid}`} className='hidden md:flex items-center py-2'>
-						<BsBagCheck size={25} className='mr-2' />
-						<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[-3px] left-4 items-center justify-center flex absolute'>
+						<BsCart4 size={25} className='mr-2' />
+						<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[8px] left-6 items-center justify-center flex absolute'>
 							{totalQuantity}
 						</span>
 					</NavLink>
 				</div>
 				<NavLink to='/menu' className='flex items-center justify-center ml-2'>
 					<div className='flex items-center p-5 h-6 '>
-						<p className=' text-lg'>Menú</p>
+						<p className='text-lg font-bold'>Menú</p>
 					</div>
 				</NavLink>
 				{user ? (
 					<button
 						onClick={handleLogOut}
-						className='  hidden md:flex items-center py-2 '
+						className='hidden md:flex items-center py-2 font-bold'
 					>
 						<BiSolidLogOutCircle size={30} className='mr-2 p-0' />
 						<span>Salir</span>
@@ -110,9 +110,9 @@ const Navbar: React.FC = () => {
 				) : (
 					<button
 						onClick={handleModalOpen}
-						className='hidden md:flex items-center py-2'
+						className='hidden md:flex items-center py-2 font-bold'
 					>
-						<BiSolidUserCircle size={30} className='' />
+						<BiSolidUserCircle size={30} className='mr-2 p-0'  />
 						<span>Ingresar</span>
 					</button>
 				)}
