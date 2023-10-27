@@ -3,7 +3,6 @@ import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import { useAuth } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
 
 const Register: React.FC = () => {
 	const [user, setUser] = useState({
@@ -52,11 +51,9 @@ const Register: React.FC = () => {
 		setError('')
 		try {
 			await register(user.email, user.password, user.name, user.photo)
-			toast.success('Usuario creado exitosamente')
 			navigate('/')
 		} catch (error: any) {
 			setError(error.message)
-			toast.error('Ups, Inténtalo nuevamente')
 		}
 	}
 
@@ -157,6 +154,7 @@ const Register: React.FC = () => {
 									}`}
 							/>
 						</div>
+						<span className='text-xs'>(*) Campos obligatorios</span>
 						<hr />
 						<br />
 						<button

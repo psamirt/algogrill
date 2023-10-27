@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import { AiOutlineClose } from 'react-icons/ai'
-import {  useAuth } from '../../../context/AuthContext'
+import { useAuth } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
-
 
 type LoginProps = {
 	onClose: () => void
@@ -18,7 +16,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 	})
 
 	const { login, loginWithGoogle } = useAuth()
-	
+
 	const navigate = useNavigate()
 	const [error, setError] = useState('')
 	const [disable, setDisable] = useState(true)
