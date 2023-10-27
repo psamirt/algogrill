@@ -4,6 +4,8 @@ import { FcGoogle } from 'react-icons/fc'
 import { AiOutlineClose } from 'react-icons/ai'
 import {  useAuth } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
+
 
 type LoginProps = {
 	onClose: () => void
@@ -41,6 +43,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 		try {
 			await loginWithGoogle()
 			onClose()
+			navigate('/')
 		} catch (error: any) {
 			setError(error.message)
 		}

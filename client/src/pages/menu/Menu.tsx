@@ -7,7 +7,7 @@ import {
 	useAppDispatch,
 	useAppSelector,
 } from '../../app/redux/hooks/customHooks'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useAuth } from '../../context/AuthContext'
 import { addProductsToCart } from '../../app/redux/actions/cartActions'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -204,7 +204,6 @@ const Menu = () => {
 					)}
 				</AnimatePresence>
 			</div>
-			<Toaster />
 		</div>
 	)
 }

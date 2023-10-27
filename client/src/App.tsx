@@ -10,6 +10,7 @@ import Admin from './pages/admin/Admin.js'
 import Menu from './pages/menu/Menu.js'
 import Cart from './pages/user/cart/Cart.js'
 import ProtectRoute from './components/protectetRoute/ProtectRoute.js'
+import { Toaster } from 'react-hot-toast'
 
 const App = (): JSX.Element => {
 	return (
@@ -31,6 +32,7 @@ const App = (): JSX.Element => {
 						}
 					></Route>
 				</Routes>
+				<Toaster />
 			</AuthProvider>
 		</Provider>
 	)

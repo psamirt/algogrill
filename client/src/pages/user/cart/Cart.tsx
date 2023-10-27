@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { CartItem, Product } from '../../../utils/Types'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useAuth } from '../../../context/AuthContext'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import {
 	deleteProductFromCart,
 	updateQuantityCart,
@@ -120,7 +120,6 @@ const Cart = () => {
 				doloremque consequuntur deleniti beatae porro! Corrupti esse vero,
 				expedita sequi suscipit molestiae.
 			</div>
-			<Toaster />
 		</div>
 	)
 }

@@ -30,7 +30,6 @@ const Navbar: React.FC = () => {
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 
-	
 	const totalQuantity = cartState.items.reduce(
 		(total, item) => total + (Number(item.quantity) || 1),
 		0,
@@ -57,6 +56,7 @@ const Navbar: React.FC = () => {
 		await logout()
 		dispatch(cleanupCart())
 		navigate('/')
+		window.location.reload()
 	}
 
 	return (
@@ -87,7 +87,10 @@ const Navbar: React.FC = () => {
 
 				{/* card and login button */}
 				<div className='relative'>
-					<NavLink to={`/cart/${user?.uid}`} className='hidden md:flex items-center py-2'>
+					<NavLink
+						to={`/cart/${user?.uid}`}
+						className='hidden md:flex items-center py-2'
+					>
 						<BsCart4 size={25} className='mr-2' />
 						<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[8px] left-6 items-center justify-center flex absolute'>
 							{totalQuantity}
@@ -112,7 +115,7 @@ const Navbar: React.FC = () => {
 						onClick={handleModalOpen}
 						className='hidden md:flex items-center py-2 font-bold'
 					>
-						<BiSolidUserCircle size={30} className='mr-2 p-0'  />
+						<BiSolidUserCircle size={30} className='mr-2 p-0' />
 						<span>Ingresar</span>
 					</button>
 				)}

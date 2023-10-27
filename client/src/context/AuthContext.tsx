@@ -16,11 +16,17 @@ import {
 	UserCredential,
 	User,
 	sendPasswordResetEmail,
+	// FacebookAuthProvider,
 } from 'firebase/auth'
 import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore'
 
 interface IAuthContext {
-	register: (email: string, password: string, role: string) => Promise<void>
+	register: (
+		email: string,
+		password: string,
+		name: string,
+		photo: string | null,
+	) => Promise<void>
 	login: (email: string, password: string) => Promise<void>
 	loginWithGoogle: () => Promise<UserCredential>
 	logout: () => Promise<void>
@@ -49,7 +55,12 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 	const [loading, setLoading] = useState(true)
 	const firestore = getFirestore()
 
-	const register = async (email: string, password: string) => {
+	const register = async (
+		email: string,
+		password: string,
+		name: string,
+		photo: string | null,
+	) => {
 		try {
 			const role = 'user'
 			const infoUser = await createUserWithEmailAndPassword(
@@ -57,20 +68,31 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 				email,
 				password,
 			)
+
 			if (infoUser.user) {
 				const { uid } = infoUser.user
 				const docuRef = doc(firestore, `users/${uid}`)
-				await setDoc(docuRef, { email: email, role: role, id: uid })
+				const photoURL =
+					photo ||
+					'https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png'
+				await setDoc(docuRef, {
+					email: email,
+					role: role,
+					id: uid,
+					displayName: name,
+					photoURL: photoURL,
+				})
 			}
 		} catch (error) {
 			console.error(error)
 			throw error
 		}
 	}
+
 	const login = async (email: string, password: string) => {
 		await signInWithEmailAndPassword(auth, email, password)
 	}
-	
+
 	const loginWithGoogle = async () => {
 		const provider = new GoogleAuthProvider()
 		try {
@@ -98,6 +120,34 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 			throw error
 		}
 	}
+
+	// const loginWithFacebook = async () => {
+	// 	const provider = new FacebookAuthProvider()
+	// 	try {
+	// 		const response = await signInWithPopup(auth, provider)
+	// 		if (response.user) {
+	// 			const { uid, email, displayName, photoURL } = response.user
+	// 			const docuRef = doc(firestore, `users/${uid}`)
+	// 			const docSnap = await getDoc(docuRef)
+	// 			if (docSnap.exists() && docSnap.data()?.role) {
+	// 				console.log('El usuario ya tiene un rol asignado.')
+	// 			} else {
+	// 				const role = 'user'
+	// 				await setDoc(docuRef, {
+	// 					email: email,
+	// 					displayName: displayName,
+	// 					photoURL: photoURL,
+	// 					role: role,
+	// 					id: uid,
+	// 				})
+	// 			}
+	// 		}
+	// 		return response
+	// 	} catch (error) {
+	// 		console.error(error)
+	// 		throw error
+	// 	}
+	// }
 
 	const resetPassword = (email: string) => {
 		return sendPasswordResetEmail(auth, email)

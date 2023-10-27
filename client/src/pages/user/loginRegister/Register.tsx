@@ -3,12 +3,15 @@ import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import { useAuth } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const Register: React.FC = () => {
 	const [user, setUser] = useState({
 		email: '',
+		name: '',
+		photo: '',
 		password: '',
-		role:'',
+		role: '',
 		verifyPassword: '',
 	})
 	const { register } = useAuth()
@@ -33,6 +36,7 @@ const Register: React.FC = () => {
 	useEffect(() => {
 		if (
 			user.email === '' ||
+			user.name === '' ||
 			user.password === '' ||
 			user.verifyPassword === '' ||
 			!passwordMatch
@@ -47,12 +51,15 @@ const Register: React.FC = () => {
 		e.preventDefault()
 		setError('')
 		try {
-			await register(user.email, user.password, user.role)
+			await register(user.email, user.password, user.name, user.photo)
+			toast.success('Usuario creado exitosamente')
 			navigate('/')
 		} catch (error: any) {
 			setError(error.message)
+			toast.error('Ups, Inténtalo nuevamente')
 		}
 	}
+
 	return (
 		<>
 			<div className='w-full flex items-center justify-center text-black mt-9'>
@@ -68,7 +75,7 @@ const Register: React.FC = () => {
 					>
 						<div className='relative mb-6'>
 							<label htmlFor='email' className='block mb-2 text-sm font-medium'>
-								Email
+								Email <span>(*)</span>
 							</label>
 							<input
 								onChange={handleChange}
@@ -82,11 +89,40 @@ const Register: React.FC = () => {
 							/>
 						</div>
 						<div className='relative mb-6'>
+							<label htmlFor='name' className='block mb-2 text-sm font-medium'>
+								Nombre <span>(*)</span>
+							</label>
+							<input
+								onChange={handleChange}
+								type='text'
+								id='name'
+								name='name'
+								placeholder='Ingresar nombre o alias'
+								required
+								className='border rounded-lg focus:ring-blue-400 
+								focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+							/>
+						</div>
+						<div className='relative mb-6'>
+							<label htmlFor='photo' className='block mb-2 text-sm font-medium'>
+								Foto
+							</label>
+							<input
+								onChange={handleChange}
+								type='text'
+								id='photo'
+								name='photo'
+								placeholder='Ingrese URL de imagen'
+								className='border rounded-lg focus:ring-blue-400 
+								focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+							/>
+						</div>
+						<div className='relative mb-6'>
 							<label
 								htmlFor='password'
 								className='block mb-2 text-sm font-medium'
 							>
-								contraseña
+								contraseña <span>(*)</span>
 							</label>
 							<input
 								onChange={handleChange}
@@ -106,7 +142,7 @@ const Register: React.FC = () => {
 								htmlFor='password'
 								className='block mb-2 text-sm font-medium'
 							>
-								Repetir contraseña
+								Repetir contraseña <span>(*)</span>
 							</label>
 							<input
 								onChange={handleChange}
@@ -130,7 +166,6 @@ const Register: React.FC = () => {
 									? 'bg-slate-300 w-full text-white'
 									: 'bg-blue-500 text-black w-full hover:scale-105 transition-transform duration-500 ease-in-out'
 							}`}
-							
 							disabled={disable}
 						>
 							Registrarse
