@@ -14,13 +14,11 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 		email: '',
 		password: '',
 	})
-
 	const { login, loginWithGoogle } = useAuth()
-
 	const navigate = useNavigate()
 	const [error, setError] = useState('')
 	const [disable, setDisable] = useState(true)
-
+	
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
 		setData(prevUser => {

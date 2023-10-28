@@ -20,12 +20,18 @@ import {
 } from '../../app/redux/hooks/customHooks'
 import { cleanupCart, getCart } from '../../app/redux/actions/cartActions'
 import { io } from 'socket.io-client/debug'
+import { User } from 'utils/Types'
+import { fetchUsers } from '../../app/redux/actions/userAction'
+import toast from 'react-hot-toast'
 const socket = io('http://localhost:3000')
 
 const Navbar: React.FC = () => {
 	const [openLogin, setOpenLogin] = useState(false)
 	const [nav, setNav] = useState(false)
 	const { user, logout } = useAuth()
+	const [users, setUsers] = useState<User[]>([])
+	const authenticatedUserUID = user?.uid
+	const selectedUser = users.find(u => u.id === authenticatedUserUID)
 	const cartState = useAppSelector(state => state.cart)
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -34,6 +40,29 @@ const Navbar: React.FC = () => {
 		(total, item) => total + (Number(item.quantity) || 1),
 		0,
 	)
+
+	useEffect(() => {
+		const getUsers = async () => {
+			try {
+				const data = await fetchUsers()
+				setUsers(data)
+			} catch (error) {
+				console.error('Error al obtener el usuario:', error)
+			}
+		}
+		getUsers()
+	}, [])
+
+	useEffect(() => {
+		if (selectedUser) {
+		  let welcomeMessage = `Bienvenido ${selectedUser.name}`;
+		  if (selectedUser.role === 'admin') {
+			welcomeMessage += `, ${selectedUser.role}`;
+		  }
+		  toast.success(welcomeMessage);
+		}
+	  }, [selectedUser]);
+	  
 
 	useEffect(() => {
 		if (user && user.uid) {
