@@ -16,7 +16,7 @@ import {
 	UserCredential,
 	User,
 	sendPasswordResetEmail,
-	// FacebookAuthProvider,
+	FacebookAuthProvider,
 } from 'firebase/auth'
 import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore'
 
@@ -30,6 +30,7 @@ interface IAuthContext {
 	login: (email: string, password: string) => Promise<void>
 	loginWithGoogle: () => Promise<UserCredential>
 	logout: () => Promise<void>
+	loginWithFacebook: () => Promise<UserCredential>
 	user: User | null
 	loading: boolean
 	resetPassword: (email: string) => Promise<void>
@@ -121,33 +122,33 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 		}
 	}
 
-	// const loginWithFacebook = async () => {
-	// 	const provider = new FacebookAuthProvider()
-	// 	try {
-	// 		const response = await signInWithPopup(auth, provider)
-	// 		if (response.user) {
-	// 			const { uid, email, displayName, photoURL } = response.user
-	// 			const docuRef = doc(firestore, `users/${uid}`)
-	// 			const docSnap = await getDoc(docuRef)
-	// 			if (docSnap.exists() && docSnap.data()?.role) {
-	// 				console.log('El usuario ya tiene un rol asignado.')
-	// 			} else {
-	// 				const role = 'user'
-	// 				await setDoc(docuRef, {
-	// 					email: email,
-	// 					displayName: displayName,
-	// 					photoURL: photoURL,
-	// 					role: role,
-	// 					id: uid,
-	// 				})
-	// 			}
-	// 		}
-	// 		return response
-	// 	} catch (error) {
-	// 		console.error(error)
-	// 		throw error
-	// 	}
-	// }
+	const loginWithFacebook = async () => {
+		const provider = new FacebookAuthProvider()
+		try {
+			const response = await signInWithPopup(auth, provider)
+			if (response.user) {
+				const { uid, email, displayName, photoURL } = response.user
+				const docuRef = doc(firestore, `users/${uid}`)
+				const docSnap = await getDoc(docuRef)
+				if (docSnap.exists() && docSnap.data()?.role) {
+					console.log('El usuario ya tiene un rol asignado.')
+				} else {
+					const role = 'user'
+					await setDoc(docuRef, {
+						email: email,
+						displayName: displayName,
+						photoURL: photoURL,
+						role: role,
+						id: uid,
+					})
+				}
+			}
+			return response
+		} catch (error) {
+			console.error(error)
+			throw error
+		}
+	}
 
 	const resetPassword = (email: string) => {
 		return sendPasswordResetEmail(auth, email)
@@ -168,6 +169,7 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 				register,
 				login,
 				loginWithGoogle,
+				loginWithFacebook,
 				logout,
 				user,
 				loading,

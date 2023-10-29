@@ -14,7 +14,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 		email: '',
 		password: '',
 	})
-	const { login, loginWithGoogle } = useAuth()
+	const { login, loginWithGoogle, loginWithFacebook } = useAuth()
 	const navigate = useNavigate()
 	const [error, setError] = useState('')
 	const [disable, setDisable] = useState(true)
@@ -38,6 +38,16 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 	const handleLoginWithGoogle = async () => {
 		try {
 			await loginWithGoogle()
+			onClose()
+			navigate('/')
+		} catch (error: any) {
+			setError(error.message)
+		}
+	}
+
+	const handleFacebookLogin = async () => {
+		try {
+			await loginWithFacebook()
 			onClose()
 			navigate('/')
 		} catch (error: any) {
@@ -127,7 +137,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 							Iniciar
 						</button>
 						<div className='flex items-center justify-center mt-8'>
-							<button>
+							<button onClick={handleFacebookLogin}>
 								<BsFacebook size={40} className='text-blue-600  ' />
 							</button>
 							<button onClick={handleLoginWithGoogle}>

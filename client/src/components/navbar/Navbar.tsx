@@ -55,15 +55,15 @@ const Navbar: React.FC = () => {
 
 	useEffect(() => {
 		if (selectedUser) {
-		  let welcomeMessage = `Bienvenido ${selectedUser.name}`;
+		  const nameWords = selectedUser.name.split(' ');
+		  let welcomeMessage = `Bienvenido ${nameWords.slice(0, 2).join(' ')}`;
 		  if (selectedUser.role === 'admin') {
-			welcomeMessage += `, ${selectedUser.role}`;
+			welcomeMessage = `Bienvenido ${selectedUser.role} ${nameWords.slice(0, 2).join(' ')}`;
 		  }
 		  toast.success(welcomeMessage);
 		}
 	  }, [selectedUser]);
 	  
-
 	useEffect(() => {
 		if (user && user.uid) {
 			const userId = user.uid
