@@ -10,16 +10,16 @@ import { FaComments } from 'react-icons/fa'
 import React, { useState } from 'react'
 import CreateProduct from './products/CreateProduct'
 import { Options } from '../../utils/Types.ts'
-// import { OptionsProduct } from '../../utils/Types.ts'
 import ProductList from './products/ProductList.tsx'
 import AllProducts from './products/AllProducts.tsx'
 import Users from './users/Users.tsx'
+import Resumen from './resumen/resumen'
 
 const Admin = (): JSX.Element => {
 	const [selectedOption, setSelectedOption] = useState<Options | string>('')
 	const [menuOpen, setMenuOpen] = useState(false)
 
-	let content = null
+	let content = <Resumen />
 
 	const handleClick = (
 		event:
@@ -38,6 +38,8 @@ const Admin = (): JSX.Element => {
 		content = <ProductList />
 	} else if (selectedOption === 'all-products') {
 		content = <AllProducts />
+	} else if (selectedOption === 'resumen') {
+		content = <Resumen />
 	} else if (selectedOption === 'users') {
 		content = <Users />
 	}
@@ -47,7 +49,14 @@ const Admin = (): JSX.Element => {
 			<div className='col-span-1 p-8'>
 				{/* logo */}
 				<div className='text-center p-8'>
-					<h1 className=' uppercase font-bold tracking-[4px]'>Resumen</h1>
+					<button
+						onClick={handleClick}
+						value='resumen'
+						name='resumen'
+						className=' uppercase font-bold tracking-[4px]'
+					>
+						Resumen
+					</button>
 				</div>
 				<div className='h-[700px] flex flex-col justify-between '>
 					{/* Menu */}
@@ -144,11 +153,7 @@ const Admin = (): JSX.Element => {
 						</ul>
 					</nav>
 					{/* imagen */}
-					<img
-						src='svg/imgAdmin.svg'
-						alt='admin'
-						className='max-w-[200px]'
-					/>
+					<img src='svg/imgAdmin.svg' alt='admin' className='max-w-[200px]' />
 				</div>
 			</div>
 			<div className='col-span-5'>{content}</div>
