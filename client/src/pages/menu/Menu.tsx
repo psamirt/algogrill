@@ -150,8 +150,18 @@ const Menu = () => {
 			</div>
 			{/* contenido */}
 			<div className='grid grid-cols-2 lg:grid-cols-4 gap-6 p-4'>
-				{filteredProducts.map(product => (
-					<div key={product._id} className='border shadow-lg rounded-lg'>
+				{filteredProducts.map((product, i) => (
+					<motion.div
+						key={product._id}
+						className='border shadow-lg rounded-lg'
+						initial={{
+							opacity: 0,
+							translateX: i % 2 === 0 ? -50 : 50,
+							translateY: -50,
+						}}
+						animate={{ opacity: 1, translateX: 0, translateY: 0 }}
+						transition={{ duration: 0.5, delay: i * 0.1 }}
+					>
 						<motion.div
 							layoutId={product._id}
 							onClick={() => showProductDetail(product._id)}
@@ -191,11 +201,14 @@ const Menu = () => {
 								</motion.button>
 							</div>
 						</div>
-					</div>
+					</motion.div>
 				))}
 				<AnimatePresence>
 					{isDetailVisible && (
-						<motion.div layoutId={selectedProduct} className='bg-black/80 fixed w-full h-screen z-10 top-0 right-0 flex items-center justify-center'>
+						<motion.div
+							layoutId={selectedProduct}
+							className='bg-black/80 fixed w-full h-screen z-10 top-0 right-0 flex items-center justify-center'
+						>
 							<ProductDetail
 								productId={selectedProduct}
 								onClose={hideProductDetail}

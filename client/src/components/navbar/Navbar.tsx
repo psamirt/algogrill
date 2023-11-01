@@ -4,6 +4,7 @@ import {
 	AiOutlineClose,
 	AiOutlineMenu,
 	AiOutlineSearch,
+	AiOutlineDashboard
 } from 'react-icons/ai'
 import { BiSolidUserCircle, BiSolidLogOutCircle } from 'react-icons/bi'
 import { BsCart4 } from 'react-icons/bs'
@@ -55,15 +56,17 @@ const Navbar: React.FC = () => {
 
 	useEffect(() => {
 		if (selectedUser) {
-		  const nameWords = selectedUser.name.split(' ');
-		  let welcomeMessage = `Bienvenido ${nameWords.slice(0, 2).join(' ')}`;
-		  if (selectedUser.role === 'admin') {
-			welcomeMessage = `Bienvenido ${selectedUser.role} ${nameWords.slice(0, 2).join(' ')}`;
-		  }
-		  toast.success(welcomeMessage);
+			const nameWords = selectedUser.name.split(' ')
+			let welcomeMessage = `Bienvenido ${nameWords.slice(0, 2).join(' ')}`
+			if (selectedUser.role === 'admin') {
+				welcomeMessage = `Bienvenido ${selectedUser.role} ${nameWords
+					.slice(0, 2)
+					.join(' ')}`
+			}
+			toast.success(welcomeMessage)
 		}
-	  }, [selectedUser]);
-	  
+	}, [selectedUser])
+
 	useEffect(() => {
 		if (user && user.uid) {
 			const userId = user.uid
@@ -115,6 +118,11 @@ const Navbar: React.FC = () => {
 				</div>
 
 				{/* card and login button */}
+				{selectedUser?.role === 'admin' &&(
+					<NavLink to='/admin'>
+						<AiOutlineDashboard size={30}/>
+					</NavLink>
+				)}
 				<div className='relative'>
 					<NavLink
 						to={`/cart/${user?.uid}`}
