@@ -40,18 +40,23 @@ const createSession = async (req, res) => {
 };
 
 const captureOrder = async (req, res) => {
-const {token} = req.query
+  const { token } = req.query;
 
-const response =await axios.port(`${PAYPAL_APY}/v2/checkout/orders${token}/capture`, {},{
-    auth:{
+  const response = await axios.port(
+    `${PAYPAL_APY}/v2/checkout/orders${token}/capture`,
+    {},
+    {
+      auth: {
         username: PAYPAL_APY_CLIENT,
-        password:PAYPAL_APY_SECRET
+        password: PAYPAL_APY_SECRET
+      }
     }
-})
-console.log(response.data);
-return res.send('payed')
-}
+  );
+  console.log(response.data);
+  return res.send('payed');
+};
 
 module.exports = {
-  createSession
+  createSession,
+  captureOrder
 };
