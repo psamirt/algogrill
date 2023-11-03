@@ -1,7 +1,5 @@
 const { Schema, model } = require('mongoose');
-
-// const validStatusTypes = ['pendiente', 'enviado', 'entregado', 'cancelado'];
-
+const validStatusTypes = ['pendiente', 'aceptado', 'enviado', 'entregado'];
 const orderSchema = new Schema(
   {
     userId: {
@@ -21,11 +19,6 @@ const orderSchema = new Schema(
         }
       }
     ],
-    // status: {
-    //   type: String,
-    //   required: true,
-    //   enum: validStatusTypes
-    // },
     shippingAddress: {
       city: {
         type: String,
@@ -40,15 +33,13 @@ const orderSchema = new Schema(
         required: true
       }
     },
+    status: {
+      type: String,
+      required: true,
+      enum: validStatusTypes
+    },
     paymentInfo: {
-      paymentId: {
-        type: String,
-        required: true
-      },
-      paymentStatus: {
-        type: String,
-        required: true
-      }
+      type: Schema.Types.Mixed
     },
     customerNotes: {
       type: String
