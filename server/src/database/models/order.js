@@ -5,7 +5,7 @@ const orderSchema = new Schema(
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      // required: true
     },
     products: [
       {
@@ -22,20 +22,20 @@ const orderSchema = new Schema(
     shippingAddress: {
       city: {
         type: String,
-        required: true
+        // required: true
       },
       address: {
         type: String,
-        required: true
+        // required: true
       },
       reference: {
         type: String,
-        required: true
+        // required: true
       }
     },
     status: {
       type: String,
-      required: true,
+      // required: true,
       enum: validStatusTypes
     },
     paymentInfo: {
