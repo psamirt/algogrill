@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 const validProductTypes = ['hamburguesa', 'salchipapa', 'alitas'];
 
@@ -33,20 +33,7 @@ const productSchema = new Schema(
     offers: {
       type: Number,
       default: 0
-    },
-    rating: [
-      {
-        stars: {
-          type: [Number]
-        },
-        totalStars: {
-          type: Number
-        },
-        comments: {
-          type: [String]
-        }
-      }
-    ]
+    }
   },
   {
     timestamps: true
@@ -54,4 +41,4 @@ const productSchema = new Schema(
 );
 
 const Products = model('Products', productSchema);
-module.exports = Products;
+export default Products;

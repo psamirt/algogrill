@@ -1,10 +1,9 @@
-// const express = require('express');
-// const { createSession, captureOrder } =
-//   require('../controllers/paymentController').default;
-// const router = express.Router();
+import { Router } from 'express';
+import {createOrder, captureOrder} from '../controllers/paymentController.js'
+const router = Router();
 
-// router.get('/createSession/:userId', createSession);
-// router.get('/success', captureOrder);
-// router.get('/cancel', (req, res) => res.send('cancel'));
+router.get('/createOrder/:userId', createOrder);
+router.get('/success', captureOrder);
+router.get('/webHook', (req, res) => res.send('webHook'));
 
-// module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const Products = require('../database/models/product');
+import Products from "../database/models/product.js";
 
-const postProduct = async (req, res) => {
+export const postProduct = async (req, res) => {
   try {
     const {
       product_type,
@@ -32,7 +32,7 @@ const postProduct = async (req, res) => {
   }
 };
 
-const getProducts = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
     const { name } = req.query;
 
@@ -54,7 +54,7 @@ const getProducts = async (req, res) => {
   }
 };
 
-const getById = async (req, res) => {
+export const getById = async (req, res) => {
   try {
     const { id } = req.query;
     const productId = await Products.findById(id);
@@ -65,7 +65,7 @@ const getById = async (req, res) => {
   }
 };
 
-const deleteById = async (req, res) => {
+export const deleteById = async (req, res) => {
   try {
     const { id } = req.query;
     const deleteProduct = await Products.deleteOne({ _id: id });
@@ -79,7 +79,7 @@ const deleteById = async (req, res) => {
   }
 };
 
-const updateProduct = async (req, res) => {
+export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const { product_name, image, price, description, disable, offers, rating } =
@@ -110,12 +110,4 @@ const updateProduct = async (req, res) => {
     console.error(error);
     res.status(400).json({ message: 'Error al actualizar el producto' });
   }
-};
-
-module.exports = {
-  postProduct,
-  getProducts,
-  getById,
-  deleteById,
-  updateProduct
 };

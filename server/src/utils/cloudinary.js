@@ -1,4 +1,6 @@
-const cloudinary = require('cloudinary').v2;
+import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';
+dotenv.config();
 const { CLOUD_NAME, CLOUD_APY, CLOUD_SECRET } = process.env;
 
 cloudinary.config({
@@ -8,4 +10,4 @@ cloudinary.config({
   secure: true
 });
 
-module.exports = cloudinary;
+export default cloudinary;

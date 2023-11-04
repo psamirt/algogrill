@@ -1,6 +1,6 @@
-const Order = require('../database/models/order');
+import Order from '../database/models/order.js'
 
-const createOrder = async (req, res) => {
+export const createOrder = async (req, res) => {
   try {
     const {
       userId,
@@ -32,7 +32,7 @@ const createOrder = async (req, res) => {
   }
 };
 
-const getOrdersByUser = async (req, res) => {
+export const getOrdersByUser = async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -44,7 +44,3 @@ const getOrdersByUser = async (req, res) => {
   }
 };
 
-module.exports = {
-  createOrder,
-  getOrdersByUser
-};

@@ -1,7 +1,7 @@
-const Cart = require('../database/models/cart');
-const Products = require('../database/models/product');
+import Products from '../database/models/product.js';
+import Cart from '../database/models/cart.js';
 
-const addToCart = async (req, res) => {
+export const addToCart = async (req, res) => {
   try {
     const { product, quantity, userId } = req.body;
     const foundProduct = await Products.findById(product);
@@ -40,7 +40,7 @@ const addToCart = async (req, res) => {
   }
 };
 
-const getCart = async (req, res) => {
+export const getCart = async (req, res) => {
   try {
     const userId = req.params.userId;
     if (!userId) {
@@ -63,7 +63,7 @@ const getCart = async (req, res) => {
   }
 };
 
-const deleteProduct = async (req, res) => {
+export const deleteProduct = async (req, res) => {
   try {
     const { userId } = req.params;
     const { productId } = req.body;
@@ -74,10 +74,14 @@ const deleteProduct = async (req, res) => {
 
     const cart = await Cart.findOne({ userId });
     if (!cart) {
-      return res.status(404).json({ message: 'Carrito no encontrado para el usuario especificado' });
+      return res.status(404).json({
+        message: 'Carrito no encontrado para el usuario especificado'
+      });
     }
 
-    const updatedItems = cart.items.filter((item) => item.product._id.toString() !== productId);
+    const updatedItems = cart.items.filter(
+      (item) => item.product._id.toString() !== productId
+    );
     cart.items = updatedItems;
     await cart.save();
 
@@ -88,7 +92,7 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-const updateQuantity = async (req, res) => {
+export const updateQuantity = async (req, res) => {
   try {
     const { userId } = req.params;
     const { productId, quantity } = req.body;
@@ -100,28 +104,31 @@ const updateQuantity = async (req, res) => {
     const cart = await Cart.findOne({ userId });
 
     if (!cart) {
-      return res.status(404).json({ message: 'Carrito no encontrado para el usuario especificado' });
+      return res.status(404).json({
+        message: 'Carrito no encontrado para el usuario especificado'
+      });
     }
 
-    const cartItemIndex = cart.items.findIndex(item => item.product._id.toString() === productId);
+    const cartItemIndex = cart.items.findIndex(
+      (item) => item.product._id.toString() === productId
+    );
 
     if (cartItemIndex === -1) {
-      return res.status(404).json({ message: 'Producto no encontrado en el carrito' });
+      return res
+        .status(404)
+        .json({ message: 'Producto no encontrado en el carrito' });
     }
     cart.items[cartItemIndex].quantity = quantity;
     await cart.save();
 
-    return res.status(200).json({ message: 'Cantidad del producto actualizada correctamente' });
+    return res
+      .status(200)
+      .json({ message: 'Cantidad del producto actualizada correctamente' });
   } catch (error) {
-    console.error('Error al actualizar la cantidad del producto en el carrito', error);
+    console.error(
+      'Error al actualizar la cantidad del producto en el carrito',
+      error
+    );
     res.status(500).json({ error: 'Error interno del servidor' });
   }
-};
-
-
-module.exports = {
-  addToCart,
-  getCart,
-  deleteProduct,
-  updateQuantity
 };

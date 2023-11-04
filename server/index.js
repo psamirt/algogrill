@@ -1,52 +1,48 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+import routes from './src/routes/index.js';
+import connectToDatabase from './src/database/db.js';
+
+// Configurar variables de entorno desde el archivo .env
+dotenv.config();
+
 const app = express();
-const cors = require('cors');
-const morgan = require('morgan');
-const { Server } = require('socket.io');
-const { createServer } = require('http');
-const bodyParser = require('body-parser');
-require('dotenv').config();
-const routes = require('./src/routes/index');
-const { PORT } = process.env;
-
-const connectToDatabase = require('./src/database/db');
-
-const server = createServer(app)
-const io = new Server(server,{
+const server = createServer(app);
+const io = new Server(server, {
   cors: {
-    origin:'*'
+    origin: '*'
   }
-})
+});
 
-
+// Configurar middlewares
 app.use(morgan('dev'));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.json());
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});
 
-io.on('connection', (socket)=>{
-  console.log('a user has connected');
-  socket.on('productAddedToCart',({ quantity, userId})=>{
-    console.log(`Product added with quantity ${quantity}`);
-    io.emit(`cartUpdate`,userId);
-  })
-})
-
+// Configurar rutas
 app.use('/', routes);
 
+// Configurar Socket.IO
+io.on('connection', (socket) => {
+  console.log('a user has connected');
+  socket.on('productAddedToCart', ({ quantity, userId }) => {
+    console.log(`Product added with quantity ${quantity}`);
+    io.emit(`cartUpdate`, userId);
+  });
+});
+
+// Ruta de prueba
 app.get('/', (req, res) => {
   res.status(200).send('corriendo');
 });
+
+// Conectar a la base de datos y arrancar el servidor
+const { PORT } = process.env;
 
 connectToDatabase()
   .then(() => {

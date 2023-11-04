@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
 const validStatusTypes = ['pendiente', 'aceptado', 'enviado', 'entregado'];
 const orderSchema = new Schema(
   {
@@ -52,4 +52,4 @@ const orderSchema = new Schema(
 );
 
 const Order = model('Order', orderSchema);
-module.exports = Order;
+export default Order;

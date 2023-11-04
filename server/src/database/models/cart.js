@@ -1,13 +1,14 @@
-const { Schema, model } = require('mongoose');
-const Products = require('./product');
+import { Schema, model } from 'mongoose';
 
 const cartItemSchema = new Schema({
-  product: Products.schema,
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product' 
+  },
   quantity: {
     type: Number,
     required: true
   },
-
 });
 
 const cartSchema = new Schema({
@@ -20,7 +21,7 @@ const cartSchema = new Schema({
 
 const Cart = model('Cart', cartSchema);
 
-module.exports = Cart;
+export default Cart;
 
 
 // additional: {
