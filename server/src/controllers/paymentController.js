@@ -34,7 +34,8 @@ export const createOrder = async (req, res) => {
         pending: 'http://localhost:3000/order/pending'
       },
       notification_url: 'https://cb3d-38-25-13-183.ngrok.io/order/webHook',
-      total_amount: parseFloat(totalAmount.toFixed(2))
+      total_amount: parseFloat(totalAmount.toFixed(2)),
+      auto_return: 'approved'
     };
 
     const result = await mercadopago.preferences.create(preference);
