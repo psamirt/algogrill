@@ -3,9 +3,8 @@ const validStatusTypes = ['pendiente', 'aceptado', 'enviado', 'entregado'];
 const orderSchema = new Schema(
   {
     userId: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      // required: true
+      type: String,
+      required: true
     },
     products: [
       {

@@ -1,10 +1,8 @@
 import { Schema, model } from 'mongoose';
+import { productSchema } from './product.js';
 
 const cartItemSchema = new Schema({
-  product: {
-    type: Schema.Types.ObjectId,
-    ref: 'Product' 
-  },
+  product: productSchema,
   quantity: {
     type: Number,
     required: true

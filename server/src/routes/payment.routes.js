@@ -4,7 +4,7 @@ import {
 } from '../controllers/paymentController.js';
 const router = Router();
 
-router.post('/createOrder', createOrder);
+router.post('/createOrder/:userId', createOrder);
 
 router.get('/success', (req, res) => res.send('success'));
 

@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const validProductTypes = ['hamburguesa', 'salchipapa', 'alitas'];
 
-const productSchema = new Schema(
+export const productSchema = new Schema(
   {
     product_type: {
       type: String,
