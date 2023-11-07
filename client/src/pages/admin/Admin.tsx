@@ -15,6 +15,7 @@ import AllProducts from './products/AllProducts.tsx'
 import Users from './users/Users.tsx'
 import Resumen from './resumen/Resumen.tsx'
 
+
 const Admin = (): JSX.Element => {
 	const [selectedOption, setSelectedOption] = useState<Options | string>('')
 	const [menuOpen, setMenuOpen] = useState(false)
