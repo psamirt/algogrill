@@ -10,12 +10,14 @@ export const createOrder = async (req, res) => {
     const { userId } = req.params;
 
     const cart = await Cart.findOne({ userId });
-    console.log(cart)
 
     const items = cart.items.map((item) => ({
+      id:item.product._id,
+			category_id: item.product.product_type,
+			description: item.product.description,
       title: item.product.product_name,
-      unit_price: parseFloat(item.product.price.toFixed(2)),
-      quantity: item.quantity
+      quantity: item.quantity,
+      unit_price: parseFloat(item.product.price.toFixed(2))
     }));
 
     mercadopago.configure({
