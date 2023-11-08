@@ -1,8 +1,8 @@
 
-const Resumen = (): JSX.Element=> {
-  return (
-    <div>resumen</div>
-  )
-}
+// const Resumen = (): JSX.Element=> {
+//   return (
+//     <div>resumen</div>
+//   )
+// }
 
-export default Resumen
+// export default Resumen
