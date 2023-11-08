@@ -21,7 +21,7 @@ import {
 } from '../../app/redux/hooks/customHooks'
 import { cleanupCart, getCart } from '../../app/redux/actions/cartActions'
 import { io } from 'socket.io-client/debug'
-import { User } from 'utils/Types'
+import {  CartItem, User } from 'utils/Types'
 import { fetchUsers } from '../../app/redux/actions/userAction'
 import toast from 'react-hot-toast'
 const socket = io('http://localhost:3000')
@@ -38,9 +38,10 @@ const Navbar: React.FC = () => {
 	const dispatch = useAppDispatch()
 
 	const totalQuantity = cartState.items.reduce(
-		(total, item) => total + (Number(item.quantity) || 1),
-		0,
-	)
+		(total: number, item:CartItem ) => total + (Number(item.quantity) || 1),
+		0
+	  );
+	  
 
 	useEffect(() => {
 		const getUsers = async () => {
