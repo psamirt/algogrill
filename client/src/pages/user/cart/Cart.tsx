@@ -22,7 +22,7 @@ const Cart = () => {
 
 	useEffect(() => {
 		setCartProduct(cartState)
-		const totalPrice = cartState.reduce((total, cartItem) => {
+		const totalPrice = cartState.reduce((total: number, cartItem: CartItem) => {
 			const itemPrice = cartItem.product.price * cartItem.quantity
 			return total + itemPrice
 		}, 0)
