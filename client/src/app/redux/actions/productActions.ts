@@ -7,12 +7,15 @@ import {
 	updateProduct,
 } from '../slices/productSlice'
 import { AppDispatch } from 'app/store'
+const baseUrl = import.meta.env.VITE_BASE_URL
 
 export const createProduct = (productData: Product) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			const response: AxiosResponse<Product> = await axios.post(
-				'http://localhost:3000/products/newProduct',
+				`${baseUrl}/products/newProduct`,
+
+				// 'http://localhost:3000/products/newProduct',
 				productData,
 			)
 			dispatch(addProduct(response.data))
@@ -27,7 +30,9 @@ export const fetchProduct = () => {
 	return async (dispatch: Dispatch) => {
 		try {
 			const response: AxiosResponse = await axios.get(
-				'http://localhost:3000/products/getAllProducts',
+				`${baseUrl}/products/getAllProducts`,
+
+				// 'http://localhost:3000/products/getAllProducts',
 			)
 			dispatch(getProducts(response.data))
 		} catch (error) {
@@ -40,7 +45,9 @@ export const editProduct = (productId: string, updatedProductData: Product) => {
 	return async (dispatch: AppDispatch) => {
 		try {
 			 await axios.put(
-				`http://localhost:3000/products/upDateProduct/${productId}`,
+				`${baseUrl}/products/upDateProduct/${productId}`,
+				
+				// `http://localhost:3000/products/upDateProduct/${productId}`,
 				updatedProductData,
 			)
 			dispatch(

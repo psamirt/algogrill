@@ -24,7 +24,7 @@ import { io } from 'socket.io-client/debug'
 import {  CartItem, User } from 'utils/Types'
 import { fetchUsers } from '../../app/redux/actions/userAction'
 import toast from 'react-hot-toast'
-const socket = io('http://localhost:3000')
+const socket = io('https://algo-grill.onrender.com')
 
 const Navbar: React.FC = () => {
 	const [openLogin, setOpenLogin] = useState(false)

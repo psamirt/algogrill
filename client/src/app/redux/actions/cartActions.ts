@@ -8,8 +8,8 @@ import axios, { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
 import { Product } from 'utils/Types'
 import { io } from 'socket.io-client'
-
-const socket = io('http://localhost:3000')
+const baseUrl = import.meta.env.VITE_BASE_URL
+const socket = io(baseUrl)
 
 export const addProductsToCart = (
 	product: Product,
@@ -19,7 +19,7 @@ export const addProductsToCart = (
 	return async (dispatch: Dispatch) => {
 		try {
 			const response: AxiosResponse = await axios.post(
-				'http://localhost:3000/cart/addToCart',
+				`${baseUrl}/cart/addToCart`,
 				{
 					product: product,
 					quantity: quantity,
@@ -39,7 +39,7 @@ export const getCart = (userId: string) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			const response: AxiosResponse = await axios.get(
-				`http://localhost:3000/cart/getCart/${userId}`,
+				`${baseUrl}/cart/getCart/${userId}`,
 			)
 			dispatch(setCart(response.data.items))
 		} catch (error) {
@@ -54,7 +54,7 @@ export const deleteProductFromCart = (
 ) => {
 	return async (dispatch: Dispatch) => {
 		try {
-			await axios.delete(`http://localhost:3000/cart/deleteProduct/${userId}`, {
+			await axios.delete(`${baseUrl}/cart/deleteProduct/${userId}`, {
 				data: { productId },
 			})
 			dispatch(deleteItem(productId))
@@ -71,7 +71,7 @@ export const updateQuantityCart = (
 ) => {
 	return async (dispatch: Dispatch) => {
 		try {
-			await axios.put(`http://localhost:3000/cart/updateQuantity/${userId}`, {
+			await axios.put(`${baseUrl}/cart/updateQuantity/${userId}`, {
 				productId,
 				quantity,
 			})
