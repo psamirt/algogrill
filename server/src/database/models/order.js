@@ -1,40 +1,41 @@
 import { Schema, model } from 'mongoose';
+
 const orderSchema = new Schema(
   {
     userId: {
       type: String,
-      required: true
+      required: true,
     },
-    products: [
+    items: [
       {
-        productId: {
+        product: {
           type: Schema.Types.ObjectId,
-          ref: 'Product'
+          ref: 'Product',
         },
         quantity: {
           type: Number,
-          default: 1
-        }
-      }
+          default: 1,
+        },
+      },
     ],
     shippingAddress: {
-      type:String,
-      // require: true
+      type: String,
+      // required: true,
     },
     status: {
       type: String,
       // required: true,
     },
     paymentInfo: {
-      type: Schema.Types.Mixed
+      type: Schema.Types.Mixed,
     },
     customerNotes: {
-      type: String
-    }
+      type: String,
+    },
   },
   {
     timestamps: true,
-    collection: 'orders'
+    collection: 'orders',
   }
 );
 

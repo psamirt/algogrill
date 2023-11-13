@@ -116,6 +116,64 @@ const Cart = () => {
 						))}
 					</tbody>
 				</table>
+				<div>
+					<h1 className='text-2xl '>Datos para envío</h1>
+					<form>
+						<div className='relative mb-6'>
+							<label
+								htmlFor='dirección'
+								className='block mb-2 text-sm font-medium'
+							>
+								dirección
+							</label>
+							<input
+								type='text'
+								id='dirección'
+								name='dirección'
+								placeholder='Ingrese dirección'
+								required
+								className='border rounded-lg focus:ring-blue-400 
+                            focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+							/>
+						</div>
+						<div className='relative mb-6'>
+							<label
+								htmlFor='referencia'
+								className='block mb-2 text-sm font-medium'
+							>
+								referencia
+							</label>
+							<input
+								type='text'
+								id='referencia'
+								name='referencia'
+								placeholder='Ingrese referencia'
+								required
+								className='border rounded-lg focus:ring-blue-400 
+                            focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+							/>
+						</div>
+						<div className='relative mb-6'>
+							<label
+								htmlFor='number'
+								className='block mb-2 text-sm font-medium'
+							>
+								número de teléfono
+							</label>
+							<input
+								type='tel'
+								inputMode='numeric'
+								pattern='\d*'
+								id='number'
+								name='number'
+								placeholder='Ingrese número de teléfono'
+								required
+								className='border rounded-lg focus:ring-blue-400 
+                            focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+							/>
+						</div>
+					</form>
+				</div>
 				<div className='flex justify-end'>
 					<button
 						onClick={handlePayment}
