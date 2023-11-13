@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-const validStatusTypes = ['pendiente', 'aceptado', 'enviado', 'entregado'];
 const orderSchema = new Schema(
   {
     userId: {
@@ -19,23 +18,12 @@ const orderSchema = new Schema(
       }
     ],
     shippingAddress: {
-      city: {
-        type: String,
-        // required: true
-      },
-      address: {
-        type: String,
-        // required: true
-      },
-      reference: {
-        type: String,
-        // required: true
-      }
+      type:String,
+      // require: true
     },
     status: {
       type: String,
       // required: true,
-      enum: validStatusTypes
     },
     paymentInfo: {
       type: Schema.Types.Mixed

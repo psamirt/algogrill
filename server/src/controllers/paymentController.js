@@ -3,7 +3,7 @@ dotenv.config();
 import mercadopago from 'mercadopago';
 import Order from '../database/models/order.js';
 import Cart from '../database/models/cart.js';
-const { ACCESS_TOKEN, WEB_HOOK } = process.env;
+const { ACCESS_TOKEN } = process.env;
 
 export const createOrder = async (req, res) => {
   try {
@@ -31,11 +31,11 @@ export const createOrder = async (req, res) => {
       back_urls: {
         success: 'http://localhost:5173/success',
         failure: 'http://localhost:5173/failure',
-        // pending: 'http://localhost:3000/order/pending'
+        pending: 'http://localhost:5173/pending',
       },
       notification_url: `https://algo-grill.onrender.com/order/webHook`,
       total_amount: parseFloat(totalAmount.toFixed(2)),
-      auto_return: 'approved'
+      auto_return: 'approved',
     };
 
     const result = await mercadopago.preferences.create(preference);
@@ -52,7 +52,7 @@ export const receiveWebhook = async (req, res) => {
 
     if (payment.type === 'payment') {
       const data = await mercadopago.payment.findById(payment['data.id']);
-      console.log(data);
+
     }
     res.send('webhook');
   } catch (error) {
