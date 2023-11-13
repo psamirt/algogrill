@@ -33,7 +33,7 @@ export const createOrder = async (req, res) => {
         failure: 'http://localhost:5173/failure',
         // pending: 'http://localhost:3000/order/pending'
       },
-      notification_url: `${WEB_HOOK}/order/webHook`,
+      notification_url: `https://algo-grill.onrender.com/order/webHook`,
       total_amount: parseFloat(totalAmount.toFixed(2)),
       auto_return: 'approved'
     };
@@ -46,8 +46,6 @@ export const createOrder = async (req, res) => {
   }
 };
 
-
-
 export const receiveWebhook = async (req, res) => {
   try {
     const payment = req.query;
@@ -56,7 +54,6 @@ export const receiveWebhook = async (req, res) => {
       const data = await mercadopago.payment.findById(payment['data.id']);
       console.log(data);
     }
-
     res.send('webhook');
   } catch (error) {
     res.status(500).json({ error: error.message });
