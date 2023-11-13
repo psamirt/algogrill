@@ -1,4 +1,13 @@
 import { Schema, model } from 'mongoose';
+import { productSchema } from './product.js';
+
+const orderItemSchema = new Schema({
+  product: productSchema,
+  quantity: {
+    type: Number,
+    default: 1,
+  },
+});
 
 const orderSchema = new Schema(
   {
@@ -6,32 +15,22 @@ const orderSchema = new Schema(
       type: String,
       required: true,
     },
-    items: [
-      {
-        product: {
-          type: Schema.Types.ObjectId,
-          ref: 'Product',
-        },
-        quantity: {
-          type: Number,
-          default: 1,
-        },
-      },
-    ],
-    shippingAddress: {
-      type: String,
-      // required: true,
+    items: [orderItemSchema],
+    userDetails: {
+      address: String,
+      phoneNumber: String,
+      reference: String,
     },
-    status: {
-      type: String,
-      // required: true,
-    },
-    paymentInfo: {
-      type: Schema.Types.Mixed,
-    },
-    customerNotes: {
-      type: String,
-    },
+    // status: {
+    //   type: String,
+    //   required: true,
+    // },
+    // paymentInfo: {
+    //   type: Schema.Types.Mixed,
+    // },
+    // customerNotes: {
+    //   type: String,
+    // },
   },
   {
     timestamps: true,
