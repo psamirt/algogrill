@@ -57,9 +57,9 @@ export const createOrder = async (req, res) => {
       auto_return: 'approved',
       id: userId
     };
-    console.log(preference);
 
     const result = await mercadopago.preferences.create(preference);
+    console.log(result)
     res.send(result.body);
   } catch (error) {
     console.error(error);
@@ -73,10 +73,7 @@ export const receiveWebhook = async (req, res) => {
 
     if (payment.type === 'payment') {
       const data = await mercadopago.payment.findById(payment['data.id']);
-      console.log(data);
-      // const orderId = data.order.id;
-      // await Order.findByIdAndUpdate(orderId, { status: 'payed' });
-      // console.log(`Orden ${orderId} actualizada a estado 'payed'`);
+
     }
     res.send('webhook');
   } catch (error) {
