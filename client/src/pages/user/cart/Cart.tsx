@@ -18,6 +18,11 @@ const Cart = () => {
 	const cartState = useAppSelector(state => state.cart.items)
 	const [cartProduct, setCartProduct] = useState<CartItem[]>([])
 	const [totalPrice, setTotalPrice] = useState<number>(0)
+	const [shippingData, setShippingData] = useState({
+		address: '',
+		reference: '',
+		phoneNumber: '',
+	})
 	const { user } = useAuth()
 	const dispatch = useAppDispatch()
 
@@ -57,11 +62,19 @@ const Cart = () => {
 	}
 
 	const handlePayment = (event: React.MouseEvent<HTMLButtonElement>) => {
-		event.preventDefault()
-		const userId = user?.uid
+		event.preventDefault();
+		const userId = user?.uid;
 		if (userId) {
-			payment(userId)
+		  payment(userId, shippingData);
 		}
+	  };
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target
+		setShippingData(prevData => ({
+			...prevData,
+			[name]: value,
+		}))
 	}
 
 	return (
@@ -129,11 +142,12 @@ const Cart = () => {
 							<input
 								type='text'
 								id='dirección'
-								name='dirección'
+								name='address'
 								placeholder='Ingrese dirección'
 								required
-								className='border rounded-lg focus:ring-blue-400 
-                            focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+								value={shippingData.address}
+								onChange={handleInputChange}
+								className='border rounded-lg focus:ring-blue-400 focus:border-gray-600 block w-full p-2.5 bg-gray-200'
 							/>
 						</div>
 						<div className='relative mb-6'>
@@ -146,11 +160,12 @@ const Cart = () => {
 							<input
 								type='text'
 								id='referencia'
-								name='referencia'
+								name='reference'
 								placeholder='Ingrese referencia'
 								required
-								className='border rounded-lg focus:ring-blue-400 
-                            focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+								value={shippingData.reference}
+								onChange={handleInputChange}
+								className='border rounded-lg focus:ring-blue-400 focus:border-gray-600 block w-full p-2.5 bg-gray-200'
 							/>
 						</div>
 						<div className='relative mb-6'>
@@ -165,11 +180,12 @@ const Cart = () => {
 								inputMode='numeric'
 								pattern='\d*'
 								id='number'
-								name='number'
+								name='phoneNumber'
 								placeholder='Ingrese número de teléfono'
 								required
-								className='border rounded-lg focus:ring-blue-400 
-                            focus:border-gray-600 block w-full p-2.5 bg-gray-200'
+								value={shippingData.phoneNumber}
+								onChange={handleInputChange}
+								className='border rounded-lg focus:ring-blue-400 focus:border-gray-600 block w-full p-2.5 bg-gray-200'
 							/>
 						</div>
 					</form>
@@ -182,13 +198,6 @@ const Cart = () => {
 						Ir a pagar <span>s/. {totalPrice.toFixed(2)}</span>
 					</button>
 				</div>
-			</div>
-			{/* pagar */}
-			<div className='w-[400px]'>
-				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed, maiores,
-				ratione recusandae veniam earum asperiores magni sint praesentium
-				doloremque consequuntur deleniti beatae porro! Corrupti esse vero,
-				expedita sequi suscipit molestiae.
 			</div>
 		</div>
 	)

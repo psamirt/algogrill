@@ -91,11 +91,16 @@ export const cleanupCart = () => {
 	}
 }
 
-export const payment = async (userId: string) => {
+export const payment = async (
+	userId: string,
+	shippingData: { address: string; phoneNumber: string; reference: string }
+  ) => {
 	try {
-	const response = await axios.post(`${baseUrl}/order/createOrder/${userId}`)
-	window.location.href = response.data.init_point
+	  const response = await axios.post(`${baseUrl}/order/createOrder/${userId}`, {
+		...shippingData,
+	  });
+	  window.location.href = response.data.init_point;
 	} catch (error) {
-		console.error('Error al pagar el carrito', error)
+	  console.error('Error al pagar el carrito', error);
 	}
-}
+  };

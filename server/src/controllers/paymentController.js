@@ -31,7 +31,7 @@ export const createOrder = async (req, res) => {
     const order = new Order({
       userId,
       items,
-      userDetails,
+      userDetails
     });
 
     await order.save();
@@ -71,6 +71,10 @@ export const receiveWebhook = async (req, res) => {
 
     if (payment.type === 'payment') {
       const data = await mercadopago.payment.findById(payment['data.id']);
+      console.log(data);
+      // const orderId = data.order.id;
+      // await Order.findByIdAndUpdate(orderId, { status: 'payed' });
+      // console.log(`Orden ${orderId} actualizada a estado 'payed'`);
     }
     res.send('webhook');
   } catch (error) {
