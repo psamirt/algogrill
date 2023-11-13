@@ -8,7 +8,7 @@ const { ACCESS_TOKEN } = process.env;
 export const createOrder = async (req, res) => {
   try {
     const { userId } = req.params;
-    // const { address, phoneNumber, reference } = req.body;
+    const { address, phoneNumber, reference } = req.body;
 
     const cart = await Cart.findOne({ userId });
     console.log(cart);
@@ -22,19 +22,19 @@ export const createOrder = async (req, res) => {
       unit_price: parseFloat(item.product.price.toFixed(2))
     }));
 
-    // const userDetails = {
-    //   address,
-    //   phoneNumber,
-    //   reference
-    // };
+    const userDetails = {
+      address,
+      phoneNumber,
+      reference
+    };
 
-    // const order = new Order({
-    //   userId,
-    //   items,
-    //   userDetails
-    // });
+    const order = new Order({
+      userId,
+      items,
+      userDetails,
+    });
 
-    // await order.save();
+    await order.save();
 
     mercadopago.configure({
       access_token: ACCESS_TOKEN

@@ -1,6 +1,8 @@
 import { Schema, model } from 'mongoose';
 import { productSchema } from './product.js';
 
+const validate = ['pending','payed','cancel']
+
 const orderItemSchema = new Schema({
   product: productSchema,
   quantity: {
@@ -21,16 +23,15 @@ const orderSchema = new Schema(
       phoneNumber: String,
       reference: String,
     },
-    // status: {
-    //   type: String,
-    //   required: true,
-    // },
-    // paymentInfo: {
-    //   type: Schema.Types.Mixed,
-    // },
-    // customerNotes: {
-    //   type: String,
-    // },
+    status: {
+      type: String,
+      required: true,
+      enum: validate,
+      default: 'pending'
+    },
+    paymentInfo: {
+      type: Schema.Types.Mixed,
+    },
   },
   {
     timestamps: true,
