@@ -3,7 +3,7 @@ dotenv.config();
 import mercadopago from 'mercadopago';
 import Order from '../database/models/order.js';
 import Cart from '../database/models/cart.js';
-const { ACCESS_TOKEN } = process.env;
+const { ACCESS_TOKEN, WEB_HOOK } = process.env;
 
 export const createOrder = async (req, res) => {
   try {
@@ -33,7 +33,7 @@ export const createOrder = async (req, res) => {
         failure: 'http://localhost:5173/failure',
         // pending: 'http://localhost:3000/order/pending'
       },
-      notification_url: 'https://cb3d-38-25-13-183.ngrok.io/order/webHook',
+      notification_url: `${WEB_HOOK}/order/webHook`,
       total_amount: parseFloat(totalAmount.toFixed(2)),
       auto_return: 'approved'
     };
