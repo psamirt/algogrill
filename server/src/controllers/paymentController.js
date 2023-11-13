@@ -55,7 +55,7 @@ export const createOrder = async (req, res) => {
       notification_url: `https://algo-grill.onrender.com/order/webHook`,
       total_amount: parseFloat(totalAmount.toFixed(2)),
       auto_return: 'approved',
-      client_id: userId
+      id: userId
     };
     console.log(preference);
 
