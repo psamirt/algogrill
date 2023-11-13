@@ -15,7 +15,7 @@ const orderSchema = new Schema(
   {
     _id: {
       type: String, // Puedes ajustar el tipo según tus necesidades
-      required: true,
+      // required: true,
       // Otros validadores o configuraciones según tus requisitos
     },
     userId: {
