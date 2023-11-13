@@ -11,6 +11,8 @@ import Menu from './pages/menu/Menu.js'
 import Cart from './pages/user/cart/Cart.js'
 import ProtectRoute from './components/protectetRoute/ProtectRoute.js'
 import { Toaster } from 'react-hot-toast'
+import Success from './components/paymentPages/success.js'
+import Failure from './components/paymentPages/Failure.js'
 
 const App = (): JSX.Element => {
 	return (
@@ -21,6 +23,8 @@ const App = (): JSX.Element => {
 					<Route path='/' element={<Home />}></Route>
 					<Route path='/register' element={<Register />}></Route>
 					<Route path='/resetPassword' element={<ResetPassword />}></Route>
+					<Route path='/success' element={<Success />}></Route>
+					<Route path='/failure' element={<Failure />}></Route>
 					<Route path='/menu' element={<Menu />} />
 					<Route path='/cart/:userId' element={<Cart />} />
 					<Route

@@ -87,6 +87,16 @@ export const updateQuantityCart = (
 
 export const cleanupCart = () => {
 	return (dispatch: Dispatch) => {
-	  dispatch(setCart([]));
-	};
-  };
+		dispatch(setCart([]))
+	}
+}
+
+export const payment = async (userId: string) => {
+	try {
+	const response = await axios.post(`${baseUrl}/order/createOrder/${userId}`)
+	console.log('respuesta del servidor', response.data);
+	// window.location.href = response.data.init_point
+	} catch (error) {
+		console.error('Error al pagar el carrito', error)
+	}
+}

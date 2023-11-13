@@ -29,9 +29,9 @@ export const createOrder = async (req, res) => {
     const preference = {
       items: items,
       back_urls: {
-        success: 'http://localhost:3000/order/success',
-        failure: 'http://localhost:3000/order/failure',
-        pending: 'http://localhost:3000/order/pending'
+        success: 'http://localhost:5173/success',
+        failure: 'http://localhost:5173/failure',
+        // pending: 'http://localhost:3000/order/pending'
       },
       notification_url: 'https://cb3d-38-25-13-183.ngrok.io/order/webHook',
       total_amount: parseFloat(totalAmount.toFixed(2)),

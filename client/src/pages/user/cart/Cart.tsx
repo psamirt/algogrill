@@ -10,6 +10,7 @@ import { useAuth } from '../../../context/AuthContext'
 import toast from 'react-hot-toast'
 import {
 	deleteProductFromCart,
+	payment,
 	updateQuantityCart,
 } from '../../../app/redux/actions/cartActions'
 
@@ -55,6 +56,14 @@ const Cart = () => {
 		return product.price * quantity
 	}
 
+	const handlePayment = (event: React.MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault()
+		const userId = user?.uid
+		if (userId) {
+			payment(userId)
+		}
+	}
+
 	return (
 		<div className='max-w-[1400px] mx-auto bg-slate-50 flex'>
 			{/* cards */}
@@ -74,7 +83,7 @@ const Cart = () => {
 								<td className='py-2 px-4'>{el.product.product_name}</td>
 								<td className='py-2 px-[50px]'>
 									<input
-									className='w-8'
+										className='w-8'
 										type='number'
 										value={el.quantity}
 										onChange={e =>
@@ -108,7 +117,10 @@ const Cart = () => {
 					</tbody>
 				</table>
 				<div className='flex justify-end'>
-					<button className='text-white px-2 rounded-md hover:scale-105 duration-300 bg-orange-500 m-3'>
+					<button
+						onClick={handlePayment}
+						className='text-white px-2 rounded-md hover:scale-105 duration-300 bg-orange-500 m-3'
+					>
 						Ir a pagar <span>s/. {totalPrice.toFixed(2)}</span>
 					</button>
 				</div>
