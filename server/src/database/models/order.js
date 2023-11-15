@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { productSchema } from './product.js';
 
-const validate = ['pending','payed','cancel']
+const validate = ['pending', 'payed', 'cancel'];
 
 const orderItemSchema = new Schema({
   product: productSchema,
@@ -27,7 +27,7 @@ const orderSchema = new Schema(
       type: String,
       required: true,
       enum: validate,
-      default: 'pending'
+      default: 'pending',
     },
     paymentInfo: {
       type: Schema.Types.Mixed,
@@ -38,6 +38,8 @@ const orderSchema = new Schema(
     collection: 'orders',
   }
 );
+
+orderSchema.index({ 'items.product.product_name': 1 }, { sparse: true });
 
 const Order = model('Order', orderSchema);
 export default Order;
