@@ -72,24 +72,12 @@ export const receiveWebhook = async (req, res) => {
     const payment = req.query;
 
     if (payment.type === 'payment') {
-      const orderId = payment['data.id'];
-
-      // Busca el pedido en la base de datos utilizando el ID del pedido
-      const order = await Order.findById(orderId);
-
-      if (order) {
-        // Actualiza el estado de la orden a "payed" en la base de datos
-        await Order.findByIdAndUpdate(orderId, { status: 'payed' });
-
-        console.log(`Orden ${orderId} actualizada a estado 'payed'`);
-      } else {
-        console.log(`No se encontró ninguna orden con el ID ${orderId}`);
-      }
+      const data = await mercadopago.payment.findById(payment['data.id']);
+      console.log(data);
     }
 
     res.send('webhook');
   } catch (error) {
-    console.error('Error en el webhook:', error);
     res.status(500).json({ error: error.message });
   }
 };
