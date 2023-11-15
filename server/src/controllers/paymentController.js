@@ -63,7 +63,7 @@ export const createOrder = async (req, res) => {
       await Cart.findOneAndRemove({ userId });
 
       await Order.findOneAndUpdate({ userId }, { $set: { status: 'payed' } });
-      
+
       res.send(result.body);
     } else {
       res.status(404).json('Carrito no encontrado');
@@ -79,9 +79,7 @@ export const receiveWebhook = async (req, res) => {
     const payment = req.query;
 
     if (payment.type === 'payment') {
-     const data = await mercadopago.payment.findById(payment['data.id']);
-
-     console.log(data);
+      await mercadopago.payment.findById(payment['data.id']);
     }
 
     res.send('webhook');
