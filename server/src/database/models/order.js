@@ -39,7 +39,6 @@ const orderSchema = new Schema(
   }
 );
 
-orderSchema.index({ 'items.product.product_name': 1 }, { sparse: true });
 
 const Order = model('Order', orderSchema);
 export default Order;

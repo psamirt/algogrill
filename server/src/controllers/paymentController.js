@@ -31,6 +31,7 @@ export const createOrder = async (req, res) => {
       const order = new Order({
         userId,
         items,
+        orderNumber: Math.random().toString(36).substring(7),
         userDetails
       });
 
