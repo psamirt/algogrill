@@ -12,53 +12,66 @@ export const createOrder = async (req, res) => {
 
     const cart = await Cart.findOne({ userId });
 
-    const items = cart.items.map((item) => ({
-      id: item.product._id,
-      category_id: item.product.product_type,
-      description: item.product.description,
-      title: item.product.product_name,
-      quantity: item.quantity,
-      unit_price: parseFloat(item.product.price.toFixed(2))
-    }));
+    if (cart) {
+      const items = cart.items.map((item) => ({
+        id: item.product._id,
+        category_id: item.product.product_type,
+        description: item.product.description,
+        title: item.product.product_name,
+        quantity: item.quantity,
+        unit_price: parseFloat(item.product.price.toFixed(2))
+      }));
 
-    const userDetails = {
-      address,
-      phoneNumber,
-      reference
-    };
+      const userDetails = {
+        address,
+        phoneNumber,
+        reference
+      };
 
-    const order = new Order({
-      userId,
-      items,
-      userDetails,
-    });
+      const order = new Order({
+        userId,
+        items,
+        userDetails
+      });
 
-    await order.save();
+      await order.save();
 
-    mercadopago.configure({
-      access_token: ACCESS_TOKEN
-    });
+      mercadopago.configure({
+        access_token: ACCESS_TOKEN
+      });
 
-    const totalAmount = items.reduce(
-      (total, item) => total + item.unit_price * item.quantity,
-      0
-    );
+      const totalAmount = items.reduce(
+        (total, item) => total + item.unit_price * item.quantity,
+        0
+      );
 
-    const preference = {
-      items: items,
-      back_urls: {
-        success: 'http://localhost:5173/success',
-        failure: 'http://localhost:5173/failure',
-        pending: 'http://localhost:5173/pending'
-      },
-      notification_url: `https://algo-grill.onrender.com/order/webHook`,
-      total_amount: parseFloat(totalAmount.toFixed(2)),
-      auto_return: 'approved',
-    };
+      const preference = {
+        items: items,
+        back_urls: {
+          success: 'http://localhost:5173/success',
+          failure: 'http://localhost:5173/failure',
+          pending: 'http://localhost:5173/pending'
+        },
+        notification_url: `https://algo-grill.onrender.com/order/webHook`,
+        total_amount: parseFloat(totalAmount.toFixed(2)),
+        auto_return: 'approved',
+        payer: {
+          phone: phoneNumber,
+          address: address
+        }
+      };
 
-    const result = await mercadopago.preferences.create(preference);
-    console.log(result)
-    res.send(result.body);
+      const result = await mercadopago.preferences.create(preference);
+
+      await Cart.findOneAndRemove({ userId });
+
+      await Order.findOneAndUpdate({ userId }, { $set: { status: 'payed' } });
+
+
+      res.send(result.body);
+    } else {
+      res.status(404).json('Carrito no encontrado');
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json('Error al crear la orden');
