@@ -11,7 +11,6 @@ export const createOrder = async (req, res) => {
     const { address, phoneNumber, reference } = req.body;
 
     const cart = await Cart.findOne({ userId });
-    console.log(cart);
 
     const items = cart.items.map((item) => ({
       id: item.product._id,
@@ -31,7 +30,7 @@ export const createOrder = async (req, res) => {
     const order = new Order({
       userId,
       items,
-      userDetails
+      userDetails,
     });
 
     await order.save();
