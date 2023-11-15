@@ -3,14 +3,13 @@ import {
 	AiFillTag,
 	AiOutlineClose,
 	AiOutlineMenu,
-	AiOutlineSearch,
-	AiOutlineDashboard
+	AiOutlineDashboard,
 } from 'react-icons/ai'
 import { BiSolidUserCircle, BiSolidLogOutCircle } from 'react-icons/bi'
 import { BsCart4 } from 'react-icons/bs'
 import { TbTruckDelivery } from 'react-icons/tb'
 import { FaWallet } from 'react-icons/fa'
-import { MdFavorite, MdHelp } from 'react-icons/md'
+import { MdFavorite, MdHelp, MdMenuBook } from 'react-icons/md'
 import { RiTodoFill } from 'react-icons/ri'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
@@ -21,7 +20,7 @@ import {
 } from '../../app/redux/hooks/customHooks'
 import { cleanupCart, getCart } from '../../app/redux/actions/cartActions'
 import { io } from 'socket.io-client/debug'
-import {  CartItem, User } from 'utils/Types'
+import { CartItem, User } from 'utils/Types'
 import { fetchUsers } from '../../app/redux/actions/userAction'
 import toast from 'react-hot-toast'
 const socket = io('https://algo-grill.onrender.com')
@@ -38,10 +37,9 @@ const Navbar: React.FC = () => {
 	const dispatch = useAppDispatch()
 
 	const totalQuantity = cartState.items.reduce(
-		(total: number, item:CartItem ) => total + (Number(item.quantity) || 1),
-		0
-	  );
-	  
+		(total: number, item: CartItem) => total + (Number(item.quantity) || 1),
+		0,
+	)
 
 	useEffect(() => {
 		const getUsers = async () => {
@@ -104,58 +102,53 @@ const Navbar: React.FC = () => {
 					>
 						<AiOutlineMenu size={30} />
 					</div>
-					<img src='svg/logo-suplente.svg' alt='logo' className='w-[170px]' />
-				</NavLink>
-
-				{/* search input */}
-
-				<div className='bg-slate-100 rounded-full flex items-center px-2 w-[200px] sm:w-[400px] lg:w-[500px]'>
-					<AiOutlineSearch />
-					<input
-						className='bg-transparent p-2 focus:outline-none w-full'
-						type='text'
-						placeholder='Search burger'
+					<img
+						src='svg/logo-suplente.svg'
+						alt='logo'
+						className='md:w-[170px] w-[100px] md:m-0 mx-36'
 					/>
-				</div>
+				</NavLink>
 
 				{/* card and login button */}
-				{selectedUser?.role === 'admin' &&(
-					<NavLink to='/admin'>
-						<AiOutlineDashboard size={30}/>
-					</NavLink>
+				{selectedUser?.role === 'admin' && (
+					<div className='hidden md:flex items-center'>
+						<NavLink to='/admin' className='m-auto'>
+							<AiOutlineDashboard size={30} className='m-auto' />
+							<span>Admin</span>
+						</NavLink>
+					</div>
 				)}
-				<div className='relative'>
-					<NavLink
-						to={`/cart/${user?.uid}`}
-						className='hidden md:flex items-center py-2'
-					>
-						<BsCart4 size={25} className='mr-2' />
-						<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] bottom-[8px] left-6 items-center justify-center flex absolute'>
-							{totalQuantity}
-						</span>
+				<div className='hidden md:flex items-center'>
+					<div>
+						<NavLink to={`/cart/${user?.uid}`}>
+							<BsCart4 size={25} className='m-auto' />
+						</NavLink>
+						<span>Cart</span>
+					</div>
+					<span className='bg-gray-700 text-slate-100 rounded-full w-[20px] h-[20px] items-center justify-center flex'>
+						{totalQuantity}
+					</span>
+				</div>
+				<div className='hidden md:flex items-center'>
+					<NavLink to='/menu'>
+						<MdMenuBook size={25} className='m-auto' />
+						<span>Menú</span>
 					</NavLink>
 				</div>
-				<NavLink to='/menu' className='flex items-center justify-center ml-2'>
-					<div className='flex items-center p-5 h-6 '>
-						<p className='text-lg font-bold'>Menú</p>
-					</div>
-				</NavLink>
 				{user ? (
-					<button
-						onClick={handleLogOut}
-						className='hidden md:flex items-center py-2 font-bold'
-					>
-						<BiSolidLogOutCircle size={30} className='mr-2 p-0' />
-						<span>Salir</span>
-					</button>
+					<div className='hidden md:flex items-center'>
+						<button onClick={handleLogOut}>
+							<BiSolidLogOutCircle size={30} className='m-auto' />
+							<span>Salir</span>
+						</button>
+					</div>
 				) : (
-					<button
-						onClick={handleModalOpen}
-						className='hidden md:flex items-center py-2 font-bold'
-					>
-						<BiSolidUserCircle size={30} className='mr-2 p-0' />
-						<span>Ingresar</span>
-					</button>
+					<div className='hidden md:flex items-center'>
+						<button onClick={handleModalOpen}>
+							<BiSolidUserCircle size={30} className='m-auto' />
+							<span>Ingresar</span>
+						</button>
+					</div>
 				)}
 				{openLogin && <Login onClose={handleModalClose} />}
 
