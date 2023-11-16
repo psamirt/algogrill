@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {
-	AiFillTag,
 	AiOutlineClose,
 	AiOutlineMenu,
 	AiOutlineDashboard,
 } from 'react-icons/ai'
 import { BiSolidUserCircle, BiSolidLogOutCircle } from 'react-icons/bi'
 import { BsCart4 } from 'react-icons/bs'
-import { FaWallet } from 'react-icons/fa'
-import { MdHelp, MdMenuBook } from 'react-icons/md'
+import { MdMenuBook } from 'react-icons/md'
 import { RiTodoFill } from 'react-icons/ri'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
@@ -162,32 +160,53 @@ const Navbar: React.FC = () => {
 					<AiOutlineClose
 						onClick={() => setNav(!nav)}
 						size={30}
-						className='absolute right-4 top-4 cursor-pointer text-white'
+						className='absolute -right-7 top-4 cursor-pointer text-black'
 					/>
-					<NavLink to='/' className='text-white'>
-						<h2 className='text-2xl p-4 m-2'>
-							Algo <span className='font-bold'>Grill</span>
-						</h2>
-					</NavLink>
-					<nav>
-						<ul className='flex-col px-4 py-4-800 text-white'>
-							<li className='text-xl py-4 flex'>
+					<div className='flex items-center justify-between'>
+						<NavLink to='/' className='text-white'>
+							<h2 className='text-2xl p-4 m-2'>
+								Algo <span className='font-bold'>Grill</span>
+							</h2>
+						</NavLink>
+						{user ? (
+							<div className='items-center flex text-white justify-end'>
+								<button onClick={handleLogOut} className='text-xl flex'>
+									<BiSolidLogOutCircle size={30} className='m-auto' />
+									<span>Cerrar <br />
+									<span>sesión</span></span>
+								</button>
+							</div>
+						) : (
+							<div className='items-center flex text-white'>
+								<button onClick={handleModalOpen}>
+									<BiSolidUserCircle size={30} className='m-auto' />
+									<span>Ingresar</span>
+								</button>
+							</div>
+						)}
+						{openLogin && <Login onClose={handleModalClose} />}
+					</div>
+					<nav className='h-screen'>
+						<div className='flex-col px-4 py-4-800 text-white mt-40'>
+							{selectedUser?.role === 'admin' && (
+								<NavLink to='/menu' className='text-xl py-4 flex'>
+									{' '}
+									<AiOutlineDashboard size={25} className='mr-4' /> Admin{' '}
+								</NavLink>
+							)}
+
+							<NavLink to='/menu' className='text-xl py-4 flex'>
 								{' '}
-								<FaWallet size={25} className='mr-4' /> Pagar{' '}
-							</li>
-							<li className='text-xl py-4 flex'>
-								{' '}
-								<MdHelp size={25} className='mr-4' /> Ayuda{' '}
-							</li>
-							<li className='text-xl py-4 flex'>
-								{' '}
-								<AiFillTag size={25} className='mr-4' /> Promociones{' '}
-							</li>
+								<BsCart4 size={25} className='mr-4' /> Carrito{' '}
+								<span className='bg-white text-black rounded-full w-[20px] h-[20px] items-center justify-center flex'>
+									{totalQuantity}
+								</span>
+							</NavLink>
 							<NavLink to='/menu' className='text-xl py-4 flex'>
 								{' '}
 								<RiTodoFill size={25} className='mr-4' /> Menu{' '}
 							</NavLink>
-						</ul>
+						</div>
 					</nav>
 				</div>
 			</div>
