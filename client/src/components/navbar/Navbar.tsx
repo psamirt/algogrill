@@ -7,9 +7,8 @@ import {
 } from 'react-icons/ai'
 import { BiSolidUserCircle, BiSolidLogOutCircle } from 'react-icons/bi'
 import { BsCart4 } from 'react-icons/bs'
-import { TbTruckDelivery } from 'react-icons/tb'
 import { FaWallet } from 'react-icons/fa'
-import { MdFavorite, MdHelp, MdMenuBook } from 'react-icons/md'
+import { MdHelp, MdMenuBook } from 'react-icons/md'
 import { RiTodoFill } from 'react-icons/ri'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
@@ -23,6 +22,7 @@ import { io } from 'socket.io-client/debug'
 import { CartItem, User } from 'utils/Types'
 import { fetchUsers } from '../../app/redux/actions/userAction'
 import toast from 'react-hot-toast'
+import { motion } from 'framer-motion'
 const socket = io('https://algo-grill.onrender.com')
 
 const Navbar: React.FC = () => {
@@ -94,20 +94,23 @@ const Navbar: React.FC = () => {
 		<div className='bg-yellow-400'>
 			<div className='max-w-[1400px] mx-auto flex justify-between items-center p-4'>
 				{/* left side */}
-
-				<NavLink className='flex items-center' to='/'>
-					<div
+				<NavLink to='/' className='flex items-center'>
+					<motion.div
 						onClick={() => setNav(!nav)}
 						className='cursor-pointer md:hidden flex'
+						animate={{
+							rotate: [0, 0, 270, 270, 0],
+							borderRadius: ['20%', '20%', '50%', '50%', '20%'],
+						}}
 					>
-						<AiOutlineMenu size={30} />
-					</div>
-					<img
-						src='svg/logo-suplente.svg'
-						alt='logo'
-						className='md:w-[170px] w-[100px] md:m-0 mx-36'
-					/>
+						<AiOutlineMenu size={30} className='space-x-10' />
+					</motion.div>
 				</NavLink>
+				<img
+					src='svg/logo-suplente.svg'
+					alt='logo'
+					className='md:w-[170px] w-[100px] md:m-auto'
+				/>
 
 				{/* card and login button */}
 				{selectedUser?.role === 'admin' && (
@@ -156,30 +159,22 @@ const Navbar: React.FC = () => {
 				<div
 					className={
 						nav
-							? 'fixed top-0 left-0 w-[300px] h-screen bg-black z-10 duration-300'
-							: 'fixed top-0 left-[-100%] w-[300px] h-screen bg-black z-10 duration-300'
+							? 'fixed top-0 left-0 w-[300px] h-screen bg-black z-20 duration-300'
+							: 'fixed top-0 left-[-100%] w-[300px] h-screen bg-black z-20 duration-300'
 					}
 				>
 					<AiOutlineClose
 						onClick={() => setNav(!nav)}
 						size={30}
-						className='absolute right-4 top-4 cursor-pointer'
+						className='absolute right-4 top-4 cursor-pointer text-white'
 					/>
-					<NavLink to='/'>
+					<NavLink to='/' className='text-white'>
 						<h2 className='text-2xl p-4 m-2'>
 							Algo <span className='font-bold'>Grill</span>
 						</h2>
 					</NavLink>
 					<nav>
-						<ul className='flex-col px-4 py-4-800'>
-							<li className='text-xl py-4 flex'>
-								{' '}
-								<TbTruckDelivery size={25} className='mr-4' /> Pedidos{' '}
-							</li>
-							<li className='text-xl py-4 flex'>
-								{' '}
-								<MdFavorite size={25} className='mr-4' /> Favoritos{' '}
-							</li>
+						<ul className='flex-col px-4 py-4-800 text-white'>
 							<li className='text-xl py-4 flex'>
 								{' '}
 								<FaWallet size={25} className='mr-4' /> Pagar{' '}
@@ -194,7 +189,7 @@ const Navbar: React.FC = () => {
 							</li>
 							<NavLink to='/menu' className='text-xl py-4 flex'>
 								{' '}
-								<RiTodoFill size={25} className='mr-4' /> Carta{' '}
+								<RiTodoFill size={25} className='mr-4' /> Menu{' '}
 							</NavLink>
 						</ul>
 					</nav>
