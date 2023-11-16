@@ -22,7 +22,6 @@ import { io } from 'socket.io-client/debug'
 import { CartItem, User } from 'utils/Types'
 import { fetchUsers } from '../../app/redux/actions/userAction'
 import toast from 'react-hot-toast'
-import { motion } from 'framer-motion'
 const socket = io('https://algo-grill.onrender.com')
 
 const Navbar: React.FC = () => {
@@ -94,23 +93,20 @@ const Navbar: React.FC = () => {
 		<div className='bg-yellow-400'>
 			<div className='max-w-[1400px] mx-auto flex justify-between items-center p-4'>
 				{/* left side */}
-				<NavLink to='/' className='flex items-center'>
-					<motion.div
-						onClick={() => setNav(!nav)}
-						className='cursor-pointer md:hidden flex'
-						animate={{
-							rotate: [0, 0, 270, 270, 0],
-							borderRadius: ['20%', '20%', '50%', '50%', '20%'],
-						}}
-					>
-						<AiOutlineMenu size={30} className='space-x-10' />
-					</motion.div>
+
+				<div
+					onClick={() => setNav(!nav)}
+					className='cursor-pointer md:hidden flex'
+				>
+					<AiOutlineMenu size={30} />
+				</div>
+				<NavLink className='flex items-center' to='/'>
+					<img
+						src='svg/logo-suplente.svg'
+						alt='logo'
+						className='md:w-[170px] w-[100px] md:m-0'
+					/>
 				</NavLink>
-				<img
-					src='svg/logo-suplente.svg'
-					alt='logo'
-					className='md:w-[170px] w-[100px] md:m-auto'
-				/>
 
 				{/* card and login button */}
 				{selectedUser?.role === 'admin' && (
