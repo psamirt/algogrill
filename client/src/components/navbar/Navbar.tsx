@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import {
-	AiOutlineClose,
-	AiOutlineMenu,
-	AiOutlineDashboard,
-} from 'react-icons/ai'
+import { AiOutlineMenu, AiOutlineDashboard } from 'react-icons/ai'
 import { BiSolidUserCircle, BiSolidLogOutCircle } from 'react-icons/bi'
+import { IoCloseCircleSharp } from 'react-icons/io5'
 import { BsCart4 } from 'react-icons/bs'
 import { MdMenuBook } from 'react-icons/md'
 import { RiTodoFill } from 'react-icons/ri'
@@ -80,6 +77,10 @@ const Navbar: React.FC = () => {
 		setOpenLogin(false)
 	}
 
+	const handleNavToggle = () => {
+		setNav(!nav)
+	}
+
 	const handleLogOut = async () => {
 		await logout()
 		dispatch(cleanupCart())
@@ -89,6 +90,13 @@ const Navbar: React.FC = () => {
 
 	return (
 		<div className='bg-yellow-400'>
+			{/* Capa traslúcida */}
+			<div
+				className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 z-10 ${
+					nav ? 'block' : 'hidden'
+				}`}
+				onClick={handleNavToggle}
+			></div>
 			<div className='max-w-[1400px] mx-auto flex justify-between items-center p-4'>
 				{/* left side */}
 
@@ -157,10 +165,10 @@ const Navbar: React.FC = () => {
 							: 'fixed top-0 left-[-100%] w-[300px] h-screen bg-black z-20 duration-300'
 					}
 				>
-					<AiOutlineClose
+					<IoCloseCircleSharp
 						onClick={() => setNav(!nav)}
 						size={30}
-						className='absolute -right-7 top-4 cursor-pointer text-black'
+						className='absolute -right-9 top-4 cursor-pointer text-white'
 					/>
 					<div className='flex items-center justify-between'>
 						<NavLink to='/' className='text-white'>
@@ -172,8 +180,10 @@ const Navbar: React.FC = () => {
 							<div className='items-center flex text-white justify-end'>
 								<button onClick={handleLogOut} className='text-xl flex'>
 									<BiSolidLogOutCircle size={30} className='m-auto' />
-									<span>Cerrar <br />
-									<span>sesión</span></span>
+									<span>
+										Cerrar <br />
+										<span>sesión</span>
+									</span>
 								</button>
 							</div>
 						) : (
