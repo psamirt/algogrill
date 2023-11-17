@@ -92,7 +92,7 @@ const Navbar: React.FC = () => {
 		<div className='bg-yellow-400'>
 			{/* Capa traslúcida */}
 			<div
-				className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 z-10 ${
+				className={`fixed top-0 left-0 w-full h-full bg-black/70 z-10 ${
 					nav ? 'block' : 'hidden'
 				}`}
 				onClick={handleNavToggle}
