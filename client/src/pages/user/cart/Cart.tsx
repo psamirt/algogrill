@@ -62,12 +62,12 @@ const Cart = () => {
 	}
 
 	const handlePayment = (event: React.MouseEvent<HTMLButtonElement>) => {
-		event.preventDefault();
-		const userId = user?.uid;
+		event.preventDefault()
+		const userId = user?.uid
 		if (userId) {
-		  payment(userId, shippingData);
+			payment(userId, shippingData)
 		}
-	  };
+	}
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
