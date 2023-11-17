@@ -12,6 +12,7 @@ import {
 	useAppDispatch,
 	useAppSelector,
 } from '../../app/redux/hooks/customHooks'
+import { motion } from 'framer-motion'
 import { cleanupCart, getCart } from '../../app/redux/actions/cartActions'
 import { io } from 'socket.io-client/debug'
 import { CartItem, User } from 'utils/Types'
@@ -97,7 +98,16 @@ const Navbar: React.FC = () => {
 				}`}
 				onClick={handleNavToggle}
 			></div>
-			<div className='max-w-[1400px] mx-auto flex justify-between items-center p-4'>
+			<motion.div
+				className='max-w-[1400px] mx-auto flex justify-between items-center p-4'
+				initial={{ opacity: 0, scale: 0.5 }}
+				animate={{ opacity: 1, scale: 1 }}
+				transition={{
+					duration: 0.8,
+					delay: 0.5,
+					ease: [0, 0.71, 0.2, 1.01],
+				}}
+			>
 				{/* left side */}
 
 				<div
@@ -219,7 +229,7 @@ const Navbar: React.FC = () => {
 						</div>
 					</nav>
 				</div>
-			</div>
+			</motion.div>
 		</div>
 	)
 }
