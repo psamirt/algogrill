@@ -10,6 +10,7 @@ import { FaComments } from 'react-icons/fa'
 import React, { useState } from 'react'
 import CreateProduct from './products/CreateProduct'
 import { Options } from '../../utils/Types.ts'
+import { motion } from 'framer-motion'
 import ProductList from './products/ProductList.tsx'
 import AllProducts from './products/AllProducts.tsx'
 import Users from './users/Users.tsx'
@@ -48,7 +49,16 @@ const Admin = (): JSX.Element => {
 
 	return (
 		<div className='max-h-[100vh] max-w-[1400px] mx-auto grid grid-cols-6'>
-			<div className='col-span-1 p-8'>
+			<motion.div 
+			initial={{ opacity: 0, scale: 0.5 }}
+			animate={{ opacity: 1, scale: 1 }}
+			transition={{
+				duration: 0.8,
+				delay: 0.5,
+				ease: [0, 0.71, 0.2, 1.01],
+			}}
+			className='col-span-1 p-8'
+			>
 				{/* logo */}
 				<div className='text-center p-8'>
 					<button
@@ -157,7 +167,7 @@ const Admin = (): JSX.Element => {
 					{/* imagen */}
 					<img src='svg/imgAdmin.svg' alt='admin' className='max-w-[200px]' />
 				</div>
-			</div>
+			</motion.div>
 			<div className='col-span-5'>{content}</div>
 		</div>
 	)
