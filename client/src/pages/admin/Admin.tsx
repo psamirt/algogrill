@@ -10,13 +10,14 @@ import { Options } from '../../utils/Types.ts'
 import { motion } from 'framer-motion'
 import ProductList from './products/ProductList.tsx'
 import AllProducts from './products/AllProducts.tsx'
+import Dashboard from './dashboard/Dashboard.tsx'
 import Users from './users/Users.tsx'
 
 const Admin = (): JSX.Element => {
 	const [selectedOption, setSelectedOption] = useState<Options | string>('')
 	const [menuOpen, setMenuOpen] = useState(false)
 
-	let content = null
+	let content = <Dashboard />
 
 	const handleClick = (
 		event:
@@ -59,7 +60,7 @@ const Admin = (): JSX.Element => {
 						name='resumen'
 						className=' uppercase font-bold tracking-[4px]'
 					>
-						Resumen
+						Dashboard
 					</button>
 				</div>
 				<div className='h-[700px] flex flex-col justify-between '>
