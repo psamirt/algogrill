@@ -1,12 +1,9 @@
 import {
-	RiDashboardLine,
 	RiUserStarLine,
 	RiMoneyDollarCircleLine,
 	RiSeoLine,
 } from 'react-icons/ri'
 import { BiFoodMenu } from 'react-icons/bi'
-import { CiDeliveryTruck } from 'react-icons/ci'
-import { FaComments } from 'react-icons/fa'
 import React, { useState } from 'react'
 import CreateProduct from './products/CreateProduct'
 import { Options } from '../../utils/Types.ts'
@@ -14,15 +11,15 @@ import { motion } from 'framer-motion'
 import ProductList from './products/ProductList.tsx'
 import AllProducts from './products/AllProducts.tsx'
 import Users from './users/Users.tsx'
-// import Resumen from './resumen/Resumen.tsx'
-
+import Resumen from './resumen/Resumen.tsx'
 
 const Admin = (): JSX.Element => {
 	const [selectedOption, setSelectedOption] = useState<Options | string>('')
 	const [menuOpen, setMenuOpen] = useState(false)
 
-	let content = null
-	// <Resumen />
+	let content = 
+	// null
+	<Resumen />
 
 	const handleClick = (
 		event:
@@ -41,23 +38,23 @@ const Admin = (): JSX.Element => {
 		content = <ProductList />
 	} else if (selectedOption === 'all-products') {
 		content = <AllProducts />
-	// } else if (selectedOption === 'resumen') {
-	// 	content = <Resumen />
+		} else if (selectedOption === 'resumen') {
+			content = <Resumen />
 	} else if (selectedOption === 'users') {
 		content = <Users />
 	}
 
 	return (
 		<div className='max-h-[100vh] max-w-[1400px] mx-auto grid grid-cols-6'>
-			<motion.div 
-			initial={{ opacity: 0, scale: 0.5 }}
-			animate={{ opacity: 1, scale: 1 }}
-			transition={{
-				duration: 0.8,
-				delay: 0.5,
-				ease: [0, 0.71, 0.2, 1.01],
-			}}
-			className='col-span-1 p-8'
+			<motion.div
+				initial={{ opacity: 0, scale: 0.5 }}
+				animate={{ opacity: 1, scale: 1 }}
+				transition={{
+					duration: 0.8,
+					delay: 0.5,
+					ease: [0, 0.71, 0.2, 1.01],
+				}}
+				className='col-span-1 p-8'
 			>
 				{/* logo */}
 				<div className='text-center p-8'>
@@ -74,15 +71,6 @@ const Admin = (): JSX.Element => {
 					{/* Menu */}
 					<nav>
 						<ul>
-							<li>
-								<a
-									href='#'
-									className='flex items-center gap-3 hover:bg-slate-400 lg:text-sm p-4 rounded-lg transition-colors font-semibold'
-								>
-									<RiDashboardLine size={30} />
-									dashboard
-								</a>
-							</li>
 							<li>
 								<button
 									onClick={handleClick}
@@ -125,16 +113,6 @@ const Admin = (): JSX.Element => {
 									</select>
 								)}
 							</div>
-
-							<li>
-								<a
-									href='#'
-									className='flex items-center gap-3 hover:bg-slate-400 p-4 rounded-lg transition-colors font-semibold'
-								>
-									<CiDeliveryTruck size={30} />
-									Pedidos y Ventas
-								</a>
-							</li>
 							<li>
 								<a
 									href='#'
@@ -151,15 +129,6 @@ const Admin = (): JSX.Element => {
 								>
 									<RiSeoLine size={30} />
 									SEO
-								</a>
-							</li>
-							<li>
-								<a
-									href='#'
-									className='flex items-center gap-3 hover:bg-slate-400 p-4 rounded-lg transition-colors font-semibold'
-								>
-									<FaComments size={30} />
-									Comentarios
 								</a>
 							</li>
 						</ul>
