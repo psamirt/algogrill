@@ -1,5 +1,5 @@
 
-const Resumen = (): JSX.Element=> {
+const Resumen = () => {
   return (
     <div>resumen</div>
   )
