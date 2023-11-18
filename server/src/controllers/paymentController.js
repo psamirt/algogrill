@@ -63,7 +63,16 @@ export const createOrder = async (req, res) => {
 
       await Cart.findOneAndRemove({ userId });
 
-      await Order.findOneAndUpdate({ userId }, { $set: { status: 'payed' } });
+      const latestOrder = await Order.findOne({ userId })
+        .sort({ createdAt: -1 })
+        .limit(1);
+
+      if (latestOrder) {
+        await Order.findByIdAndUpdate(
+          { _id: latestOrder._id },
+          { $set: { status: 'payed' } }
+        );
+      }
 
       res.send(result.body);
     } else {
@@ -86,5 +95,28 @@ export const receiveWebhook = async (req, res) => {
     res.send('webhook');
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const getPayed = async (_req, res) => {
+  try {
+    const totalPaid = await Order.aggregate([
+      {
+        $match: {
+          status: 'payed'
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: '$total_amount' }
+        }
+      }
+    ]);
+
+    res.status(200).json({ totalPaid: totalPaid[0]?.totalAmount || 0 });
+  } catch (error) {
+    console.error('Error calculating total paid amount:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
