@@ -22,6 +22,11 @@ export const createOrder = async (req, res) => {
         unit_price: parseFloat(item.product.price.toFixed(2))
       }));
 
+      const totalAmount = items.reduce(
+        (total, item) => total + item.unit_price * item.quantity,
+        0
+      );
+
       const userDetails = {
         address,
         phoneNumber,
@@ -32,7 +37,8 @@ export const createOrder = async (req, res) => {
         userId,
         items,
         orderNumber: Math.random().toString(36).substring(7),
-        userDetails
+        userDetails,
+        total_amount: parseFloat(totalAmount.toFixed(2))
       });
 
       await order.save();
@@ -40,11 +46,6 @@ export const createOrder = async (req, res) => {
       mercadopago.configure({
         access_token: ACCESS_TOKEN
       });
-
-      const totalAmount = items.reduce(
-        (total, item) => total + item.unit_price * item.quantity,
-        0
-      );
 
       const preference = {
         items: items,

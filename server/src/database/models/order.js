@@ -32,6 +32,10 @@ const orderSchema = new Schema(
     paymentInfo: {
       type: Schema.Types.Mixed,
     },
+    total_amount:{
+      type: Number,
+      required: true
+    }
   },
   {
     timestamps: true,
