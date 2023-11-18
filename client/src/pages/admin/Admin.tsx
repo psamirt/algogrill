@@ -11,15 +11,12 @@ import { motion } from 'framer-motion'
 import ProductList from './products/ProductList.tsx'
 import AllProducts from './products/AllProducts.tsx'
 import Users from './users/Users.tsx'
-import Resumen from './resumen/Resumen.tsx'
 
 const Admin = (): JSX.Element => {
 	const [selectedOption, setSelectedOption] = useState<Options | string>('')
 	const [menuOpen, setMenuOpen] = useState(false)
 
-	let content = 
-	// null
-	<Resumen />
+	let content = null
 
 	const handleClick = (
 		event:
@@ -38,8 +35,6 @@ const Admin = (): JSX.Element => {
 		content = <ProductList />
 	} else if (selectedOption === 'all-products') {
 		content = <AllProducts />
-		} else if (selectedOption === 'resumen') {
-			content = <Resumen />
 	} else if (selectedOption === 'users') {
 		content = <Users />
 	}
