@@ -6,7 +6,7 @@ import {
   getSalesByDay,
   getTopSellingProducts,
   getTotalProductsSold
-} from '../controllers/dashboardController';
+} from '../controllers/dashboardController.js';
 
 router.get('/getPayed', getPayed);
 router.get('/getSalesByDay', getSalesByDay);
