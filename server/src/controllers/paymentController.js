@@ -98,25 +98,3 @@ export const receiveWebhook = async (req, res) => {
   }
 };
 
-export const getPayed = async (_req, res) => {
-  try {
-    const totalPaid = await Order.aggregate([
-      {
-        $match: {
-          status: 'payed'
-        }
-      },
-      {
-        $group: {
-          _id: null,
-          totalAmount: { $sum: '$total_amount' }
-        }
-      }
-    ]);
-
-    res.status(200).json({ totalPaid: totalPaid[0]?.totalAmount || 0 });
-  } catch (error) {
-    console.error('Error calculating total paid amount:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};

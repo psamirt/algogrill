@@ -6,12 +6,30 @@ import {
 	Metric,
 	ProgressBar,
 	Text,
+	// DonutChart,
+	// Title,
 } from '@tremor/react'
 import { motion } from 'framer-motion'
 import { getPayed } from '../../../app/redux/actions/adminAction'
 
+// const cities = [
+// 	{
+// 		name: 'New York',
+// 		sales: 9800,
+// 	},
+// 	// ...
+// 	{
+// 		name: 'Zurich',
+// 		sales: 1398,
+// 	},
+// ]
+
+// const valueFormatter = (number: number) =>
+// 	`$ ${new Intl.NumberFormat('us').format(number).toString()}`
+
 const Dashboard: React.FC = () => {
 	const [payedData, setPayedData] = useState<number | undefined>(undefined)
+	// const [value, setValue] = React.useState(null)
 
 	useEffect(() => {
 		const getTotalPayed = async () => {
@@ -36,7 +54,9 @@ const Dashboard: React.FC = () => {
 				ease: [0, 0.71, 0.2, 1.01],
 			}}
 		>
-			<Card className='max-w-lg mx-auto'>
+			{/* objetivo mensual */}
+
+			<Card className='max-w-lg m-3'>
 				<Flex alignItems='start'>
 					<div>
 						<Text>Ventas</Text>
@@ -50,6 +70,20 @@ const Dashboard: React.FC = () => {
 				</Flex>
 				<ProgressBar value={15.9} className='mt-2' />
 			</Card>
+
+			{/* ranking de productos */}
+			{/* <Card className='mx-auto'>
+				<Title>Top Productos</Title>
+				<DonutChart
+					className='mt-6'
+					data={cities}
+					category='sales'
+					index='name'
+					colors={['rose', 'yellow', 'orange', 'indigo', 'blue', 'emerald']}
+					onValueChange={v => setValue(v)}
+				/>
+			</Card> */}
+			{/* <pre>{JSON.stringify(value)}</pre> */}
 		</motion.div>
 	)
 }
