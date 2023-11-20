@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-    button {
-        @apply  rounded-full px-5 items-center 
-    }
     body {
         @apply bg-slate-100 text-gray-700
     }

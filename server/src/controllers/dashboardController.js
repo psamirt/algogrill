@@ -57,7 +57,7 @@ export const getTopSellingProducts = async (_req, res) => {
       {
         $group: {
           _id: '$items._id',
-          productName: { $first: '$items.product.title' },
+          productName: { $first: '$items.product.product_name' },
           totalSold: { $sum: '$items.quantity' }
         }
       },

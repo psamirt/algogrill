@@ -5,31 +5,36 @@ import {
 	Flex,
 	Metric,
 	ProgressBar,
+	Tab,
+	TabGroup,
+	TabList,
+	TabPanel,
+	TabPanels,
 	Text,
-	// DonutChart,
-	// Title,
+	DonutChart,
+	Title,
 } from '@tremor/react'
 import { motion } from 'framer-motion'
 import { getPayed } from '../../../app/redux/actions/adminAction'
 
-// const cities = [
-// 	{
-// 		name: 'New York',
-// 		sales: 9800,
-// 	},
-// 	// ...
-// 	{
-// 		name: 'Zurich',
-// 		sales: 1398,
-// 	},
-// ]
+const cities = [
+	{
+		name: 'New York',
+		sales: 9800,
+	},
+	// ...
+	{
+		name: 'Zurich',
+		sales: 1398,
+	},
+]
 
-// const valueFormatter = (number: number) =>
-// 	`$ ${new Intl.NumberFormat('us').format(number).toString()}`
+const valueFormatter = (number: number) =>
+	`$ ${new Intl.NumberFormat('us').format(number).toString()}`
 
 const Dashboard: React.FC = () => {
 	const [payedData, setPayedData] = useState<number | undefined>(undefined)
-	// const [value, setValue] = React.useState(null)
+	const [value, setValue] = React.useState(null)
 
 	useEffect(() => {
 		const getTotalPayed = async () => {
@@ -54,36 +59,70 @@ const Dashboard: React.FC = () => {
 				ease: [0, 0.71, 0.2, 1.01],
 			}}
 		>
-			{/* objetivo mensual */}
+			<TabGroup>
+				<TabList className='mt-8'>
+					<Tab>Objetivo Diario</Tab>
+					<Tab>Objetivo Mensual</Tab>
+				</TabList>
 
-			<Card className='max-w-lg m-3'>
-				<Flex alignItems='start'>
-					<div>
-						<Text>Ventas</Text>
-						<Metric>./S {payedData}</Metric>
-					</div>
-					<BadgeDelta deltaType='moderateIncrease'>13.2%</BadgeDelta>
-				</Flex>
-				<Flex className='mt-4'>
-					<Text className='truncate'>68% ($ 149,940)</Text>
-					<Text>$ 220,500</Text>
-				</Flex>
-				<ProgressBar value={15.9} className='mt-2' />
-			</Card>
-
-			{/* ranking de productos */}
-			{/* <Card className='mx-auto'>
-				<Title>Top Productos</Title>
-				<DonutChart
-					className='mt-6'
-					data={cities}
-					category='sales'
-					index='name'
-					colors={['rose', 'yellow', 'orange', 'indigo', 'blue', 'emerald']}
-					onValueChange={v => setValue(v)}
-				/>
-			</Card> */}
-			{/* <pre>{JSON.stringify(value)}</pre> */}
+				<TabPanels>
+					<TabPanel className='flex-wrap'>
+						<div className='flex'>
+							<Card className='max-w-md m-3'>
+								<Flex alignItems='start'>
+									<div>
+										<Text>Ventas</Text>
+										<Metric>./S {payedData}</Metric>
+									</div>
+									<BadgeDelta deltaType='moderateIncrease'>13.2%</BadgeDelta>
+								</Flex>
+								<Flex className='mt-4'>
+									<Text className='truncate'>68% ($ 149,940)</Text>
+									<Text>$ 220,500</Text>
+								</Flex>
+								<ProgressBar value={15.9} className='mt-2' />
+							</Card>
+							<Card className='max-w-md m-3'>
+								<Flex alignItems='start'>
+									<div>
+										<Text>Ventas</Text>
+										<Metric>./S {payedData}</Metric>
+									</div>
+									<BadgeDelta deltaType='moderateIncrease'>13.2%</BadgeDelta>
+								</Flex>
+								<Flex className='mt-4'>
+									<Text className='truncate'>68% ($ 149,940)</Text>
+									<Text>$ 220,500</Text>
+								</Flex>
+								<ProgressBar value={15.9} className='mt-2' />
+							</Card>
+						</div>
+						{/* ranking de productos */}
+						<Card className='mx-auto'>
+							<Title>Top Productos</Title>
+							<DonutChart
+								className='mt-6'
+								data={cities}
+								category='sales'
+								index='name'
+								colors={[
+									'rose',
+									'yellow',
+									'orange',
+									'indigo',
+									'blue',
+									'emerald',
+								]}
+								onValueChange={v => setValue(v)}
+							/>
+						</Card>
+						<pre>{JSON.stringify(value)}</pre>
+					</TabPanel>
+					<TabPanel>
+						<div>asd</div>
+					</TabPanel>
+				</TabPanels>
+			</TabGroup>
 		</motion.div>
 	)
 }

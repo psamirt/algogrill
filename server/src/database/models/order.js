@@ -4,7 +4,7 @@ import { productSchema } from './product.js';
 const validate = ['pending', 'payed', 'cancel'];
 
 const orderItemSchema = new Schema({
-  product: productSchema,
+  product: [productSchema],
   quantity: {
     type: Number,
     default: 1,
