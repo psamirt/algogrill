@@ -4,6 +4,7 @@ import mercadopago from 'mercadopago';
 import Order from '../database/models/order.js';
 import Cart from '../database/models/cart.js';
 const { ACCESS_TOKEN } = process.env;
+import axios from 'axios';
 
 export const createOrder = async (req, res) => {
   try {
@@ -90,8 +91,12 @@ export const receiveWebhook = async (req, res) => {
     const payment = req.query;
 
     if (payment.type === 'payment') {
-    const result =  await mercadopago.payment.findById(payment['data.id']);
-    console.log(result);
+      const result = await mercadopago.payment.findById(payment['data.id']);
+
+      const data = await axios.get(
+        `https://api.mercadopago.com/v1/payments/${result.id}`
+      );
+      console.log(data);
     }
 
     res.send('webhook');
@@ -99,4 +104,3 @@ export const receiveWebhook = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
