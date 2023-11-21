@@ -90,7 +90,8 @@ export const receiveWebhook = async (req, res) => {
     const payment = req.query;
 
     if (payment.type === 'payment') {
-      await mercadopago.payment.findById(payment['data.id']);
+    const result =  await mercadopago.payment.findById(payment['data.id']);
+    console.log(result);
     }
 
     res.send('webhook');
