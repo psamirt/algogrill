@@ -47,7 +47,7 @@ export const createOrder = async (req, res) => {
         access_token: ACCESS_TOKEN
       });
 
-      const preference = {
+      let preference = {
         items: items,
         back_urls: {
           success: 'http://localhost:5173/success',
@@ -57,7 +57,7 @@ export const createOrder = async (req, res) => {
         notification_url: `https://algo-grill.onrender.com/order/webHook`,
         total_amount: parseFloat(totalAmount.toFixed(2)),
         auto_return: 'approved',
-        
+        metadata:{orderId: order._id}
       };
 
       const result = await mercadopago.preferences.create(preference);
