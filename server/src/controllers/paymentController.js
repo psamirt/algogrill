@@ -60,6 +60,7 @@ export const createOrder = async (req, res) => {
       };
 
       const result = await mercadopago.preferences.create(preference);
+      console.log(result);
 
       await Cart.findOneAndRemove({ userId });
 
