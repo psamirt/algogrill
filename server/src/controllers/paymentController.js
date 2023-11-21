@@ -94,11 +94,6 @@ export const receiveWebhook = async (req, res) => {
       await mercadopago.payment.findById(payment['data.id']);
     }
 
-    const data = await axios.get(
-      `https://api.mercadopago.com/v1/payments/${payment['data.id']}`
-    );
-    console.log(data);
-
     res.send('webhook');
   } catch (error) {
     res.status(500).json({ error: error.message });
