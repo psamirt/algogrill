@@ -92,12 +92,12 @@ export const receiveWebhook = async (req, res) => {
 
     if (payment.type === 'payment') {
       await mercadopago.payment.findById(payment['data.id']);
-
-      const data = await axios.get(
-        `https://api.mercadopago.com/v1/payments/${payment['data.id']}`
-      );
-      console.log(data);
     }
+
+    const data = await axios.get(
+      `https://api.mercadopago.com/v1/payments/${payment['data.id']}`
+    );
+    console.log(data);
 
     res.send('webhook');
   } catch (error) {
