@@ -15,7 +15,7 @@ export const createOrder = async (req, res) => {
     if (cart) {
       const items = cart.items.map((item) => ({
         id: item.product._id,
-        category: item.product.product_type,
+        category_id: item.product.product_type,
         description: item.product.description,
         title: item.product.product_name,
         quantity: item.quantity,
@@ -56,25 +56,26 @@ export const createOrder = async (req, res) => {
         },
         notification_url: `https://algo-grill.onrender.com/order/webHook`,
         total_amount: parseFloat(totalAmount.toFixed(2)),
-        auto_return: 'approved'
+        auto_return: 'approved',
+        
       };
 
       const result = await mercadopago.preferences.create(preference);
 
-      await Cart.findOneAndRemove({ userId });
+      // await Cart.findOneAndRemove({ userId });
 
-      const latestOrder = await Order.findOne({ userId })
-        .sort({ createdAt: -1 })
-        .limit(1);
+      // const latestOrder = await Order.findOne({ userId })
+      //   .sort({ createdAt: -1 })
+      //   .limit(1);
 
-      if (latestOrder) {
-        await Order.findByIdAndUpdate(
-          { _id: latestOrder._id },
-          { $set: { status: 'payed' } }
-        );
-      }
+      // if (latestOrder) {
+      //   await Order.findByIdAndUpdate(
+      //     { _id: latestOrder._id },
+      //     { $set: { status: 'payed' } }
+      //   );
+      // }
 
-      res.send(result.body);
+      res.send(result.body.id);
     } else {
       res.status(404).json('Carrito no encontrado');
     }
