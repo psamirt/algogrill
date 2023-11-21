@@ -75,7 +75,7 @@ export const createOrder = async (req, res) => {
       //   );
       // }
 
-      res.send(result.body.id);
+      res.send(result.body);
     } else {
       res.status(404).json('Carrito no encontrado');
     }
