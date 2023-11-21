@@ -15,7 +15,7 @@ export const createOrder = async (req, res) => {
     if (cart) {
       const items = cart.items.map((item) => ({
         id: item.product._id,
-        category_id: item.product.product_type,
+        category: item.product.product_type,
         description: item.product.description,
         title: item.product.product_name,
         quantity: item.quantity,

@@ -1,48 +1,57 @@
 import { Schema, model } from 'mongoose';
-import { productSchema } from './product.js';
 
 const validate = ['pending', 'payed', 'cancel'];
 
 const orderItemSchema = new Schema({
-  product: [productSchema],
+  category: {
+    type: String
+  },
+  description: {
+    type: String
+  },
+  title: {
+    type: String
+  },
   quantity: {
     type: Number,
-    default: 1,
+    default: 1
   },
+  unit_price: {
+    type: Number
+  }
 });
 
 const orderSchema = new Schema(
   {
     userId: {
       type: String,
-      required: true,
+      required: true
     },
     items: [orderItemSchema],
     userDetails: {
       address: String,
       phoneNumber: String,
-      reference: String,
+      reference: String
     },
     status: {
       type: String,
       required: true,
       enum: validate,
-      default: 'pending',
+      default: 'pending'
     },
     paymentInfo: {
-      type: Schema.Types.Mixed,
+      type: Schema.Types.Mixed
     },
-    total_amount:{
+    total_amount: {
       type: Number,
       required: true
     }
   },
   {
     timestamps: true,
-    collection: 'orders',
+    collection: 'orders'
   }
 );
-
 
 const Order = model('Order', orderSchema);
 export default Order;

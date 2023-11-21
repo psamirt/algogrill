@@ -29,8 +29,8 @@ const cities = [
 	},
 ]
 
-const valueFormatter = (number: number) =>
-	`$ ${new Intl.NumberFormat('us').format(number).toString()}`
+// const valueFormatter = (number: number) =>
+// 	`$ ${new Intl.NumberFormat('us').format(number).toString()}`
 
 const Dashboard: React.FC = () => {
 	const [payedData, setPayedData] = useState<number | undefined>(undefined)
