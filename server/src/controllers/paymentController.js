@@ -91,7 +91,12 @@ export const receiveWebhook = async (req, res) => {
     const payment = req.query;
 
     if (payment.type === 'payment') {
-      await mercadopago.payment.findById(payment['data.id']);
+      const response = await mercadopago.payment.findById(payment['data.id']);
+
+      const data = await axios.get(
+        `https://api.mercadopago.com/v1/payments/${response.body.id}`
+      );
+      console.log(data);
     }
 
     res.send('webhook');
