@@ -57,7 +57,7 @@ export const createOrder = async (req, res) => {
         notification_url: `https://algo-grill.onrender.com/order/webHook`,
         total_amount: parseFloat(totalAmount.toFixed(2)),
         auto_return: 'approved',
-        metadata:{orderId: order._id}
+        metadata:{userId: userId}
       };
 
       const result = await mercadopago.preferences.create(preference);
@@ -90,7 +90,25 @@ export const receiveWebhook = async (req, res) => {
     const payment = req.query;
 
     if (payment.type === 'payment') {
-      await mercadopago.payment.findById(payment['data.id']);
+      const paymentDetails = await mercadopago.payment.findById(payment['data.id']);
+
+      if (paymentDetails.status === 'approved') {
+        const userId = paymentDetails.metadata.order_id;
+        const order = await Order.findByIdAndUpdate(
+          { userId },
+          { $set: { status: 'payed' } }
+        );
+        await Cart.findOneAndRemove({ userId });
+
+        if (order) {
+          console.log('Order updated to payed for user:', userId);
+          console.log('Cart deleted for user:', userId);
+        } else {
+          console.error('Order not found for user:', userId);
+        }
+      } else {
+        console.error('Payment failed:', paymentDetails.status);
+      }
     }
 
     res.send('webhook');
@@ -98,3 +116,4 @@ export const receiveWebhook = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
