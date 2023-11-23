@@ -7,14 +7,14 @@ import {
 	updateProduct,
 } from '../slices/productSlice'
 import { AppDispatch } from 'app/store'
-// const baseUrl = import.meta.env.VITE_BASE_URL
-const localUrl = import.meta.env.VITE_LOCAL_URL
+const baseUrl = import.meta.env.VITE_BASE_URL
+// const localUrl = import.meta.env.VITE_LOCAL_URL
 
 export const createProduct = (productData: Product) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			const response: AxiosResponse<Product> = await axios.post(
-				`${localUrl}/products/newProduct`,
+				`${baseUrl}/products/newProduct`,
 				productData,
 			)
 			dispatch(addProduct(response.data))
@@ -29,7 +29,7 @@ export const fetchProduct = () => {
 	return async (dispatch: Dispatch) => {
 		try {
 			const response: AxiosResponse = await axios.get(
-				`${localUrl}/products/getAllProducts`,
+				`${baseUrl}/products/getAllProducts`,
 			)
 			dispatch(getProducts(response.data))
 		} catch (error) {
@@ -42,7 +42,7 @@ export const editProduct = (productId: string, updatedProductData: Product) => {
 	return async (dispatch: AppDispatch) => {
 		try {
 			 await axios.put(
-				`${localUrl}/products/upDateProduct/${productId}`,
+				`${baseUrl}/products/upDateProduct/${productId}`,
 				updatedProductData,
 			)
 			dispatch(
