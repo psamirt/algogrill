@@ -98,10 +98,16 @@ export const receiveWebhook = async (req, res) => {
       if (paymentDetails.status === 'approved') {
         const userId = paymentDetails.metadata.order_id;
         console.log(userId);
-        const order = await Order.findByIdAndUpdate(
-          { userId },
-          { $set: { status: 'payed' } }
-        );
+        const latestOrder = await Order.findOne({ userId })
+          .sort({ createdAt: -1 })
+          .limit(1);
+
+        if (latestOrder) {
+          await Order.findByIdAndUpdate(
+            { _id: latestOrder._id },
+            { $set: { status: 'payed' } }
+          );
+        }
         await Cart.findOneAndRemove({ userId });
 
         if (order) {
