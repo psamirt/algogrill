@@ -81,24 +81,19 @@ export const receiveWebhook = async (req, res) => {
         payment['data.id']
       );
 
-      if (paymentDetails.status === 'approved') {
-        const userId = paymentDetails.body.metadata.user_id;
-        console.log(userId);
-        const latestOrder = await Order.findOne({ userId })
-          .sort({ createdAt: -1 })
-          .limit(1);
+      const userId = paymentDetails.body.metadata.user_id;
+      console.log(userId);
+      const latestOrder = await Order.findOne({ userId })
+        .sort({ createdAt: -1 })
+        .limit(1);
 
-        if (latestOrder) {
-          await Order.findByIdAndUpdate(
-            { userId },
-            { $set: { status: 'payed' } }
-          );
-        }
-        await Cart.findOneAndRemove({ userId });
-
-      } else {
-        console.error('Payment failed:', paymentDetails.status);
+      if (latestOrder) {
+        await Order.findByIdAndUpdate(
+          { userId },
+          { $set: { status: 'payed' } }
+        );
       }
+      await Cart.findOneAndRemove({ userId });
     }
 
     res.send('webhook');
