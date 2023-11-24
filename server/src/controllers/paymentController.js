@@ -80,7 +80,6 @@ export const receiveWebhook = async (req, res) => {
       const paymentDetails = await mercadopago.payment.findById(
         payment['data.id']
       );
-      console.log(paymentDetails);
 
       if (paymentDetails.status === 'approved') {
         const userId = paymentDetails.body.metadata.user_id;
@@ -91,7 +90,7 @@ export const receiveWebhook = async (req, res) => {
 
         if (latestOrder) {
           await Order.findByIdAndUpdate(
-            { _id: latestOrder._id },
+            { userId },
             { $set: { status: 'payed' } }
           );
         }
