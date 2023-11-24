@@ -62,19 +62,6 @@ export const createOrder = async (req, res) => {
 
       const result = await mercadopago.preferences.create(preference);
 
-      // await Cart.findOneAndRemove({ userId });
-
-      // const latestOrder = await Order.findOne({ userId })
-      //   .sort({ createdAt: -1 })
-      //   .limit(1);
-
-      // if (latestOrder) {
-      //   await Order.findByIdAndUpdate(
-      //     { _id: latestOrder._id },
-      //     { $set: { status: 'payed' } }
-      //   );
-      // }
-
       res.send(result.body);
     } else {
       res.status(404).json('Carrito no encontrado');
@@ -96,7 +83,7 @@ export const receiveWebhook = async (req, res) => {
       console.log(paymentDetails);
 
       if (paymentDetails.status === 'approved') {
-        const userId = paymentDetails.metadata.order_id;
+        const userId = paymentDetails.body.metadata.user_id;
         console.log(userId);
         const latestOrder = await Order.findOne({ userId })
           .sort({ createdAt: -1 })
@@ -110,12 +97,6 @@ export const receiveWebhook = async (req, res) => {
         }
         await Cart.findOneAndRemove({ userId });
 
-        if (order) {
-          console.log('Order updated to payed for user:', userId);
-          console.log('Cart deleted for user:', userId);
-        } else {
-          console.error('Order not found for user:', userId);
-        }
       } else {
         console.error('Payment failed:', paymentDetails.status);
       }
