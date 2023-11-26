@@ -34,6 +34,7 @@ export const createOrder = async (req, res) => {
       };
 
       const order = new Order({
+        _id: cart._id,
         userId,
         items,
         orderNumber: Math.random().toString(36).substring(7),
@@ -53,11 +54,15 @@ export const createOrder = async (req, res) => {
           success: 'https://algogrill.vercel.app/success',
           failure: 'https://algogrill.vercel.app/failure',
           pending: 'https://algogrill.vercel.app/pending'
+          // success: 'http://localhost:5173/success',
+          // failure: 'http://localhost:5173/failure',
+          // pending: 'http://localhost:5173/pending'
         },
         notification_url: `https://algo-grill.onrender.com/order/webHook`,
+        // notification_url: `https://8745-38-25-13-183.ngrok.io/order/webHook`,
         total_amount: parseFloat(totalAmount.toFixed(2)),
         auto_return: 'approved',
-        metadata: { userId: userId }
+        metadata: { userId: userId, cartId: cart._id }
       };
 
       const result = await mercadopago.preferences.create(preference);
@@ -80,19 +85,19 @@ export const receiveWebhook = async (req, res) => {
       const paymentDetails = await mercadopago.payment.findById(
         payment['data.id']
       );
-
       const userId = paymentDetails.body.metadata.user_id;
-      console.log(userId);
-      const latestOrder = await Order.findOne({ userId })
-        .sort({ createdAt: -1 })
-        .limit(1);
+      const cartId = paymentDetails.body.metadata.cart_id;
+      console.log(paymentDetails.body.metadata);
 
-      if (latestOrder) {
-        await Order.findByIdAndUpdate(
-          { userId },
-          { $set: { status: 'payed' } }
+      const cartOrder = await Order.findById(cartId);
+
+      if (cartOrder) {
+        await Order.findOneAndUpdate(
+          { _id: cartOrder._id },
+          { status: 'payed' }
         );
       }
+
       await Cart.findOneAndRemove({ userId });
     }
 
