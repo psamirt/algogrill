@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 const Failure = () => {
 	useEffect(() => {
 		const redirectTimer = setTimeout(() => {
-			window.location.href = 'http://localhost:5173/'
+			window.location.href = 'https://algogrill.vercel.app/'
 		}, 5000)
 		return () => clearTimeout(redirectTimer)
 	}, [])

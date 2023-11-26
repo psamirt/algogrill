@@ -87,7 +87,6 @@ export const receiveWebhook = async (req, res) => {
       );
       const userId = paymentDetails.body.metadata.user_id;
       const cartId = paymentDetails.body.metadata.cart_id;
-      console.log(paymentDetails.body.metadata);
 
       const cartOrder = await Order.findById(cartId);
 
