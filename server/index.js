@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import routes from './src/routes/index.js';
 import connectToDatabase from './src/database/db.js';
+const { PORT } = process.env;
 
 // Configurar variables de entorno desde el archivo .env
 dotenv.config();
@@ -37,12 +38,9 @@ io.on('connection', (socket) => {
 });
 
 // Ruta de prueba
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.status(200).send('corriendo');
 });
-
-// Conectar a la base de datos y arrancar el servidor
-const { PORT } = process.env;
 
 connectToDatabase()
   .then(() => {

@@ -38,7 +38,9 @@ const App = (): JSX.Element => {
 						}
 					></Route>
 				</Routes>
-				<Toaster />
+				<Toaster 
+				position="bottom-left"
+				/>
 			</AuthProvider>
 		</Provider>
 	)
