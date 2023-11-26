@@ -93,7 +93,7 @@ export const receiveWebhook = async (req, res) => {
       if (cartOrder) {
         await Order.findOneAndUpdate(
           { _id: cartOrder._id },
-          { status: 'payed' }
+          { status: 'payed', paymentInfo: paymentDetails.body }
         );
       }
 
