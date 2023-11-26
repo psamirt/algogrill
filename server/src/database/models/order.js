@@ -27,7 +27,6 @@ const orderSchema = new Schema(
       type: String,
       required: true
     },
-    items: [orderItemSchema],
     userDetails: {
       address: String,
       phoneNumber: String,
