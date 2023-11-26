@@ -36,7 +36,6 @@ export const createOrder = async (req, res) => {
       const order = new Order({
         _id: cart._id,
         userId,
-        items,
         orderNumber: Math.random().toString(36).substring(7),
         userDetails,
         total_amount: parseFloat(totalAmount.toFixed(2))
