@@ -23,65 +23,43 @@ export const getPayed = async (_req, res) => {
   }
 };
 
-export const getTotalProductsSold = async (_req, res) => {
-  try {
-    const totalProductsSold = await Order.aggregate([
-      {
-        $unwind: '$items'
-      },
-      {
-        $group: {
-          _id: null,
-          totalProductsSold: { $sum: '$items.quantity' }
-        }
-      }
-    ]);
-
-    res
-      .status(200)
-      .json({
-        totalProductsSold: totalProductsSold[0]?.totalProductsSold || 0
-      });
-  } catch (error) {
-    console.error('Error calculating total products sold:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
-
 export const getTopSellingProducts = async (_req, res) => {
   try {
     const topSellingProducts = await Order.aggregate([
       {
-        $unwind: '$items'
+        $unwind: '$paymentInfo.additional_info.items'
       },
       {
         $group: {
-          _id: '$items._id',
-          productName: { $first: '$items.product.product_name' },
-          totalSold: { $sum: '$items.quantity' }
+          _id: '$paymentInfo.additional_info.items.id',
+          productName: { $first: '$paymentInfo.additional_info.items.title' },
+          totalSold: { $sum: { $toInt: '$paymentInfo.additional_info.items.quantity' } }
         }
       },
       {
         $sort: { totalSold: -1 }
       },
-      {
-        $limit: 10 // Obtén los 10 productos más vendidos, ajusta según sea necesario
-      }
     ]);
 
-    res.status(200).json({ topSellingProducts });
+    const totalProductsSold = topSellingProducts.reduce((acc, product) => acc + product.totalSold, 0);
+
+    res.status(200).json({ topSellingProducts, totalProductsSold });
   } catch (error) {
     console.error('Error getting top selling products:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
+
 export const getSalesByDay = async (_req, res) => {
   try {
     const salesByDay = await Order.aggregate([
       {
         $group: {
-          _id: { $dayOfMonth: '$createdAt' },
+          _id: {
+            day: { $dayOfMonth: '$createdAt' },
+            month: { $month: '$createdAt' }
+          },
           totalSales: { $sum: '$total_amount' }
         }
       }

@@ -1,9 +1,13 @@
 import { useEffect } from 'react'
+const baseUrl = import.meta.env.VITE_BASE_URL
+// const localUrl = import.meta.env.VITE_LOCAL_URL
 
 const Success = () => {
 	useEffect(() => {
 		const redirectTimer = setTimeout(() => {
-			window.location.href = 'https://algogrill.vercel.app/'
+			window.location.href = 
+			`${baseUrl}`
+			// `${localUrl}`
 		}, 5000)
 		return () => clearTimeout(redirectTimer)
 	}, [])

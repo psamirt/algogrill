@@ -2,28 +2,13 @@ import { Schema, model } from 'mongoose';
 
 const validate = ['pending', 'payed', 'cancel'];
 
-const orderItemSchema = new Schema({
-  category: {
-    type: String
-  },
-  description: {
-    type: String
-  },
-  title: {
-    type: String
-  },
-  quantity: {
-    type: Number,
-    default: 1
-  },
-  unit_price: {
-    type: Number
-  }
-});
-
 const orderSchema = new Schema(
   {
     userId: {
+      type: String,
+      required: true
+    },
+    cartId: {
       type: String,
       required: true
     },

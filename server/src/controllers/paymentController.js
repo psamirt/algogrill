@@ -34,7 +34,7 @@ export const createOrder = async (req, res) => {
       };
 
       const order = new Order({
-        _id: cart._id,
+        cartId: cart._id,
         userId,
         orderNumber: Math.random().toString(36).substring(7),
         userDetails,
@@ -53,18 +53,31 @@ export const createOrder = async (req, res) => {
           success: 'https://algogrill.vercel.app/success',
           failure: 'https://algogrill.vercel.app/failure',
           pending: 'https://algogrill.vercel.app/pending'
-          // success: 'http://localhost:5173/success',
+          // success: 'http://localhost:5173/success'
           // failure: 'http://localhost:5173/failure',
           // pending: 'http://localhost:5173/pending'
         },
         notification_url: `https://algo-grill.onrender.com/order/webHook`,
-        // notification_url: `https://8745-38-25-13-183.ngrok.io/order/webHook`,
+        // notification_url: `https://33ea-38-25-13-183.ngrok.io/order/webHook`,
         total_amount: parseFloat(totalAmount.toFixed(2)),
         auto_return: 'approved',
         metadata: { userId: userId, cartId: cart._id }
       };
 
       const result = await mercadopago.preferences.create(preference);
+
+      if (order.status === 'pending') {
+        setTimeout(async () => {
+          const updatedOrder = await Order.findOneAndUpdate(
+            { _id: order._id, status: 'pending' },
+            { status: 'cancelled' },
+            { new: true }
+          );
+          if (updatedOrder) {
+            await Order.findOneAndRemove({ _id: order._id });
+          }
+        }, 5 * 60 * 1000);
+      }
 
       res.send(result.body);
     } else {
@@ -87,12 +100,11 @@ export const receiveWebhook = async (req, res) => {
       const userId = paymentDetails.body.metadata.user_id;
       const cartId = paymentDetails.body.metadata.cart_id;
 
-      const cartOrder = await Order.findById(cartId);
-
-      if (cartOrder) {
+      if (cartId) {
         await Order.findOneAndUpdate(
-          { _id: cartOrder._id },
-          { status: 'payed', paymentInfo: paymentDetails.body }
+          { cartId: cartId },
+          { status: 'payed', paymentInfo: paymentDetails.body },
+          { new: true }
         );
       }
 
