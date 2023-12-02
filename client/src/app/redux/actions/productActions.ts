@@ -15,6 +15,7 @@ export const createProduct = (productData: Product) => {
 		try {
 			const response: AxiosResponse<Product> = await axios.post(
 				`${baseUrl}/products/newProduct`,
+				// `${localUrl}/products/newProduct`,
 				productData,
 			)
 			dispatch(addProduct(response.data))
@@ -30,6 +31,7 @@ export const fetchProduct = () => {
 		try {
 			const response: AxiosResponse = await axios.get(
 				`${baseUrl}/products/getAllProducts`,
+				// `${localUrl}/products/getAllProducts`,
 			)
 			dispatch(getProducts(response.data))
 		} catch (error) {
@@ -43,6 +45,7 @@ export const editProduct = (productId: string, updatedProductData: Product) => {
 		try {
 			 await axios.put(
 				`${baseUrl}/products/upDateProduct/${productId}`,
+				// `${localUrl}/products/upDateProduct/${productId}`,
 				updatedProductData,
 			)
 			dispatch(

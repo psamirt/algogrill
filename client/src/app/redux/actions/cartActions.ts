@@ -11,6 +11,7 @@ import { io } from 'socket.io-client'
 const baseUrl = import.meta.env.VITE_BASE_URL
 // const localUrl = import.meta.env.VITE_LOCAL_URL
 const socket = io(baseUrl)
+// const socket = io(localUrl)
 
 export const addProductsToCart = (
 	product: Product,
@@ -21,6 +22,7 @@ export const addProductsToCart = (
 		try {
 			const response: AxiosResponse = await axios.post(
 				`${baseUrl}/cart/addToCart`,
+				// `${localUrl}/cart/addToCart`,
 				{
 					product: product,
 					quantity: quantity,
@@ -41,6 +43,7 @@ export const getCart = (userId: string) => {
 		try {
 			const response: AxiosResponse = await axios.get(
 				`${baseUrl}/cart/getCart/${userId}`,
+				// `${localUrl}/cart/getCart/${userId}`,
 			)
 			dispatch(setCart(response.data.items))
 		} catch (error) {
@@ -55,6 +58,7 @@ export const deleteProductFromCart = (
 ) => {
 	return async (dispatch: Dispatch) => {
 		try {
+			// await axios.delete(`${localUrl}/cart/deleteProduct/${userId}`, {
 			await axios.delete(`${baseUrl}/cart/deleteProduct/${userId}`, {
 				data: { productId },
 			})
@@ -72,6 +76,7 @@ export const updateQuantityCart = (
 ) => {
 	return async (dispatch: Dispatch) => {
 		try {
+			// await axios.put(`${localUrl}/cart/updateQuantity/${userId}`, {
 			await axios.put(`${baseUrl}/cart/updateQuantity/${userId}`, {
 				productId,
 				quantity,
@@ -97,7 +102,8 @@ export const payment = async (
 	shippingData: { address: string; phoneNumber: string; reference: string }
   ) => {
 	try {
-	  const response = await axios.post(`${baseUrl}/order/createOrder/${userId}`, {
+		  const response = await axios.post(`${baseUrl}/order/createOrder/${userId}`, {
+		// const response = await axios.post(`${localUrl}/order/createOrder/${userId}`, {
 		...shippingData,
 	  });
 	  window.location.href = response.data.init_point;

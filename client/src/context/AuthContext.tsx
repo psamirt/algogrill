@@ -63,7 +63,7 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 		photo: string | null,
 	) => {
 		try {
-			const role = 'user'
+			const role = 'admin'
 			const infoUser = await createUserWithEmailAndPassword(
 				auth,
 				email,
