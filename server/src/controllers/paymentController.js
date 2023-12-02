@@ -53,12 +53,12 @@ export const createOrder = async (req, res) => {
           success: 'https://algogrill.vercel.app/success',
           failure: 'https://algogrill.vercel.app/failure',
           pending: 'https://algogrill.vercel.app/pending'
-          // success: 'http://localhost:5173/success'
+          // success: 'http://localhost:5173/success',
           // failure: 'http://localhost:5173/failure',
           // pending: 'http://localhost:5173/pending'
         },
         notification_url: `https://algo-grill.onrender.com/order/webHook`,
-        // notification_url: `https://33ea-38-25-13-183.ngrok.io/order/webHook`,
+        // notification_url: `https://f737-38-25-13-183.ngrok.io/order/webHook`,
         total_amount: parseFloat(totalAmount.toFixed(2)),
         auto_return: 'approved',
         metadata: { userId: userId, cartId: cart._id }

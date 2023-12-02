@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 const baseUrl = import.meta.env.VITE_BASE_URL
-// const localUrl = import.meta.env.VITE_LOCAL_URL
+// const localUrl = import.meta.env.VITE_LOCAL_URL_FRONT
 
 const Success = () => {
 	useEffect(() => {

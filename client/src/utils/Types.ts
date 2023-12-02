@@ -58,3 +58,28 @@ export const slides = [
 	{ url: 'imagenes/salchigrill.png' },
 	{ url: 'imagenes/hamburguesa2.png' },
 ]
+
+export type Bar = {
+	key?: string
+	value: number
+	name: string
+}
+
+export interface Producto {
+	_id: string
+	totalSold: number
+	productName: string
+}
+
+export type ApiSaleData = {
+	_id: {
+		day: number
+		month: number
+	}
+	totalSales: number
+}
+
+export type ChartDataItem = {
+	name: string
+	'Ranking por día': number
+}
