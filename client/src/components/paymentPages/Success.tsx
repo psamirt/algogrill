@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
-const baseUrl = import.meta.env.VITE_BASE_URL
-// const localUrl = import.meta.env.VITE_LOCAL_URL_FRONT
+// const baseUrl = import.meta.env.VITE_BASE_URL
+const localUrl = import.meta.env.VITE_LOCAL_URL_FRONT
 
 const Success = () => {
 	useEffect(() => {
 		const redirectTimer = setTimeout(() => {
 			window.location.href = 
-			`${baseUrl}`
-			// `${localUrl}`
+			// `${baseUrl}`
+			`${localUrl}`
 		}, 5000)
 		return () => clearTimeout(redirectTimer)
 	}, [])

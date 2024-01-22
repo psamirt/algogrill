@@ -23,14 +23,21 @@ import { motion } from 'framer-motion'
 import {
 	getPayed,
 	getTopProducts,
-	getSalesByDay
+	getSalesByDay,
 } from '../../../app/redux/actions/adminAction'
 import { Bar, ChartDataItem } from 'utils/Types'
 
 const Dashboard: React.FC = () => {
 	const [payedData, setPayedData] = useState<number | undefined>(undefined)
 	const [topProducts, setTopProducts] = useState<Bar[]>([])
-	const [salesByDay, setSalesByDay] = useState<ChartDataItem[]>([])	
+	const [salesByDay, setSalesByDay] = useState<ChartDataItem[]>([])
+	const [metaDiaria, setMetaDiaria] = useState({
+		meta: 0,
+	})
+
+	const handleChangeMeta = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setMetaDiaria({ meta: parseFloat(e.target.value) || 0 })
+	}
 
 	useEffect(() => {
 		const getTotalPayed = async () => {
@@ -97,9 +104,16 @@ const Dashboard: React.FC = () => {
 									</Flex>
 									<Flex className='mt-4'>
 										<Text className='truncate'>68% ($ 149,940)</Text>
-										<Text>$ 220,500</Text>
+										<Text>
+											<input
+												type='number'
+												value={metaDiaria.meta}
+												onChange={handleChangeMeta}
+												className='bg-transparent'
+											/>
+										</Text>
 									</Flex>
-									<ProgressBar value={15.9} className='mt-2' />
+									<ProgressBar value={60} className='mt-2' />
 								</Card>
 							</Col>
 							<Card>
